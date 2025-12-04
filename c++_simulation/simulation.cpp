@@ -87,7 +87,7 @@ int main()
     // Initialization
     ///////////////////////////////////
 
-    std::map<std::array<int, 2>, Tile> tileMap;             //EXAMPLE
+    std::map<std::array<int, 2>, Tile> tileMap;
     Tile testTile;                                          //EXAMPLE
     testTile.color = DARKBLUE;                              //EXAMPLE
     tileMap[std::array<int, 2>{1, 2}] = testTile;           //EXAMPLE, to be replaced with randomly initialized, functional tiles
