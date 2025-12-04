@@ -1,5 +1,5 @@
+#include <algorithm>
 #include "raylib.h"
-#include <iostream>
 #include <random>
 #include <array>
 #include <map>
