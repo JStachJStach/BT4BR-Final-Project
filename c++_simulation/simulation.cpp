@@ -10,7 +10,7 @@
 
 const int screenWidth = 1200;
 const int screenHeight = 1200;
-double tickDuration = 0.03;
+double tickDuration = 0.3;
 // Grid
 const unsigned int gridSize = 60;
 const unsigned int cellSize = screenWidth / gridSize;
@@ -24,18 +24,26 @@ std::mt19937 rng(dev());
 struct Tile
 {
     std::string name;
-    Color tileColor;
+    Color color;
     int state = 0;
     void draw(std::array<int, 2> pos)
     {
         //tile color based on name and state
-        DrawRectangle(pos[0] * cellSize, pos[1] * cellSize, cellSize, cellSize, tileColor);
+        DrawRectangle(pos[0] * cellSize, pos[1] * cellSize, cellSize, cellSize, color);
     }
+    std::array<int, 2> move(std::array<int, 2> currentPos)
+    {
+        return std::array<int, 2>{currentPos[0] + 1, currentPos[1]};        //EXAMPLE
+    }                                         
+    void say(std::array<int, 2> pos)                                        //EXAMPLE
+    {                                                                       //EXAMPLE
+        std::printf("Hello, my position is: (%d, %d)\n", pos[0], pos[1]);   //EXAMPLE
+    }                                                                       //EXAMPLE
 };
 
-bool OnTile(std::array<int, 2> key, std::map<std::array<int, 2>, Tile> map)
+bool OnTile(std::array<int, 2> pos, std::map<std::array<int, 2>, Tile> map)
 {
-    if (map.find(key) == map.end())
+    if (map.find(pos) == map.end())
     {
         return false;
     }
@@ -67,9 +75,9 @@ void DrawGrid()
 
 void DrawTiles(std::map<std::array<int, 2>, Tile> map)
 {
-    for (auto const& [key, val] : map)
+    for (auto const& [pos, val] : map)
     {
-        map[key].draw(key);
+        map[pos].draw(pos);
     }
 }
 
@@ -79,7 +87,10 @@ int main()
     // Initialization
     ///////////////////////////////////
 
-    std::map<std::array<int, 2>, Tile> tileMap;
+    std::map<std::array<int, 2>, Tile> tileMap;             //EXAMPLE
+    Tile testTile;                                          //EXAMPLE
+    testTile.color = DARKBLUE;                              //EXAMPLE
+    tileMap[std::array<int, 2>{1, 2}] = testTile;           //EXAMPLE, to be replaced with randomly initialized, functional tiles
 
     double lastTickTime = 0;
     InitWindow(screenWidth, screenHeight, "Simulation");
@@ -94,16 +105,16 @@ int main()
 
         if (lastTickTime + tickDuration < GetTime())
         {
-            std::vector<std::array<int, 2>> tilesPositions; //tilesPosition is where new positions are going to be created
+            std::vector<std::array<int, 2>> tilesPositions; //tilesPosition is made to make the choice of pos unbiased (e.g. not from left to right)
             for (auto const& [key, val] : tileMap)
             {
                 tilesPositions.push_back(key);
             }
-            std::shuffle(tilesPositions.begin(), tilesPositions.end(), rng); //making choice of tile unbiased
+            std::shuffle(tilesPositions.begin(), tilesPositions.end(), rng);
             for (auto pos : tilesPositions)
             {
-                std::array<int, 2> newPos = pos;
-                // if "tile something" do "move somewhere"
+                std::array<int, 2> newPos = tileMap[pos].move(pos);
+                tileMap[pos].say(pos);                      //EXAMPLE
                 if (newPos != pos)
                 {
                     tileMap[newPos] = tileMap[pos];
@@ -119,7 +130,6 @@ int main()
 
         BeginDrawing();
         DrawGrid();
-        DrawTiles(tileMap);
         DrawTiles(tileMap);
         ClearBackground(RAYWHITE);
         EndDrawing();
