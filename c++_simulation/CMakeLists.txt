@@ -5,4 +5,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 link_libraries(raylib)
 
-add_executable(c++_simulation simulation.cpp)
+add_executable(c++_simulation simulation.cpp
+        headers/global_enums.h
+        classes/Tile.cpp
+        headers/Tile.h
+        headers/settings.h
+        classes/RandomUtils.cpp
+        headers/RandomUtils.h)

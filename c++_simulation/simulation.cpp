@@ -1,46 +1,11 @@
+#include <ranges>
 #include <algorithm>
-#include "raylib.h"
-#include <random>
-#include <array>
-#include <map>
+#include "headers/settings.h"
+#include "headers/RandomUtils.h"
+#include "headers/global_enums.h"
+#include "headers/Tile.h"
+RandomUtils RandomUtils;
 
-///////////////////////////////////
-// Settings
-///////////////////////////////////
-
-const int screenWidth = 1200;
-const int screenHeight = 1200;
-double tickDuration = 0.3;
-// Grid
-const unsigned int gridSize = 60;
-const unsigned int cellSize = screenWidth / gridSize;
-const unsigned int gridLineThickness = 2;
-Color gridLineColor = LIGHTGRAY;
-// Start Values
-std::random_device dev;
-std::mt19937 rng(dev());
-std::uniform_int_distribution<std::mt19937::result_type> distOnGrid(0, gridSize - 1);
-
-struct Tile
-{
-    std::string name;   //tiles have names
-    Color color;        //and colors
-    int state = 0;      //and state, that should determine tile behavior, to be done in a future
-    //every method below takes current tile position as an argument    
-    void draw(std::array<int, 2> pos)  //draw tile based on position
-    {
-        //tile color should be based on name and state
-        DrawRectangle(pos[0] * cellSize, pos[1] * cellSize, cellSize, cellSize, color);
-    }
-    std::array<int, 2> move(std::array<int, 2> currentPos) //move -> generate, and return, new position based on current position
-    {
-        return std::array<int, 2>{currentPos[0] + 1, currentPos[1]};        //EXAMPLE
-    }                                         
-    void say(std::array<int, 2> pos)                                        //EXAMPLE
-    {                                                                       //EXAMPLE
-        std::printf("Hello, my position is: (%d, %d)\n", pos[0], pos[1]);   //EXAMPLE
-    }                                                                       //EXAMPLE
-};
 
 bool OnTile(std::array<int, 2> pos, std::map<std::array<int, 2>, Tile> map) //this functions is (will be) used to check if there is any tile on given position. So the tiles won't overlap.
 {
@@ -50,8 +15,6 @@ bool OnTile(std::array<int, 2> pos, std::map<std::array<int, 2>, Tile> map) //th
     }
     return true;
 }
-
-
 
 void DrawGrid()
 {
@@ -74,29 +37,28 @@ void DrawGrid()
     }
 }
 
-void DrawTiles(std::map<std::array<int, 2>, Tile> map) //this function calls draw methods of all tiles in tilemap 
+void DrawTiles(std::map<std::array<int, 2>, Tile> tileMap) //this function calls draw methods of all tiles in tilemap
 {
-    for (auto const& [pos, val] : map)
+    for (const auto &position: tileMap | std::views::keys)
     {
-        map[pos].draw(pos);
+        tileMap[position].draw(position);
     }
 }
 
 int main()
 {
+    RandomUtils.save_seed();
     ///////////////////////////////////
     // Initialization
     ///////////////////////////////////
 
     std::map<std::array<int, 2>, Tile> tileMap; //creating empty tilemap
-    Tile testTile;                                          //EXAMPLE, to be replaced with randomly initialized, functional tiles
-    testTile.color = DARKBLUE;                              //EXAMPLE, to be replaced with randomly initialized, functional tiles
-    tileMap[std::array<int, 2>{1, 2}] = testTile;           //EXAMPLE, to be replaced with randomly initialized, functional tiles
+    const Tile testTile("Test Tile", DARKBLUE);                                          //EXAMPLE, to be replaced with randomly initialized, functional tiles//EXAMPLE, to be replaced with randomly initialized, functional tiles
+    tileMap[std::array<int, 2>{RandomUtils.get_random_cell(), RandomUtils.get_random_cell()}] = testTile;           //EXAMPLE, to be replaced with randomly initialized, functional tiles
 
     double lastTickTime = 0; //this is necessary to perform tick update (look at the statement ( if (lastTickTime + tickDuration < GetTime()) ) )
     InitWindow(screenWidth, screenHeight, "Simulation");
     SetTargetFPS(60);
-
 
     while (!WindowShouldClose())
     {
