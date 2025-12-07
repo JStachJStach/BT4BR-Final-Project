@@ -6,10 +6,15 @@
 #include "headers/Tile.h"
 RandomUtils RandomUtils;
 
-
-bool OnTile(std::array<int, 2> pos, std::map<std::array<int, 2>, Tile> map) //this functions is (will be) used to check if there is any tile on given position. So the tiles won't overlap.
+/**
+ * Check if the tile position given already exists in the tilemap???? Kuba please fact check me on this
+ * @param tilePosition Tile position
+ * @param tileMap Current state of the tilemap
+ * @return
+ */
+bool OnTile(const std::array<int, 2> &tilePosition, const std::map<std::array<int, 2>, Tile> &tileMap) //this functions is (will be) used to check if there is any tile on given position. So the tiles won't overlap.
 {
-    if (map.find(pos) == map.end())
+    if (!tileMap.contains(tilePosition))
     {
         return false;
     }
@@ -69,9 +74,9 @@ int main()
         if (lastTickTime + tickDuration < GetTime()) //this condition is fulfilled only once per tickDuration
         {
             std::vector<std::array<int, 2>> tilesPositions; //tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
-            for (auto const& [key, val] : tileMap)
+            for (const auto &key: tileMap | std::views::keys)
             {
-                tilesPositions.push_back(key); //tilesPositon contains all of the positions that are stored in map
+                tilesPositions.push_back(key); //tilesPositon contains all positions that are stored in the map
             }
             std::shuffle(tilesPositions.begin(), tilesPositions.end(), rng); //tilesPositon is being shuffled
             for (auto pos : tilesPositions) //positions from tilePosition are in random order so the order of movement is undetermined

@@ -22,19 +22,19 @@ Tile::Tile(const std::string& name, const Color& color) : _name(name), _color(co
 
 /**
  * Draw tile based on position
- * @param position Current tile position
+ * @param currentPosition Current tile position
  */
-void Tile::draw(const std::array<int, 2>& position) const
+void Tile::draw(const std::array<int, 2>& currentPosition) const
 {
     //tile color should be based on name and state
-    DrawRectangle(position[0] * cellSize, position[1] * cellSize, cellSize, cellSize, _color);
+    DrawRectangle(currentPosition[0] * cellSize, currentPosition[1] * cellSize, cellSize, cellSize, _color);
 }
 /**
  * Moves, generates and returns new position based on current position
  * @param currentPosition Current tile position
  * @return New position
  */
-std::array<int, 2> Tile::move(std::array<int, 2> currentPosition) //move -> generate, and return, new position based on current position
+std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition) //move -> generate, and return, new position based on current position
 {
     return std::array<int, 2>{currentPosition[0] + 1, currentPosition[1]};        //EXAMPLE
 }
@@ -50,7 +50,7 @@ void Tile::say(const std::array<int, 2>& position)                              
  * Color setter
  * @param newColor New tile color
  */
-void Tile::setColor(const Color & newColor)
+void Tile::set_color(const Color & newColor)
 {
     _color = newColor;
 }
@@ -58,7 +58,7 @@ void Tile::setColor(const Color & newColor)
  * State setter
  * @param newState New tile state
  */
-void Tile::setState(const TileState & newState)
+void Tile::set_state(const TileState & newState)
 {
     _state = newState;
 }
@@ -66,7 +66,7 @@ void Tile::setState(const TileState & newState)
  * Name setter
  * @param newName New tile name
  */
-void Tile::setName(const std::string & newName)
+void Tile::set_name(const std::string & newName)
 {
     _name = newName;
 }
