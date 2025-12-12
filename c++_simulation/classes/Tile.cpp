@@ -39,9 +39,14 @@ void Tile::draw(const std::array<int, 2>& currentPosition) const
  */
 std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition) //move -> generate, and return, new position based on current position
 {
-    return std::array<int, 2>{currentPosition[0] + RandomUtils::get_random_num(-1,1), currentPosition[1] +
-            RandomUtils::get_random_num(-1, 1)
-    };        //EXAMPLE
+    int newPositionX = currentPosition[0] + RandomUtils::get_random_num(-1,1),
+    newPositionY = currentPosition[1] + RandomUtils::get_random_num(-1,1);
+    // Check if new position is in the bounds of the grid
+    if (newPositionX < 0 || newPositionX > gridSize - 1)
+        newPositionX = currentPosition[0];
+    if (newPositionY < 0 || newPositionY > gridSize - 1)
+        newPositionY = currentPosition[1];
+    return std::array<int, 2>{newPositionX, newPositionY};
 }
 /**
  * Print current position to console
@@ -74,4 +79,9 @@ void Tile::set_state(const TileState & newState)
 void Tile::set_name(const std::string & newName)
 {
     _name = newName;
+}
+
+TileState Tile::get_state() const
+{
+    return _state;
 }

@@ -32,6 +32,7 @@ constexpr unsigned int gridLineThickness = 2;
 inline Color gridLineColor = LIGHTGRAY;
 // Tiles (Placeholder names)
 constexpr unsigned int grassStartAmount = 10;
+inline constexpr unsigned int grassMaxAmount = 50;
 constexpr unsigned int rabbitStartAmount = 10;
 constexpr unsigned int foxStartAmount = 10;
 inline std::vector<unsigned int> tileStartAmounts{grassStartAmount, rabbitStartAmount, foxStartAmount};
@@ -48,6 +49,7 @@ inline void save_settings()
         file << "Grid size: " << gridSize << "px" << std::endl;
         file << "Grid line thickness: " << gridLineThickness << "px" << std::endl;
         file << "Starting grass amount: " << grassStartAmount << std::endl;
+        file << "Max grass amount: " << grassMaxAmount << std::endl;
         file << "Starting rabbit amount: " << rabbitStartAmount << std::endl;
         file << "Starting fox amount: " << foxStartAmount << std::endl;
     }

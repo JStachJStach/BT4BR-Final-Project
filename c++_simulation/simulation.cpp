@@ -1,5 +1,7 @@
 #include <ranges>
 #include <algorithm>
+
+#include "classes/GrassUtils.h"
 #include "headers/settings.h"
 #include "headers/RandomUtils.h"
 #include "headers/global_enums.h"
@@ -14,11 +16,11 @@ RandomUtils RandomUtils;
  */
 bool OnTile(const std::array<int, 2> &tilePosition, const std::map<std::array<int, 2>, Tile> &tileMap) //this functions is (will be) used to check if there is any tile on given position. So the tiles won't overlap.
 {
-    if (!tileMap.contains(tilePosition))
+    if (tileMap.contains(tilePosition))
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 void DrawGrid()
@@ -77,6 +79,10 @@ int main()
     InitWindow(screenWidth, screenHeight, "Simulation");
     SetTargetFPS(60);
 
+
+    std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
+    std::vector<std::array<int, 2>> grassPositions; // separate Array for grass since it shouldn't move
+
     while (!WindowShouldClose())
     {
         ///////////////////////////////////
@@ -85,12 +91,20 @@ int main()
 
         if (lastTickTime + tickDuration < GetTime()) //this condition is fulfilled only once per tickDuration
         {
-            std::vector<std::array<int, 2>> tilesPositions; //tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
+            tilesPositions.clear();
+            grassPositions.clear();
+
+            // get tile positons
             for (const auto &key: tileMap | std::views::keys)
             {
-                tilesPositions.push_back(key); //tilesPositon contains all positions that are stored in the map
+                if (tileMap.at(key).get_state() != TileState::Grass)
+                    tilesPositions.push_back(key); //tilesPositon contains all positions that are stored in the map
+                else
+                    grassPositions.push_back(key);
             }
-            std::shuffle(tilesPositions.begin(), tilesPositions.end(), rng); //tilesPositon is being shuffled
+
+            std::ranges::shuffle(tilesPositions, rng); //tilesPositon is being shuffled
+
             for (auto pos : tilesPositions) //positions from tilePosition are in random order so the order of movement is undetermined
             {
                 std::array<int, 2> newPos = tileMap[pos].move(pos); //.move(pos) means: generate new position of tile based on the old position (argument) and tile type (Tile.name stored in struct)
@@ -101,6 +115,7 @@ int main()
                     tileMap.erase(pos);
                 }
             }
+            GrassUtils::grow(tileMap, grassPositions);
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
         }
 
