@@ -52,14 +52,26 @@ void DrawTiles(std::map<std::array<int, 2>, Tile> tileMap) //this function calls
 
 int main()
 {
+    // Really important save_seed() is called first, please do not mess with this :)
     RandomUtils.save_seed();
+    save_settings();
     ///////////////////////////////////
     // Initialization
     ///////////////////////////////////
 
     std::map<std::array<int, 2>, Tile> tileMap; //creating empty tilemap
-    const Tile testTile("Test Tile", DARKBLUE);                                          //EXAMPLE, to be replaced with randomly initialized, functional tiles//EXAMPLE, to be replaced with randomly initialized, functional tiles
-    tileMap[std::array<int, 2>{RandomUtils.get_random_cell(), RandomUtils.get_random_cell()}] = testTile;           //EXAMPLE, to be replaced with randomly initialized, functional tiles
+    // Set loop bounds
+    constexpr TileState TileMin = TileState::Grass;
+    constexpr TileState TileMax = TileState::Fox;
+    // Iterate over the enum class and create tiles based on settings
+    for (auto i = static_cast<int>(TileMin); i <= static_cast<int>(TileMax); i++)
+    {
+        TileState state = static_cast<TileState>(i);
+        for (int j = 0; j < tileStartAmounts[i - 1]; j++)
+        {
+            RandomUtils.get_random_tile(tileMap, state);
+        }
+    }
 
     double lastTickTime = 0; //this is necessary to perform tick update (look at the statement ( if (lastTickTime + tickDuration < GetTime()) ) )
     InitWindow(screenWidth, screenHeight, "Simulation");
@@ -81,7 +93,7 @@ int main()
             std::shuffle(tilesPositions.begin(), tilesPositions.end(), rng); //tilesPositon is being shuffled
             for (auto pos : tilesPositions) //positions from tilePosition are in random order so the order of movement is undetermined
             {
-                std::array<int, 2> newPos = tileMap[pos].move(pos); //.move(pos) means: generate new position of tile based on the old position (argument) and tile type (Tile.name stored in struct) 
+                std::array<int, 2> newPos = tileMap[pos].move(pos); //.move(pos) means: generate new position of tile based on the old position (argument) and tile type (Tile.name stored in struct)
                 tileMap[pos].say(pos);                      //EXAMPLE
                 if (newPos != pos) //if moved: remove old pos from the map
                 {

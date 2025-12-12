@@ -13,6 +13,7 @@ public:
     void set_state(const TileState&);
     void set_name(const std::string&);
 private:
+    static int _tileID;
     std::string _name;   //tiles have names
     Color _color;        //and colors
     TileState _state = TileState::None;      //and state, that should determine tile behavior, to be done in a future

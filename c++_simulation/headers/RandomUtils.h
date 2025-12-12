@@ -1,13 +1,16 @@
 #pragma once
 #include <random>
 #include "settings.h"
-#include "fstream"
+#include "Tile.h"
 // Start Values
 extern std::mt19937 rng;
 class RandomUtils
 {
 public:
-    static int get_random_cell();
+    static int get_random_num(const int& lowerBound, const int& upperBound);
     void save_seed();
+    void get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap,const TileState& state);
+private:
+    static int _get_random_cell();
 };
 
