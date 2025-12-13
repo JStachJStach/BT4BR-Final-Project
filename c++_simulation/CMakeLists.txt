@@ -13,4 +13,4 @@ add_executable(c++_simulation simulation.cpp
         classes/RandomUtils.cpp
         headers/RandomUtils.h
         classes/GrassUtils.cpp
-        classes/GrassUtils.h)
+        headers/GrassUtils.h)

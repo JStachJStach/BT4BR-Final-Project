@@ -2,7 +2,7 @@
 // Created by kiki on 12.12.2025.
 //
 
-#include "GrassUtils.h"
+#include "../headers/GrassUtils.h"
 
 void GrassUtils::grow(std::map<std::array<int, 2>, Tile> &tileMap, const std::vector<std::array<int, 2>> &grassPositions)
 {
