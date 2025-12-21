@@ -6,7 +6,7 @@
 #include "headers/RandomUtils.h"
 #include "headers/global_enums.h"
 #include "headers/Tile.h"
-RandomUtils RandomUtils;
+RandomUtils randomUtils;
 
 /**
  * Check if the tile position given already exists in the tilemap???? Kuba please fact check me on this
@@ -14,14 +14,6 @@ RandomUtils RandomUtils;
  * @param tileMap Current state of the tilemap
  * @return
  */
-bool OnTile(const std::array<int, 2> &tilePosition, const std::map<std::array<int, 2>, Tile> &tileMap) //this functions is (will be) used to check if there is any tile on given position. So the tiles won't overlap.
-{
-    if (tileMap.contains(tilePosition))
-    {
-        return true;
-    }
-    return false;
-}
 
 void DrawGrid()
 {
@@ -55,7 +47,7 @@ void DrawTiles(std::map<std::array<int, 2>, Tile> tileMap) //this function calls
 int main()
 {
     // Really important save_seed() is called first, please do not mess with this :)
-    RandomUtils.save_seed();
+    randomUtils.save_seed();
     save_settings();
     ///////////////////////////////////
     // Initialization
@@ -71,7 +63,7 @@ int main()
         TileState state = static_cast<TileState>(i);
         for (int j = 0; j < tileStartAmounts[i - 1]; j++)
         {
-            RandomUtils.get_random_tile(tileMap, state);
+            randomUtils.get_random_tile(tileMap, state);
         }
     }
 
@@ -107,8 +99,8 @@ int main()
 
             for (auto pos : tilesPositions) //positions from tilePosition are in random order so the order of movement is undetermined
             {
-                std::array<int, 2> newPos = tileMap[pos].move(pos); //.move(pos) means: generate new position of tile based on the old position (argument) and tile type (Tile.name stored in struct)
-                tileMap[pos].say(pos);                      //EXAMPLE
+                std::array<int, 2> newPos = tileMap[pos].move(pos, tileMap); //.move(pos) means: generate new position of tile based on the old position (argument) and tile type (Tile.name stored in struct)
+                //tileMap[pos].say(pos);                      //EXAMPLE
                 if (newPos != pos) //if moved: remove old pos from the map
                 {
                     tileMap[newPos] = tileMap[pos];

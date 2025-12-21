@@ -128,6 +128,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="classes\GrassUtils.cpp" />
+    <ClCompile Include="classes\RandomUtils.cpp" />
+    <ClCompile Include="classes\Tile.cpp" />
     <ClCompile Include="simulation.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

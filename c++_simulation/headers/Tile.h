@@ -7,7 +7,7 @@ public:
     Tile();
     Tile(const std::string&, const Color&);
     void draw(const std::array<int, 2> &) const;
-    std::array<int, 2> move(const std::array<int, 2>&);
+    std::array<int, 2> move(const std::array<int, 2>&, const std::map<std::array<int, 2>, Tile>&);
     void say(const std::array<int, 2>&);
     void set_color(const Color&);
     void set_state(const TileState&);

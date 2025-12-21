@@ -37,7 +37,7 @@ void Tile::draw(const std::array<int, 2>& currentPosition) const
  * @param currentPosition Current tile position
  * @return New position
  */
-std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition) //move -> generate, and return, new position based on current position
+std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, const std::map<std::array<int, 2>, Tile>& tileMap) //move -> generate, and return, new position based on current position
 {
     int newPositionX = currentPosition[0] + RandomUtils::get_random_num(-1,1),
     newPositionY = currentPosition[1] + RandomUtils::get_random_num(-1,1);
@@ -46,7 +46,11 @@ std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition) //move 
         newPositionX = currentPosition[0];
     if (newPositionY < 0 || newPositionY > gridSize - 1)
         newPositionY = currentPosition[1];
-    return std::array<int, 2>{newPositionX, newPositionY};
+    // Check if new position is overlapping other tile
+    std::array<int, 2> newPosition = std::array<int, 2>{newPositionX, newPositionY};
+    if (tileMap.contains(newPosition))
+        newPosition = currentPosition;
+    return newPosition;
 }
 /**
  * Print current position to console

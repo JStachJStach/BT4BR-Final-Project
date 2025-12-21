@@ -20,11 +20,11 @@
 ///////////////////////////////////
 // Settings
 ///////////////////////////////////
-// Window
+// Window//
 constexpr int screenWidth = 720;
 constexpr int screenHeight = 720;
 // Tick Speed
-inline double tickDuration = 0.3;
+inline double tickDuration = 0.03;
 // Grid
 constexpr unsigned int gridSize = 60;
 constexpr unsigned int cellSize = screenWidth / gridSize;
