@@ -6,17 +6,6 @@ int Tile::rabbit_count = 0;
 int Tile::fox_count = 0;
 int Tile::grass_count = 0;
 
-std::array<std::array<int, 2>, 8> positionsAdjacent = std::array<std::array<int, 2>, 8>{
-        std::array<int, 2>{-1, -1},
-        std::array<int, 2>{-1, 0},
-        std::array<int, 2>{-1, 1},
-        std::array<int, 2>{0, -1},
-        std::array<int, 2>{0, 1},
-        std::array<int, 2>{1, -1},
-        std::array<int, 2>{1, 0},
-        std::array<int, 2>{1, 1}
-};
-
 
 /**
  * Default Constructor
@@ -71,22 +60,20 @@ void Tile::draw(const std::array<int, 2>& currentPosition) const
 std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, std::map<std::array<int, 2>, Tile> &tileMap)
 {   
     // Check if there are certain tiles on adjacent positions
-    for (auto positionAdj : positionsAdjacent)
+    for (auto pos: RandomUtils::positionsAdjacent(currentPosition))
     {
-        positionAdj[0] += currentPosition[0];
-        positionAdj[1] += currentPosition[1];
-        if (tileMap.contains(positionAdj))
+        if (tileMap.contains(pos))
         {
-            if (this->name == "Fox" and tileMap[positionAdj].name == "Rabbit")
+            if (this->name == "Fox" and tileMap[pos].name == "Rabbit")
             {
-                tileMap.erase(positionAdj);
+                tileMap.erase(pos);
                 rabbit_count--;
-                return positionAdj;
+                return pos;
             }
-            if (this->name == "Rabbit" and tileMap[positionAdj].name == "Grass")
+            if (this->name == "Rabbit" and tileMap[pos].name == "Grass")
             {
                 grass_count--;
-                return positionAdj;
+                return pos;
             }
         }
     }

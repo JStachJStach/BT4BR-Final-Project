@@ -25,6 +25,32 @@ void RandomUtils::save_seed()
 }
 
 /**
+ * List of adjacent positions
+ * @param currentPosition Tile position
+ * @return Array of positions adjacent to currentPosition
+ */
+std::array<std::array<int, 2>, 8> RandomUtils::positionsAdjacent(const std::array<int,2> currentPosition)
+{
+    std::array<std::array<int, 2>, 8> toReturn = std::array<std::array<int, 2>, 8>{
+        std::array<int, 2>{-1, -1},
+            std::array<int, 2>{-1, 0},
+            std::array<int, 2>{-1, 1},
+            std::array<int, 2>{0, -1},
+            std::array<int, 2>{0, 1},
+            std::array<int, 2>{1, -1},
+            std::array<int, 2>{1, 0},
+            std::array<int, 2>{1, 1}
+    };
+    for (auto& pos : toReturn)
+    {
+        pos[0] += currentPosition[0];
+        pos[1] += currentPosition[1];
+    }
+    std::shuffle(toReturn.begin(), toReturn.end(),rng);
+    return toReturn;
+}
+
+/**
  * Function that adds a random tile depending on tile state
  * @param tileMap array of all currently active tiles
  * @param state state of tile that controls what role and color it has
