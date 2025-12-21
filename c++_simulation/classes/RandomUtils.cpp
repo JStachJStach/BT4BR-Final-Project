@@ -44,7 +44,7 @@ void RandomUtils::get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap, c
         {
             Tile *tile = new Tile("Rabbit", GRAY);
             tile->set_state(TileState::Rabbit);
-            tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;//uwzglednic  czy pole zajete
+            tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
             break;
         }
         case TileState::Fox :
