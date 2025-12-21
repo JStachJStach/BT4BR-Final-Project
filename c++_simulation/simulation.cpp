@@ -69,7 +69,7 @@ int main()
     InitWindow(screenWidth, screenHeight, "Simulation");
     SetTargetFPS(60);
 
-    //saving data per tick to file
+    //saving data to csv file per tick 
     std::fstream data_file;
     data_file.open("../data/raw/data.csv", std::ios::out | std::ios::trunc);
     if (data_file.is_open())
