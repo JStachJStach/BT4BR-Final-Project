@@ -12,11 +12,11 @@ void GrassUtils::grow(std::map<std::array<int, 2>, Tile> &tileMap, const std::ve
     }
     if (grassPositions.size() < grassMaxAmount)
     {
-        for (int i = 0; i < grassPositions.size(); ++i)
+        for (auto grassPosition : grassPositions)
         {
             const int newXPosition = RandomUtils::get_random_num(-1,1);
             const int newYPosition = RandomUtils::get_random_num(-1,1);
-            std::array<int, 2> newGrassPosition = {grassPositions[i][0] + newXPosition, grassPositions[i][1] + newYPosition};
+            std::array<int, 2> newGrassPosition = {grassPosition[0] + newXPosition, grassPosition[1] + newYPosition};
             if (!tileMap.contains(newGrassPosition))
                 tileMap[newGrassPosition] = *(new Tile("Grass", GREEN));
         }

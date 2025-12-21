@@ -31,22 +31,23 @@ void RandomUtils::save_seed()
  */
 std::array<std::array<int, 2>, 8> RandomUtils::positionsAdjacent(const std::array<int,2> currentPosition)
 {
-    std::array<std::array<int, 2>, 8> toReturn = std::array<std::array<int, 2>, 8>{
-        std::array<int, 2>{-1, -1},
-            std::array<int, 2>{-1, 0},
-            std::array<int, 2>{-1, 1},
-            std::array<int, 2>{0, -1},
-            std::array<int, 2>{0, 1},
-            std::array<int, 2>{1, -1},
-            std::array<int, 2>{1, 0},
-            std::array<int, 2>{1, 1}
+    // C++ is smart enough to not need explicit std::array<std::array<int, 2>, 8> call here so auto is used
+    auto toReturn = std::array{
+        std::array{-1, -1},
+        std::array{-1, 0},
+        std::array{-1, 1},
+        std::array{0, -1},
+        std::array{0, 1},
+        std::array{1, -1},
+        std::array{1, 0},
+        std::array{1, 1}
     };
     for (auto& pos : toReturn)
     {
         pos[0] += currentPosition[0];
         pos[1] += currentPosition[1];
     }
-    std::shuffle(toReturn.begin(), toReturn.end(),rng);
+    std::ranges::shuffle(toReturn,rng);
     return toReturn;
 }
 
@@ -61,19 +62,19 @@ void RandomUtils::get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap, c
     {
         case TileState::Grass :
         {
-            Tile *tile = new Tile("Grass", GREEN);
+            const Tile *tile = new Tile("Grass", GREEN);
             tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
             break;
         }
         case TileState::Rabbit :
         {
-            Tile *tile = new Tile("Rabbit", GRAY);
+            const Tile *tile = new Tile("Rabbit", GRAY);
             tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
             break;
         }
         case TileState::Fox :
         {
-            Tile *tile = new Tile("Fox", ORANGE);
+            const Tile *tile = new Tile("Fox", ORANGE);
             tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
             break;
         }

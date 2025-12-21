@@ -2,10 +2,15 @@
 
 #include "../headers/RandomUtils.h"
 int Tile::_tileID = 0;
-int Tile::rabbit_count = 0;
-int Tile::fox_count = 0;
-int Tile::grass_count = 0;
+int Tile::_rabbit_count = 0;
+int Tile::_fox_count = 0;
+int Tile::_grass_count = 0;
 
+/**********************************************
+ *                                            *
+ *               Constructors                 *
+ *                                            *
+ **********************************************/
 
 /**
  * Default Constructor
@@ -17,30 +22,36 @@ Tile::Tile() : _color(RAYWHITE)
 /**
  * Basic tile constructor that sets the name, color of the object and count created objects
  *
- * @param name Name of tile object
+ * @param name_in Name of tile object
  * @param color Color of tile object
  */
-Tile::Tile(const std::string& name_in, const Color& color) : name(name_in), _color(color)
+Tile::Tile(const std::string& name_in, const Color& color) : _name(name_in), _color(color)
 {
     _tileID++;
-    if (name == "Grass")
+    if (_name == "Grass")
     {
         set_state(TileState::Grass);
-        grass_count++;
+        _grass_count++;
     }
-    if (name == "Fox")
+    if (_name == "Fox")
     {
         set_state(TileState::Fox);
-        fox_count++;
+        _fox_count++;
     }
-    if (name == "Rabbit")
+    if (_name == "Rabbit")
     {
         set_state(TileState::Rabbit);
-        rabbit_count++;
+        _rabbit_count++;
     }
     // Debug string
-    std::cout << "Creating tile " << name << " with ID "  << _tileID <<"\n";
+    std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
 }
+
+/**********************************************
+ *                                            *
+ *                  Methods                   *
+ *                                            *
+ **********************************************/
 
 /**
  * Draw tile based on position
@@ -64,15 +75,15 @@ std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, std::ma
     {
         if (tileMap.contains(pos))
         {
-            if (this->name == "Fox" and tileMap[pos].name == "Rabbit")
+            if (this->_name == "Fox" and tileMap[pos]._name == "Rabbit")
             {
                 tileMap.erase(pos);
-                rabbit_count--;
+                _rabbit_count--;
                 return pos;
             }
-            if (this->name == "Rabbit" and tileMap[pos].name == "Grass")
+            if (this->_name == "Rabbit" and tileMap[pos]._name == "Grass")
             {
-                grass_count--;
+                _grass_count--;
                 return pos;
             }
         }
@@ -92,14 +103,13 @@ std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, std::ma
         newPosition = currentPosition;
     return newPosition;
 }
-/**
- * Print current position to console
- * @param position Current tile position
- */
-void Tile::say(const std::array<int, 2>& position)                                        //EXAMPLE
-{                                                                       //EXAMPLE
-    std::printf("Hello, my position is: (%d, %d)\n", position[0], position[1]);   //EXAMPLE
-}                                                                       //EXAMPLE
+
+/**********************************************
+ *                                            *
+ *                  Setters                   *
+ *                                            *
+ **********************************************/
+
 /**
  * Color setter
  * @param newColor New tile color
@@ -122,10 +132,60 @@ void Tile::set_state(const TileState & newState)
  */
 void Tile::set_name(const std::string & newName)
 {
-    name = newName;
+    _name = newName;
 }
 
+/**********************************************
+ *                                            *
+ *                  Getters                   *
+ *                                            *
+ **********************************************/
+
+/**
+ * TileState getter
+ * @return current tile state
+ */
 TileState Tile::get_state() const
 {
     return _state;
+}
+/**
+ * Static grass_count getter
+ * @return current grass count
+ */
+int Tile::get_grass_count()
+{
+    return _grass_count;
+}
+/**
+ * Static rabbit_count getter
+ * @return current rabbit count
+ */
+int Tile::get_rabbit_count()
+{
+    return _rabbit_count;
+}
+/**
+ * Static fox_count getter
+ * @return current fox count
+ */
+int Tile::get_fox_count()
+{
+    return _fox_count;
+}
+/**
+ * Color getter
+ * @return current color
+ */
+Color Tile::get_color() const
+{
+    return _color;
+}
+/**
+ * Name getter
+ * @return current name
+ */
+std::string Tile::get_name() const
+{
+    return _name;
 }

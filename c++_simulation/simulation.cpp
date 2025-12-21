@@ -59,7 +59,7 @@ int main()
         TileState state = static_cast<TileState>(i);
         for (int j = 0; j < tileStartAmounts[i - 1]; j++)
         {
-            randomUtils.get_random_tile(tileMap, state);
+            RandomUtils::get_random_tile(tileMap, state);
         }
     }
     double lastTickTime = 0; //this is necessary to perform tick update (look at the statement ( if (lastTickTime + tickDuration < GetTime()) ) )
@@ -111,10 +111,9 @@ int main()
             }
             GrassUtils::grow(tileMap, grassPositions);
             // save data (per tick) to file
-            if (data_file.is_open())
-            {
-                data_file << lastTickTime << "," << Tile::grass_count << "," << Tile::rabbit_count << "," << Tile::fox_count << std::endl;
-            }
+
+            data_file << lastTickTime << "," << Tile::get_grass_count() << "," << Tile::get_rabbit_count() << "," << Tile::get_fox_count() << std::endl;
+
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
         }
 
