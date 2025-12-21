@@ -33,7 +33,7 @@ inline Color gridLineColor = LIGHTGRAY;
 // Tiles (Placeholder names)
 constexpr unsigned int grassStartAmount = 10;
 inline constexpr unsigned int grassMaxAmount = 50;
-constexpr unsigned int rabbitStartAmount = 10;
+constexpr unsigned int rabbitStartAmount = 60;
 constexpr unsigned int foxStartAmount = 10;
 inline std::vector<unsigned int> tileStartAmounts{grassStartAmount, rabbitStartAmount, foxStartAmount};
 

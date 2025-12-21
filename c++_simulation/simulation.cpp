@@ -1,7 +1,6 @@
 #include <ranges>
 #include <algorithm>
-#include <cstdlib>
-#include <thread>
+
 
 #include "headers/GrassUtils.h"
 #include "headers/settings.h"
@@ -64,7 +63,6 @@ int main()
             randomUtils.get_random_tile(tileMap, state);
         }
     }
-
     double lastTickTime = 0; //this is necessary to perform tick update (look at the statement ( if (lastTickTime + tickDuration < GetTime()) ) )
     InitWindow(screenWidth, screenHeight, "Simulation");
     SetTargetFPS(60);

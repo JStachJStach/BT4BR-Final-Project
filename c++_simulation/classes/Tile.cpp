@@ -5,6 +5,19 @@ int Tile::_tileID = 0;
 int Tile::rabbit_count = 0;
 int Tile::fox_count = 0;
 int Tile::grass_count = 0;
+
+std::array<std::array<int, 2>, 8> positionsAdjacent = std::array<std::array<int, 2>, 8>{
+        std::array<int, 2>{-1, -1},
+        std::array<int, 2>{-1, 0},
+        std::array<int, 2>{-1, 1},
+        std::array<int, 2>{0, -1},
+        std::array<int, 2>{0, 1},
+        std::array<int, 2>{1, -1},
+        std::array<int, 2>{1, 0},
+        std::array<int, 2>{1, 1}
+};
+
+
 /**
  * Default Constructor
  */
@@ -13,22 +26,31 @@ Tile::Tile() : _color(RAYWHITE)
 }
 
 /**
- * Basic tile constructor that sets the name and color of the object
+ * Basic tile constructor that sets the name, color of the object and count created objects
  *
  * @param name Name of tile object
  * @param color Color of tile object
  */
-Tile::Tile(const std::string& name, const Color& color) : _name(name), _color(color)
+Tile::Tile(const std::string& name_in, const Color& color) : name(name_in), _color(color)
 {
     _tileID++;
-    if (_name == "Grass")
+    if (name == "Grass")
+    {
+        set_state(TileState::Grass);
         grass_count++;
-    if (_name == "Fox")
+    }
+    if (name == "Fox")
+    {
+        set_state(TileState::Fox);
         fox_count++;
-    if (_name == "Rabbit")
+    }
+    if (name == "Rabbit")
+    {
+        set_state(TileState::Rabbit);
         rabbit_count++;
+    }
     // Debug string
-    std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
+    std::cout << "Creating tile " << name << " with ID "  << _tileID <<"\n";
 }
 
 /**
@@ -43,11 +65,33 @@ void Tile::draw(const std::array<int, 2>& currentPosition) const
 /**
  * Moves, generates and returns new position based on current position
  * @param currentPosition Current tile position
- * @param tileMap 
+ * @param tileMap Active array of tiles 
  * @return New position
  */
-std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, const std::map<std::array<int, 2>, Tile>& tileMap) //move -> generate, and return, new position based on current position
-{
+std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, std::map<std::array<int, 2>, Tile> &tileMap)
+{   
+    // Check if there are certain tiles on adjacent positions
+    for (auto positionAdj : positionsAdjacent)
+    {
+        positionAdj[0] += currentPosition[0];
+        positionAdj[1] += currentPosition[1];
+        if (tileMap.contains(positionAdj))
+        {
+            if (this->name == "Fox" and tileMap[positionAdj].name == "Rabbit")
+            {
+                tileMap.erase(positionAdj);
+                rabbit_count--;
+                return positionAdj;
+            }
+            if (this->name == "Rabbit" and tileMap[positionAdj].name == "Grass")
+            {
+                grass_count--;
+                return positionAdj;
+            }
+        }
+    }
+
+    // Regular move
     int newPositionX = currentPosition[0] + RandomUtils::get_random_num(-1,1),
     newPositionY = currentPosition[1] + RandomUtils::get_random_num(-1,1);
     // Check if new position is in the bounds of the grid
@@ -91,7 +135,7 @@ void Tile::set_state(const TileState & newState)
  */
 void Tile::set_name(const std::string & newName)
 {
-    _name = newName;
+    name = newName;
 }
 
 TileState Tile::get_state() const

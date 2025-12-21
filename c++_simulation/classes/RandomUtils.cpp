@@ -36,21 +36,18 @@ void RandomUtils::get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap, c
         case TileState::Grass :
         {
             Tile *tile = new Tile("Grass", GREEN);
-            tile->set_state(TileState::Grass);
             tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
             break;
         }
         case TileState::Rabbit :
         {
             Tile *tile = new Tile("Rabbit", GRAY);
-            tile->set_state(TileState::Rabbit);
             tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
             break;
         }
         case TileState::Fox :
         {
             Tile *tile = new Tile("Fox", ORANGE);
-            tile->set_state(TileState::Fox);
             tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
             break;
         }
