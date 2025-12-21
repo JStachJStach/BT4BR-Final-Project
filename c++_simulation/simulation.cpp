@@ -1,5 +1,7 @@
 #include <ranges>
 #include <algorithm>
+#include <cstdlib>
+#include <thread>
 
 #include "headers/GrassUtils.h"
 #include "headers/settings.h"
@@ -8,12 +10,6 @@
 #include "headers/Tile.h"
 RandomUtils randomUtils;
 
-/**
- * Check if the tile position given already exists in the tilemap???? Kuba please fact check me on this
- * @param tilePosition Tile position
- * @param tileMap Current state of the tilemap
- * @return
- */
 
 void DrawGrid()
 {
@@ -49,6 +45,8 @@ int main()
     // Really important save_seed() is called first, please do not mess with this :)
     randomUtils.save_seed();
     save_settings();
+
+
     ///////////////////////////////////
     // Initialization
     ///////////////////////////////////
@@ -71,6 +69,13 @@ int main()
     InitWindow(screenWidth, screenHeight, "Simulation");
     SetTargetFPS(60);
 
+    //saving data per tick to file
+    std::fstream data_file;
+    data_file.open("../data/raw/data.csv", std::ios::out | std::ios::trunc);
+    if (data_file.is_open())
+    {
+        data_file << "lastTickTime" << "," << "Tile::grass_count" << "," << "Tile::rabbit_count" << "," << "Tile::fox_count" << std::endl;
+    }
 
     std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
     std::vector<std::array<int, 2>> grassPositions; // separate Array for grass since it shouldn't move
@@ -108,6 +113,11 @@ int main()
                 }
             }
             GrassUtils::grow(tileMap, grassPositions);
+            // save data (per tick) to file
+            if (data_file.is_open())
+            {
+                data_file << lastTickTime << "," << Tile::grass_count << "," << Tile::rabbit_count << "," << Tile::fox_count << std::endl;
+            }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
         }
 
@@ -121,6 +131,6 @@ int main()
         ClearBackground(RAYWHITE);
         EndDrawing();
     }
-
+    data_file.close();
     CloseWindow();
 }

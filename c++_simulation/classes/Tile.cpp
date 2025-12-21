@@ -2,7 +2,9 @@
 
 #include "../headers/RandomUtils.h"
 int Tile::_tileID = 0;
-
+int Tile::rabbit_count = 0;
+int Tile::fox_count = 0;
+int Tile::grass_count = 0;
 /**
  * Default Constructor
  */
@@ -19,6 +21,12 @@ Tile::Tile() : _color(RAYWHITE)
 Tile::Tile(const std::string& name, const Color& color) : _name(name), _color(color)
 {
     _tileID++;
+    if (_name == "Grass")
+        grass_count++;
+    if (_name == "Fox")
+        fox_count++;
+    if (_name == "Rabbit")
+        rabbit_count++;
     // Debug string
     std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
 }
@@ -35,6 +43,7 @@ void Tile::draw(const std::array<int, 2>& currentPosition) const
 /**
  * Moves, generates and returns new position based on current position
  * @param currentPosition Current tile position
+ * @param tileMap 
  * @return New position
  */
 std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, const std::map<std::array<int, 2>, Tile>& tileMap) //move -> generate, and return, new position based on current position

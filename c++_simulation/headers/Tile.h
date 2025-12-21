@@ -13,6 +13,9 @@ public:
     void set_state(const TileState&);
     void set_name(const std::string&);
     TileState get_state() const;
+    static int fox_count;
+    static int rabbit_count;
+    static int grass_count;
 private:
     static int _tileID;
     std::string _name;   //tiles have names
