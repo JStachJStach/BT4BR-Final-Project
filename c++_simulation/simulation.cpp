@@ -6,6 +6,7 @@
 #include "headers/RandomUtils.h"
 #include "headers/global_enums.h"
 #include "headers/Tile.h"
+#include "headers/FileUtils.h"
 RandomUtils randomUtils;
 
 
@@ -66,13 +67,10 @@ int main()
     InitWindow(screenWidth, screenHeight, "Simulation");
     SetTargetFPS(60);
 
-    //saving data to csv file per tick 
-    std::fstream data_file;
-    data_file.open("../data/raw/data.csv", std::ios::out | std::ios::trunc);
-    if (data_file.is_open())
-    {
-        data_file << "lastTickTime" << "," << "Tile::grass_count" << "," << "Tile::rabbit_count" << "," << "Tile::fox_count" << std::endl;
-    }
+    // FileUtils object because file I/O operations are a lot slower than memory I/O operations
+    FileUtils FileUtil{};
+    // Save data to a vector
+    std::vector<FileUtils> overTimeData;
 
     std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
     std::vector<std::array<int, 2>> grassPositions; // separate Array for grass since it shouldn't move
@@ -110,9 +108,12 @@ int main()
                 }
             }
             GrassUtils::grow(tileMap, grassPositions);
-            // save data (per tick) to file
-
-            data_file << lastTickTime << "," << Tile::get_grass_count() << "," << Tile::get_rabbit_count() << "," << Tile::get_fox_count() << std::endl;
+            // save data (per tick) to vector
+            FileUtil.lastTickTime = lastTickTime;
+            FileUtil.grassCount = Tile::get_grass_count();
+            FileUtil.rabbitCount = Tile::get_rabbit_count();
+            FileUtil.foxCount = Tile::get_fox_count();
+            overTimeData.push_back(FileUtil);
 
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
         }
@@ -127,6 +128,6 @@ int main()
         ClearBackground(RAYWHITE);
         EndDrawing();
     }
-    data_file.close();
+    FileUtils::saveCSV(overTimeData);
     CloseWindow();
 }
