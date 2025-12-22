@@ -15,7 +15,7 @@ int Tile::_grass_count = 0;
 /**
  * Default Constructor
  */
-Tile::Tile() : _color(RAYWHITE)
+Tile::Tile() : _color(BLACK)
 {
 }
 
@@ -68,8 +68,36 @@ void Tile::draw(const std::array<int, 2>& currentPosition) const
  * @param tileMap Active array of tiles 
  * @return New position
  */
-std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, std::map<std::array<int, 2>, Tile> &tileMap)
+std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map<std::array<int, 2>, Tile> &tileMap)
 {   
+    // Satiation system
+    if (this->_name == "Rabbit")
+    {
+        //depleting satiation
+        this->_satiation += rabbitSatPerTick;
+        //death
+        if (this->_satiation < rabbitMinSat)
+        {
+            _rabbit_count--;
+            tileMap.erase(currentPosition);
+            return currentPosition;
+        }
+        if (this->_satiation > rabbitReproductionSat)
+        {
+            for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
+            {
+                if (!tileMap.contains(pos))
+                {
+                    const Tile* tile = new Tile("Rabbit", GRAY);
+                    tileMap[std::array<int, 2>{pos[0], pos[1]}] = *tile;
+                    break;
+                }
+            }
+        }
+    }
+
+
+
     // Check if there are certain tiles on adjacent positions
     for (auto pos: RandomUtils::positionsAdjacent(currentPosition))
     {
@@ -77,12 +105,12 @@ std::array<int, 2> Tile::move(const std::array<int, 2> &currentPosition, std::ma
         {
             if (this->_name == "Fox" and tileMap[pos]._name == "Rabbit")
             {
-                tileMap.erase(pos);
                 _rabbit_count--;
                 return pos;
             }
-            if (this->_name == "Rabbit" and tileMap[pos]._name == "Grass")
+            if (this->_name == "Rabbit" and this->_satiation < rabbitMaxSat and tileMap[pos]._name == "Grass")
             {
+                this->_satiation += rabbitSatPerGrass;
                 _grass_count--;
                 return pos;
             }

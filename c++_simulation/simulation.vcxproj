@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="classes\FileUtils.cpp" />
     <ClCompile Include="classes\GrassUtils.cpp" />
     <ClCompile Include="classes\RandomUtils.cpp" />
     <ClCompile Include="classes\Tile.cpp" />

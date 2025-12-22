@@ -1,5 +1,12 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import subprocess
+
+
+
+#path = "c++_simulation/x64/Debug/simulation.exe"
+#subprocess.Popen([path])
+
 
 for i in range(10):
     df = pd.read_csv("data/raw/data.csv")

@@ -9,6 +9,12 @@
 #include "headers/FileUtils.h"
 RandomUtils randomUtils;
 
+//TODO
+//Bug: Grass is growing beyond borders
+//Loading settings from file
+//Saving csv per certain time to allow plotting in real time
+//fox reproduction
+
 
 void DrawGrid()
 {
@@ -99,8 +105,7 @@ int main()
 
             for (auto pos : tilesPositions) //positions from tilePosition are in random order so the order of movement is undetermined
             {
-                std::array<int, 2> newPos = tileMap[pos].move(pos, tileMap); //.move(pos) means: generate new position of tile based on the old position (argument) and tile type (Tile.name stored in struct)
-                //tileMap[pos].say(pos);                      //EXAMPLE
+                std::array<int, 2> newPos = tileMap[pos].act(pos, tileMap); //.act(pos,tileMap) is responsible for status and behavior
                 if (newPos != pos) //if moved: remove old pos from the map
                 {
                     tileMap[newPos] = tileMap[pos];

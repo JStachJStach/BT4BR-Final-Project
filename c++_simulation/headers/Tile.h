@@ -7,7 +7,7 @@ public:
     Tile();
     Tile(const std::string&, const Color&);
     void draw(const std::array<int, 2> &) const;
-    std::array<int, 2> move(const std::array<int, 2>&, std::map<std::array<int, 2>, Tile>&);
+    std::array<int, 2> act(const std::array<int, 2>&, std::map<std::array<int, 2>, Tile>&);
     void set_color(const Color&);
     void set_state(const TileState&);
     void set_name(const std::string&);
@@ -23,6 +23,7 @@ private:
     static int _fox_count;
     static int _rabbit_count;
     static int _grass_count;
+    int _satiation=0;
     std::string _name;
     Color _color;
     TileState _state = TileState::None;

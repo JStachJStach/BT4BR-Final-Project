@@ -24,7 +24,7 @@
 constexpr int screenWidth = 720;
 constexpr int screenHeight = 720;
 // Tick Speed
-inline double tickDuration = 0.03;
+inline double tickDuration = 0.05;
 // Grid
 constexpr unsigned int gridSize = 60;
 constexpr unsigned int cellSize = screenWidth / gridSize;
@@ -36,6 +36,12 @@ inline constexpr unsigned int grassMaxAmount = 50;
 constexpr unsigned int rabbitStartAmount = 60;
 constexpr unsigned int foxStartAmount = 10;
 inline std::vector<unsigned int> tileStartAmounts{grassStartAmount, rabbitStartAmount, foxStartAmount};
+//Reproduction and death
+constexpr int rabbitMaxSat = 75;
+constexpr int rabbitMinSat = -50;
+constexpr int rabbitReproductionSat = 73;
+constexpr int rabbitSatPerGrass = 25;
+constexpr int rabbitSatPerTick = -1;
 
 inline void save_settings()
 {
