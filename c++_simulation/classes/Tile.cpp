@@ -82,6 +82,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
             tileMap.erase(currentPosition);
             return currentPosition;
         }
+        //reproduction
         if (this->_satiation > rabbitReproductionSat)
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
@@ -89,6 +90,31 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                 if (!tileMap.contains(pos))
                 {
                     const Tile* tile = new Tile("Rabbit", GRAY);
+                    tileMap[std::array<int, 2>{pos[0], pos[1]}] = *tile;
+                    break;
+                }
+            }
+        }
+    }
+    if (this->_name == "Fox")
+    {
+        //depleting satiation
+        this->_satiation += foxSatPerTick;
+        //death
+        if (this->_satiation < foxMinSat)
+        {
+            _fox_count--;
+            tileMap.erase(currentPosition);
+            return currentPosition;
+        }
+        //reproduction
+        if (this->_satiation > foxReproductionSat)
+        {
+            for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
+            {
+                if (!tileMap.contains(pos))
+                {
+                    const Tile* tile = new Tile("Fox", ORANGE);
                     tileMap[std::array<int, 2>{pos[0], pos[1]}] = *tile;
                     break;
                 }
@@ -103,8 +129,13 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
     {
         if (tileMap.contains(pos))
         {
-            if (this->_name == "Fox" and tileMap[pos]._name == "Rabbit")
+            if (this->_name == "Fox" and this->_satiation < foxMaxSat and tileMap[pos]._name == "Rabbit")
             {
+                this->_satiation += foxSatPerRabbit;
+                if (this->_satiation > foxMaxSat)
+                {
+                    this->_satiation = foxMaxSat;
+                }
                 _rabbit_count--;
                 return pos;
             }

@@ -11,9 +11,10 @@ RandomUtils randomUtils;
 
 //TODO
 //Bug: Grass is growing beyond borders
+//Modified Grass behavior
 //Loading settings from file
 //Saving csv per certain time to allow plotting in real time
-//fox reproduction
+
 
 
 void DrawGrid()
