@@ -111,6 +111,10 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
             if (this->_name == "Rabbit" and this->_satiation < rabbitMaxSat and tileMap[pos]._name == "Grass")
             {
                 this->_satiation += rabbitSatPerGrass;
+                if (this->_satiation > rabbitMaxSat)
+                {
+                    this->_satiation = rabbitMaxSat;
+                }
                 _grass_count--;
                 return pos;
             }

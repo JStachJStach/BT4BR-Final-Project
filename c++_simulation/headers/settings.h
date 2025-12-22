@@ -42,6 +42,13 @@ constexpr int rabbitMinSat = -50;
 constexpr int rabbitReproductionSat = 73;
 constexpr int rabbitSatPerGrass = 25;
 constexpr int rabbitSatPerTick = -1;
+/*
+constexpr int foxMaxSat = 75;
+constexpr int foxMinSat = -50;
+constexpr int foxReproductionSat = 73;
+constexpr int foxSatPerRabbit = 25;
+constexpr int foxSatPerTick = -1;
+*/
 
 inline void save_settings()
 {
