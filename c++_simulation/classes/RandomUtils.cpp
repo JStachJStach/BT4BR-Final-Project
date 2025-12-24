@@ -1,31 +1,58 @@
 #include "../headers/RandomUtils.h"
+// Global variables
 inline std::random_device dev;
 const long long SEED = dev(); //Advance the engine and use it as a variable for reproducibility purposes
 std::mt19937 rng(SEED);
 
+/**
+ * Method for getting random integer in a range defined by user
+ * @param lowerBound Lower bound of number to generate
+ * @param upperBound Upper bound of number to generate
+ * @return Random integer in defined range
+ */
 int RandomUtils::get_random_num(const int& lowerBound, const int& upperBound)
 {
     std::uniform_int_distribution<> randomResult(lowerBound, upperBound);
     return randomResult(rng);
 }
 
+/**
+ * Method for getting random floating point number in a range defined by user
+ * @param lowerBound Lower bound of number to generate
+ * @param upperBound Upper bound of number to generate
+ * @return Random floating point number in defined range
+ */
+float RandomUtils::get_random_float(const float &lowerBound, const float &upperBound)
+{
+    std::uniform_real_distribution<float> randomResult(lowerBound, upperBound);
+    return randomResult(rng);
+}
+
+/**
+ * Method for saving seed used for random number generation
+ */
 void RandomUtils::save_seed()
 {
-    std::fstream seedFile("../data/Raw_Output.txt", std::fstream::out);
+    // Open file for saving seed
+    const std::string path = "../data/settings_used.txt";
+    std::ofstream seedFile(path);
+
+    // Check if file has opened correctly
     if (seedFile.is_open())
     {
         seedFile << "Ecosystem Simulation v0.0.1" << std::endl;
         seedFile << "Seed used: " << SEED << std::endl;
+        seedFile.close();
     }
     else
     {
-        std::cerr << "Unable to open file" << std::endl;
+       throw std::runtime_error("Could not open seed file at " + path);
     }
-    seedFile.close();
+
 }
 
 /**
- * List of adjacent positions
+ * Method to get adjacent positions
  * @param currentPosition Tile position
  * @return Array of positions adjacent to currentPosition
  */
@@ -52,7 +79,7 @@ std::array<std::array<int, 2>, 8> RandomUtils::positionsAdjacent(const std::arra
 }
 
 /**
- * Function that adds a random tile depending on tile state
+ * Method that adds a random tile depending on tile state
  * @param tileMap array of all currently active tiles
  * @param state state of tile that controls what role and color it has
  */
@@ -82,6 +109,10 @@ void RandomUtils::get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap, c
     }
 }
 
+/**
+ * Method that gets random coordinates of cells
+ * @return Random cell coordinates
+ */
 int RandomUtils::_get_random_cell()
 {
     std::uniform_int_distribution<std::mt19937::result_type> distanceOnGrid(0, gridSize-1);

@@ -1,0 +1,52 @@
+{
+  "window": {
+    "width": 720,
+    "height": 720
+  },
+
+  "tick": {
+    "duration": 0.05
+  },
+
+  "grid": {
+    "size": 120,
+    "lineThickness": 2,
+    "lineColor": "LIGHTGRAY"
+  },
+
+  "tiles": {
+    "definitions": {
+      "grass": {
+        "startAmount": 10,
+        "growChance": 0.75,
+        "maxAmount": 1000
+      },
+      "rabbit": {
+        "startAmount": 30
+      },
+      "fox": {
+        "startAmount": 10
+      }
+    },
+
+    "startOrder": ["grass", "rabbit", "fox"]
+  },
+
+  "animals": {
+    "rabbit": {
+      "maxSat": 75,
+      "minSat": -50,
+      "reproductionSat": 73,
+      "satPerFood": 25,
+      "satPerTick": -1
+    },
+
+    "fox": {
+      "maxSat": 75,
+      "minSat": -50,
+      "reproductionSat": 73,
+      "satPerFood": 25,
+      "satPerTick": -1
+    }
+  }
+}

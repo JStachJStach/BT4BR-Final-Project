@@ -2,9 +2,9 @@
 
 #include "../headers/RandomUtils.h"
 int Tile::_tileID = 0;
-int Tile::_rabbit_count = 0;
-int Tile::_fox_count = 0;
-int Tile::_grass_count = 0;
+int Tile::_rabbitCount = 0;
+int Tile::_foxCount = 0;
+int Tile::_grassCount = 0;
 
 /**********************************************
  *                                            *
@@ -22,26 +22,26 @@ Tile::Tile() : _color(BLACK)
 /**
  * Basic tile constructor that sets the name, color of the object and count created objects
  *
- * @param name_in Name of tile object
+ * @param nameIn Name of tile object
  * @param color Color of tile object
  */
-Tile::Tile(const std::string& name_in, const Color& color) : _name(name_in), _color(color)
+Tile::Tile(const std::string& nameIn, const Color& color) : _name(nameIn), _color(color)
 {
     _tileID++;
     if (_name == "Grass")
     {
         set_state(TileState::Grass);
-        _grass_count++;
+        _grassCount++;
     }
     if (_name == "Fox")
     {
         set_state(TileState::Fox);
-        _fox_count++;
+        _foxCount++;
     }
     if (_name == "Rabbit")
     {
         set_state(TileState::Rabbit);
-        _rabbit_count++;
+        _rabbitCount++;
     }
     // Debug string
     std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
@@ -78,7 +78,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         //death
         if (this->_satiation < rabbitMinSat)
         {
-            _rabbit_count--;
+            _rabbitCount--;
             tileMap.erase(currentPosition);
             return currentPosition;
         }
@@ -103,7 +103,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         //death
         if (this->_satiation < foxMinSat)
         {
-            _fox_count--;
+            _foxCount--;
             tileMap.erase(currentPosition);
             return currentPosition;
         }
@@ -136,7 +136,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                 {
                     this->_satiation = foxMaxSat;
                 }
-                _rabbit_count--;
+                _rabbitCount--;
                 return pos;
             }
             if (this->_name == "Rabbit" and this->_satiation < rabbitMaxSat and tileMap[pos]._name == "Grass")
@@ -146,7 +146,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                 {
                     this->_satiation = rabbitMaxSat;
                 }
-                _grass_count--;
+                _grassCount--;
                 return pos;
             }
         }
@@ -218,7 +218,7 @@ TileState Tile::get_state() const
  */
 int Tile::get_grass_count()
 {
-    return _grass_count;
+    return _grassCount;
 }
 /**
  * Static rabbit_count getter
@@ -226,7 +226,7 @@ int Tile::get_grass_count()
  */
 int Tile::get_rabbit_count()
 {
-    return _rabbit_count;
+    return _rabbitCount;
 }
 /**
  * Static fox_count getter
@@ -234,7 +234,7 @@ int Tile::get_rabbit_count()
  */
 int Tile::get_fox_count()
 {
-    return _fox_count;
+    return _foxCount;
 }
 /**
  * Color getter

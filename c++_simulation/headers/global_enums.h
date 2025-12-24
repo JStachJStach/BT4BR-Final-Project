@@ -1,8 +1,8 @@
 #pragma once
 enum class TileState // EXAMPLE TileStates, final states TBD
 {
-    None = 0,
-    Grass = 1,
-    Rabbit = 2,
-    Fox = 3
+    Grass = 0,
+    Rabbit = 1,
+    Fox = 2,
+    None = 3
 };

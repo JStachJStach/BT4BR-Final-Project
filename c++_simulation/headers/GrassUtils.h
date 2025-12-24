@@ -1,6 +1,7 @@
 #pragma once
 #include "Tile.h"
 #include "RandomUtils.h"
+#include "settings.h"
 
 class GrassUtils : Tile
 {

@@ -20,9 +20,9 @@ public:
 
 private:
     static int _tileID;
-    static int _fox_count;
-    static int _rabbit_count;
-    static int _grass_count;
+    static int _foxCount;
+    static int _rabbitCount;
+    static int _grassCount;
     int _satiation=0;
     std::string _name;
     Color _color;

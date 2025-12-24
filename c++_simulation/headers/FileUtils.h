@@ -7,5 +7,5 @@ struct FileUtils
     int rabbitCount;
     int foxCount;
 
-    static void saveCSV(const std::vector<FileUtils>& data);
+    static void saveCSV(const std::vector<FileUtils>& dataVector);
 };

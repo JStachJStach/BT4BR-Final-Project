@@ -1,16 +1,32 @@
 #include "../headers/FileUtils.h"
-void FileUtils::saveCSV(const std::vector<FileUtils>& data)
+/**
+ * Static method to save collected tile data into CSV format
+ * @param dataVector Vector containing collected tile data
+ */
+void FileUtils::saveCSV(const std::vector<FileUtils>& dataVector)
 {
-    std::fstream data_file;
-    data_file.open("../data/raw/data.csv", std::ios::out | std::ios::trunc);
+    // Open file in write mode wherein the data is saved
+    std::ofstream data_file;
+    const std::string filePath = "../data/raw/data.csv";
+    data_file.open(filePath);
+
+    // Check if the file has opened correctly
     if (data_file.is_open())
     {
-        data_file << "lastTickTime" << "," << "Tile::grass_count" << "," << "Tile::rabbit_count" << "," << "Tile::fox_count" << std::endl;
-        for (const auto & i : data)
+        // Save variable names for CSV columns
+        data_file << "lastTickTime" << "," << "Tile::grassCount" << "," << "Tile::rabbitCount" << "," << "Tile::foxCount" << std::endl;
+
+        // Loop over the vector containing the collected data
+        for (const auto & i : dataVector)
         {
+            // Save data delimited by ','
             data_file << i.lastTickTime << "," << i.grassCount << "," << i.rabbitCount << "," << i.foxCount<< std::endl;
         }
+        // Close the file
         data_file.close();
     }
-
+    else
+    {
+        throw std::runtime_error("Could not open file" + std::string(filePath));
+    }
 }

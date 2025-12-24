@@ -7,13 +7,12 @@
 #include "headers/global_enums.h"
 #include "headers/Tile.h"
 #include "headers/FileUtils.h"
-RandomUtils randomUtils;
 
 //TODO
-//Bug: Grass is growing beyond borders
-//Modified Grass behavior
-//Loading settings from file
+//Bug: Grass is growing beyond borders (Done?)
+//Modified Grass behavior (Done?)
 //Saving csv per certain time to allow plotting in real time
+//Fix get_random_tile allowing for duplicates
 
 
 
@@ -49,8 +48,19 @@ void DrawTiles(std::map<std::array<int, 2>, Tile> tileMap) //this function calls
 int main()
 {
     // Really important save_seed() is called first, please do not mess with this :)
-    randomUtils.save_seed();
-    save_settings();
+    try
+    {
+        RandomUtils::save_seed();
+        get_settings();
+        save_settings();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+
 
 
     ///////////////////////////////////
@@ -65,7 +75,7 @@ int main()
     for (auto i = static_cast<int>(TileMin); i <= static_cast<int>(TileMax); i++)
     {
         TileState state = static_cast<TileState>(i);
-        for (int j = 0; j < tileStartAmounts[i - 1]; j++)
+        for (int j = 0; j < tileStartAmounts[i]; j++)
         {
             RandomUtils::get_random_tile(tileMap, state);
         }
@@ -122,18 +132,33 @@ int main()
             overTimeData.push_back(FileUtil);
 
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
+
+            // If there are no animals left, close the window. We don't need to check grass as if there's no bunnies left it will have grown by the time
+            // the foxes die and if there are no foxes left the bunnies are going to eat it all
+            if (!Tile::get_rabbit_count() && !Tile::get_fox_count())
+            {
+               break;
+            }
         }
 
         ///////////////////////////////////
         // Draw
         ///////////////////////////////////
-
         BeginDrawing();
         DrawGrid();
         DrawTiles(tileMap);
         ClearBackground(RAYWHITE);
         EndDrawing();
     }
-    FileUtils::saveCSV(overTimeData);
+
+    try
+    {
+        FileUtils::saveCSV(overTimeData);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
     CloseWindow();
 }
