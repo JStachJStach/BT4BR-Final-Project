@@ -90,7 +90,8 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                 if (!tileMap.contains(pos))
                 {
                     const Tile* tile = new Tile("Rabbit", GRAY);
-                    tileMap[std::array<int, 2>{pos[0], pos[1]}] = *tile;
+                    tileMap[std::array{pos[0], pos[1]}] = *tile;
+                    delete tile;
                     break;
                 }
             }
@@ -115,7 +116,8 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                 if (!tileMap.contains(pos))
                 {
                     const Tile* tile = new Tile("Fox", ORANGE);
-                    tileMap[std::array<int, 2>{pos[0], pos[1]}] = *tile;
+                    tileMap[std::array{pos[0], pos[1]}] = *tile;
+                    delete tile;
                     break;
                 }
             }
@@ -161,7 +163,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
     if (newPositionY < 0 || newPositionY > gridSize - 1)
         newPositionY = currentPosition[1];
     // Check if new position is overlapping other tile
-    std::array<int, 2> newPosition = std::array<int, 2>{newPositionX, newPositionY};
+    auto newPosition = std::array<int, 2>{newPositionX, newPositionY};
     if (tileMap.contains(newPosition))
         newPosition = currentPosition;
     return newPosition;

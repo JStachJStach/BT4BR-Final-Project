@@ -36,12 +36,14 @@ void RandomUtils::save_seed()
     // Open file for saving seed
     const std::string path = "../data/settings_used.txt";
     std::ofstream seedFile(path);
-
+    const time_t cur_time = time(nullptr);
+    const tm *local_time = localtime(&cur_time);
     // Check if file has opened correctly
     if (seedFile.is_open())
     {
-        seedFile << "Ecosystem Simulation v0.0.1" << std::endl;
-        seedFile << "Seed used: " << SEED << std::endl;
+        seedFile << "Ecosystem Simulation v0.1.0" << std::endl;
+        seedFile << "Ran at: " << asctime(local_time);
+        seedFile << "Seed used: " << SEED << std::endl << std::endl;
         seedFile.close();
     }
     else

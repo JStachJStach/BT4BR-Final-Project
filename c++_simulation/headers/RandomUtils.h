@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 #include <algorithm>
+#include <ctime>
 #include "settings.h"
 #include "Tile.h"
 // Start Values

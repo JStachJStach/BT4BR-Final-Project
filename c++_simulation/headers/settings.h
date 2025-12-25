@@ -121,14 +121,33 @@ inline void save_settings()
     if (file.is_open())
     {
         // Not everything here needs to be saved, we can adjust later
+        file << "Settings used: " << std::endl;
         file << "Window size: "<< screenWidth << "x" << screenHeight << "px" << std::endl;
         file << "Tick duration: " << tickDuration << std::endl; //Seconds? Please add unit
+        file << std::endl;
+        file << "Grid: " << std::endl;
         file << "Grid size: " << gridSize << "px" << std::endl;
         file << "Grid line thickness: " << gridLineThickness << "px" << std::endl;
+        file << std::endl;
+        file << "Grass parameters: " << std::endl;
         file << "Starting grass amount: " << tileStartAmounts[static_cast<int>(TileState::Grass)] << std::endl;
         file << "Max grass amount: " << grassMaxAmount << std::endl;
+        file << std::endl;
+        file << "Rabbit parameters: " << std::endl;
         file << "Starting rabbit amount: " << tileStartAmounts[static_cast<int>(TileState::Rabbit)] << std::endl;
+        file << "Maximum rabbit saturation: " << rabbitMaxSat << std::endl;
+        file << "Minimum rabbit saturation: " << rabbitMinSat << std::endl;
+        file << "Rabbit reproduction saturation: " << rabbitReproductionSat << std::endl;
+        file << "Rabbit saturation per meal: " << rabbitSatPerGrass << std::endl;
+        file << "Rabbit hunger rate per tick: " << rabbitSatPerTick << std::endl;
+        file << std::endl;
+        file << "Fox parameters: " << std::endl;
         file << "Starting fox amount: " << tileStartAmounts[static_cast<int>(TileState::Fox)] << std::endl;
+        file << "Maximum fox saturation: " << foxMaxSat << std::endl;
+        file << "Minimum fox saturation: " << foxMinSat << std::endl;
+        file << "Fox reproduction saturation: " << foxReproductionSat << std::endl;
+        file << "Fox saturation per meal: " << foxSatPerRabbit << std::endl;
+        file << "Fox hunger rate per tick: " << foxSatPerTick << std::endl;
         file.close();
     }
     else
