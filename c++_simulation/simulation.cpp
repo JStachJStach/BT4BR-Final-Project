@@ -11,7 +11,6 @@
 //TODO
 //Bug: Grass is growing beyond borders (Done?)
 //Modified Grass behavior (Done?)
-//Saving csv per certain time to allow plotting in real time
 //Fix get_random_tile allowing for duplicates
 
 
@@ -92,6 +91,7 @@ int main()
     std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
     std::vector<std::array<int, 2>> grassPositions; // separate Array for grass since it shouldn't move
 
+    unsigned int cycleCounter = 0;
     while (!WindowShouldClose())
     {
         ///////////////////////////////////
@@ -124,13 +124,17 @@ int main()
                 }
             }
             GrassUtils::grow(tileMap, grassPositions);
+            cycleCounter++;
             // save data (per tick) to vector
             FileUtil.lastTickTime = lastTickTime;
             FileUtil.grassCount = Tile::get_grass_count();
             FileUtil.rabbitCount = Tile::get_rabbit_count();
             FileUtil.foxCount = Tile::get_fox_count();
             overTimeData.push_back(FileUtil);
-
+            if (cycleCounter % ticksPerSave == 0)
+            {
+                FileUtils::update(overTimeData);
+            }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
 
             // If there are no animals left, close the window. We don't need to check grass as if there's no bunnies left it will have grown by the time

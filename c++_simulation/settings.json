@@ -5,7 +5,8 @@
   },
 
   "tick": {
-    "duration": 0.05
+    "duration": 0.05,
+    "tickPerSave": 12
   },
 
   "grid": {

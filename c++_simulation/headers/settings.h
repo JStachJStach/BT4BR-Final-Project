@@ -29,7 +29,8 @@ inline unsigned int screenWidth;
 inline unsigned int screenHeight;
 
 // Tick Speed
-inline double tickDuration ;
+inline double tickDuration;
+inline unsigned int ticksPerSave;
 
 // Grid
 inline unsigned int gridSize;
@@ -68,6 +69,7 @@ inline void get_settings()
 
         // Tick
         tickDuration = settings.at("tick").value("duration", 0.05);
+        ticksPerSave = settings.at("tick").value("tickPerSave", 120);
 
         // Grid
         gridSize = settings.at("grid").value("size", 120u);
