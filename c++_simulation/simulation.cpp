@@ -133,7 +133,7 @@ int main()
             overTimeData.push_back(FileUtil);
             if (cycleCounter % ticksPerSave == 0)
             {
-                FileUtils::update(overTimeData);
+                FileUtils::saveCSV(overTimeData);
             }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
 

@@ -8,7 +8,6 @@ struct FileUtils
     int foxCount;
 
     static void saveCSV(const std::vector<FileUtils>& dataVector);
-    static void update(const std::vector<FileUtils>& dataVector);
     private:
     static bool hasOpenedThisCycle;
 };
