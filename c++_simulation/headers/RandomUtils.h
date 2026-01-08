@@ -12,9 +12,11 @@ public:
     static int get_random_num(const int& lowerBound, const int& upperBound);
     static float get_random_float(const float& lowerBound, const float& upperBound);
     static void save_seed();
-    static std::array<std::array<int, 2>, 8> positionsAdjacent(const std::array<int, 2>);
+    static  std::vector<std::array<int,2>> positionsAdjacent(std::array<int, 2>, int = 1);
     static void get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap,const TileState& state);
 private:
     static int _get_random_cell();
+    static std::vector<std::array<int,2>> _rabbitSight;
+    static std::vector<std::array<int,2>> _foxSight;
 };
 

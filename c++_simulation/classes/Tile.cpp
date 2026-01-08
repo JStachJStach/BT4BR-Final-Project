@@ -127,7 +127,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
 
 
     // Check if there are certain tiles on adjacent positions
-    for (auto pos: RandomUtils::positionsAdjacent(currentPosition))
+    for (auto pos : (this->_name == "Rabbit" ? RandomUtils::positionsAdjacent(currentPosition, rabbitSightValue) : RandomUtils::positionsAdjacent(currentPosition, foxSightValue)))
     {
         if (tileMap.contains(pos))
         {

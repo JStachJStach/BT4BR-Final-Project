@@ -18,7 +18,7 @@
   "tiles": {
     "definitions": {
       "grass": {
-        "startAmount": 10,
+        "startAmount": 1000,
         "growChance": 0.75,
         "maxAmount": 1000
       },
@@ -39,7 +39,8 @@
       "minSat": -50,
       "reproductionSat": 73,
       "satPerFood": 25,
-      "satPerTick": -1
+      "satPerTick": -1,
+      "sightValue": 3
     },
 
     "fox": {
@@ -47,7 +48,8 @@
       "minSat": -50,
       "reproductionSat": 73,
       "satPerFood": 25,
-      "satPerTick": -1
+      "satPerTick": -1,
+      "sightValue": 4
     }
   }
 }

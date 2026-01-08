@@ -57,28 +57,28 @@ void RandomUtils::save_seed()
 /**
  * Method to get adjacent positions
  * @param currentPosition Tile position
+ * @param rangeOfSight Range of adjacent tiles
  * @return Array of positions adjacent to currentPosition
  */
-std::array<std::array<int, 2>, 8> RandomUtils::positionsAdjacent(const std::array<int,2> currentPosition)
+ std::vector<std::array<int,2>> RandomUtils::positionsAdjacent(const std::array<int,2> currentPosition, const int rangeOfSight)
 {
     // C++ is smart enough to not need explicit std::array<std::array<int, 2>, 8> call here so auto is used
-    auto toReturn = std::array{
-        std::array{-1, -1},
-        std::array{-1, 0},
-        std::array{-1, 1},
-        std::array{0, -1},
-        std::array{0, 1},
-        std::array{1, -1},
-        std::array{1, 0},
-        std::array{1, 1}
-    };
-    for (auto& pos : toReturn)
+    std::vector<std::array<int,2>> positions;
+
+    for (auto i = -rangeOfSight; i <= rangeOfSight; i++)
+    {
+        for (int j = -rangeOfSight;j <= rangeOfSight; j++)
+        {
+            positions.push_back({i,j});
+        }
+    }
+    for (auto& pos : positions)
     {
         pos[0] += currentPosition[0];
         pos[1] += currentPosition[1];
     }
-    std::ranges::shuffle(toReturn,rng);
-    return toReturn;
+    std::ranges::shuffle(positions,rng);
+    return positions;
 }
 
 /**
