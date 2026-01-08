@@ -16,7 +16,5 @@ public:
     static void get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap,const TileState& state);
 private:
     static int _get_random_cell();
-    static std::vector<std::array<int,2>> _rabbitSight;
-    static std::vector<std::array<int,2>> _foxSight;
 };
 

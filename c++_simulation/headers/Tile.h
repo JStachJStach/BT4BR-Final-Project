@@ -18,6 +18,7 @@ public:
     [[nodiscard]] Color get_color() const;
     [[nodiscard]] std::string get_name() const;
 
+    static std::array<int, 2> move_if_target_in_sight(std::array<int, 2>,const std::array<int, 2>&);
 private:
     static int _tileID;
     static int _foxCount;

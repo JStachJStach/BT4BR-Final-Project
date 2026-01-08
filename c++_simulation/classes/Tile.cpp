@@ -139,7 +139,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                     this->_satiation = foxMaxSat;
                 }
                 _rabbitCount--;
-                return pos;
+                return move_if_target_in_sight(pos, currentPosition);
             }
             if (this->_name == "Rabbit" and this->_satiation < rabbitMaxSat and tileMap[pos]._name == "Grass")
             {
@@ -149,7 +149,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                     this->_satiation = rabbitMaxSat;
                 }
                 _grassCount--;
-                return pos;
+                return move_if_target_in_sight(pos, currentPosition);
             }
         }
     }
@@ -167,6 +167,42 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
     if (tileMap.contains(newPosition))
         newPosition = currentPosition;
     return newPosition;
+}
+
+std::array<int, 2>  Tile::move_if_target_in_sight(const std::array<int,2> pos, const std::array<int, 2> &currentPosition)
+{
+    if (pos[0] - currentPosition[0] > 0 && pos[1] - currentPosition[1] > 0) // + +
+    {
+        return {currentPosition[0] + 1, currentPosition[1] + 1};
+    }
+    else if (pos[0] - currentPosition[0] > 0 && pos[1] - currentPosition[1] == 0) // + 0
+    {
+        return {currentPosition[0] + 1, currentPosition[1]};
+    }
+    else if (pos[0] - currentPosition[0] > 0 && pos[1] - currentPosition[1] < 0) // + -
+    {
+        return {currentPosition[0] + 1, currentPosition[1] - 1};
+    }
+    else if (pos[0] - currentPosition[0] < 0 && pos[1] - currentPosition[1] < 0) // - -
+    {
+        return {currentPosition[0] - 1, currentPosition[1] - 1};
+    }
+    else if (pos[0] - currentPosition[0] < 0 && pos[1] - currentPosition[1] > 0) // - +
+    {
+        return {currentPosition[0] - 1, currentPosition[1] + 1};
+    }
+    else if (pos[0] - currentPosition[0] < 0 && pos[1] - currentPosition[1] == 0) // - 0
+    {
+        return {currentPosition[0] - 1, currentPosition[1]};
+    }
+    else if (pos[0] - currentPosition[0] == 0 && pos[1] - currentPosition[1] < 0) // 0 -
+    {
+        return {currentPosition[0], currentPosition[1] - 1};
+    }
+    else // 0, 1
+    {
+        return {currentPosition[0], currentPosition[1] + 1};
+    }
 }
 
 /**********************************************

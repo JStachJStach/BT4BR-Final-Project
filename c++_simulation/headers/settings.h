@@ -87,7 +87,7 @@ inline void get_settings()
         }
         // Grass
         grassGrowChance = settings.at("tiles").at("definitions").at("grass").value("growChance", 0.75f);
-        grassMaxAmount = settings.at("tiles").at("definitions").at("grass").value("maxAmount", 1000);
+        grassMaxAmount = settings.at("tiles").at("definitions").at("grass").value("maxAmount", 10);
 
         // Rabbits
         rabbitMaxSat = settings.at("animals").at("rabbit").value("maxSat", 75);
