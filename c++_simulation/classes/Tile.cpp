@@ -44,7 +44,7 @@ Tile::Tile(const std::string& nameIn, const Color& color) : _name(nameIn), _colo
         _rabbitCount++;
     }
     // Debug string
-    std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
+    //std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
 }
 
 /**********************************************
