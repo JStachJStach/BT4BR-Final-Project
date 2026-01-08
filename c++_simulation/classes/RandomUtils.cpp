@@ -35,7 +35,7 @@ float RandomUtils::get_random_float(const float &lowerBound, const float &upperB
 void RandomUtils::save_seed()
 {
     // Open file for saving seed
-    const std::string path = "../data/settings_used.txt";
+    const std::string path = set_path("../data/settings_used.txt");
     std::ofstream seedFile(path);
     const time_t cur_time = time(nullptr);
     const tm *local_time = localtime(&cur_time);

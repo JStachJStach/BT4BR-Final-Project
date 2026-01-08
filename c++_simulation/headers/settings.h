@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <filesystem>
 ///////////////////////////////////
 // Headers
 ///////////////////////////////////
@@ -55,9 +56,27 @@ inline int foxSatPerRabbit;
 inline int foxSatPerTick;
 inline int foxSightValue;
 
+inline std::string set_path(std::string fileName)
+{
+    auto path = std::filesystem::current_path();
+    std::string settingsFilePath;
+    for (const auto& str : path)
+    {
+        settingsFilePath += str;
+        if (str.string() != "/") settingsFilePath += '/';
+        if (str.string() == "c++_simulation")
+        {
+            settingsFilePath += fileName;
+            break;
+        }
+    }
+    return settingsFilePath;
+}
+
+
 inline void get_settings()
 {
-    const std::string settingsFilePath = "settings.json";
+    std::string settingsFilePath = set_path("settings.json");
     std::ifstream file(settingsFilePath);
     if (file.is_open())
     {
@@ -116,7 +135,8 @@ inline void get_settings()
 inline void save_settings()
 {
     // Open file for saving settings in append mode
-    const std::string path = "../data/settings_used.txt";
+
+    const std::string path = set_path("../data/settings_used.txt");
     std::ofstream file;
     file.open(path, std::ios::app);
 
