@@ -366,3 +366,4 @@ cmake-build-debug/
 /.idea
 # This file does not need to be tracked because later it will be a part of a larger results file :)
 data/settings_used.txt
+data/raw/data.csv
