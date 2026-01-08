@@ -12,12 +12,9 @@
 // Headers
 ///////////////////////////////////
 
-
-
-
-#include <nlohmann/json.hpp>
+#include "../include/nlohmann/json.hpp"
 using json = nlohmann::json;
-#include "raylib.h"
+#include "../include/raylib.h"
 #include "global_enums.h"
 
 ///////////////////////////////////
@@ -49,12 +46,14 @@ inline int rabbitMinSat;
 inline int rabbitReproductionSat;
 inline int rabbitSatPerGrass;
 inline int rabbitSatPerTick;
+inline int rabbitSightValue;
 
 inline int foxMaxSat;
 inline int foxMinSat;
 inline int foxReproductionSat;
 inline int foxSatPerRabbit;
 inline int foxSatPerTick;
+inline int foxSightValue;
 
 inline void get_settings()
 {
@@ -96,6 +95,7 @@ inline void get_settings()
         rabbitReproductionSat = settings.at("animals").at("rabbit").value("reproductionSat", 73);
         rabbitSatPerGrass = settings.at("animals").at("rabbit").value("satPerFood", 25);
         rabbitSatPerTick = settings.at("animals").at("rabbit").value("satPerTick", -1);
+        rabbitSightValue = settings.at("animals").at("rabbit").value("sightValue", 3);
 
         // Foxes
         foxMaxSat = settings.at("animals").at("fox").value("maxSat", 75);
@@ -103,6 +103,7 @@ inline void get_settings()
         foxReproductionSat = settings.at("animals").at("fox").value("reproductionSat", 73);
         foxSatPerRabbit = settings.at("animals").at("fox").value("satPerFood", 25);
         foxSatPerTick = settings.at("animals").at("fox").value("satPerTick", -1);
+        foxSightValue = settings.at("animals").at("fox").value("sightValue", 4);
     }
     else
     {
