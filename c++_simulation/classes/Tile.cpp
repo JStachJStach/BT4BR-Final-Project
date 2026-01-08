@@ -44,7 +44,7 @@ Tile::Tile(const std::string& nameIn, const Color& color) : _name(nameIn), _colo
         _rabbitCount++;
     }
     // Debug string
-    //std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
+    std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
 }
 
 /**********************************************
@@ -87,7 +87,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
             {
-                if (!tileMap.contains(pos) and pos[0] > -1 and pos[0] < gridSize and pos[1] > -1 and pos[1] < gridSize)
+                if (!tileMap.contains(pos))
                 {
                     const Tile* tile = new Tile("Rabbit", GRAY);
                     tileMap[std::array{pos[0], pos[1]}] = *tile;
@@ -113,7 +113,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
             {
-                if (!tileMap.contains(pos) and pos[0] > -1 and pos[0] < gridSize and pos[1] > -1 and pos[1] < gridSize)
+                if (!tileMap.contains(pos))
                 {
                     const Tile* tile = new Tile("Fox", ORANGE);
                     tileMap[std::array{pos[0], pos[1]}] = *tile;

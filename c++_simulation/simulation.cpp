@@ -134,7 +134,6 @@ int main()
             if (cycleCounter % ticksPerSave == 0)
             {
                 FileUtils::saveCSV(overTimeData);
-
             }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
 

@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include "../headers/RandomUtils.h"
 // Global variables
 inline std::random_device dev;
