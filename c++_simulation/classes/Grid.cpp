@@ -25,24 +25,25 @@ std::size_t Grid::index(const Position pos) const
     return static_cast<std::size_t>(pos.y_pos * width_ + pos.x_pos);
 }
 
-void Grid::_modifyAmounts(const bool subtract, const Actor &actor)
+void Grid::_modifyAmounts(const bool subtract, std::unique_ptr<Actor> actor, Position pos)
 {
     int modifyAmount = 1;
     if (subtract)
     {
         modifyAmount *= -1;
     }
-    switch (actor.type())
+    switch (actor->type())
     {
         case TileState::Rabbit:
         {
             _rabbitCount += modifyAmount;
+            cells_[index(pos)]->setActor(std::move(actor));
             break;
         }
         case TileState::Fox:
         {
             _foxCount += modifyAmount;
-
+            cells_[index(pos)]->setActor(std::move(actor));
             break;
         }
         default: break;
@@ -57,12 +58,12 @@ bool Grid::isEmpty(const Position pos) const
     return !cells_[index(pos)]->hasActor();
 }
 
-std::unique_ptr<Cell> Grid::get(const Position pos)
+Cell* Grid::get(const Position pos) const
 {
     if (!inBounds(pos))
         throw std::out_of_range("Grid::get: position out of bounds");
 
-    return std::move(cells_[index(pos)]);
+    return cells_[index(pos)].get();
 }
 
 void Grid::addActor(const Position pos, std::unique_ptr<Actor> actor)
@@ -73,10 +74,9 @@ void Grid::addActor(const Position pos, std::unique_ptr<Actor> actor)
     if (!isEmpty(pos))
         throw std::logic_error("Grid::addTile: cell already occupied");
 
+    _modifyAmounts(false, std::move(actor), pos);
     cells_[index(pos)]->setActor(std::move(actor));
-    auto actor_temp = cells_[index(pos)]->getActor();
-    _modifyAmounts(true, *actor_temp);
-    cells_[index(pos)]->setActor(std::move(actor_temp));
+
 }
 
 void Grid::removeCell(const Position pos)
@@ -85,9 +85,7 @@ void Grid::removeCell(const Position pos)
         throw std::out_of_range("Grid::removeTile: position out of bounds");
 
     cells_[index(pos)].reset();
-    auto actor = cells_[index(pos)]->getActor();
-    _modifyAmounts(true, *actor);
-    cells_[index(pos)]->setActor(std::move(actor));
+    _modifyAmounts(true, std::move(cells_[index(pos)]->getActor()), pos);
 
 }
 // Not sure if this is needed tbh

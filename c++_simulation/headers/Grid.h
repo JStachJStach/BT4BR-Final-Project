@@ -18,7 +18,7 @@ public:
     // Queries
     [[nodiscard]] bool inBounds(Position pos) const noexcept;
     [[nodiscard]] bool isEmpty(Position pos) const;
-    [[nodiscard]] std::unique_ptr<Cell> get(Position pos);
+    [[nodiscard]] Cell* get(Position pos) const;
 
     // Modification
     void addActor(Position pos, std::unique_ptr<Actor> actor);
@@ -29,7 +29,7 @@ public:
 private:
     Grid(int width, int height);
     [[nodiscard]] std::size_t index(Position pos) const;
-    void _modifyAmounts(bool subtract, const Actor & actor);
+    void _modifyAmounts(bool subtract,  std::unique_ptr<Actor> actor, Position pos);
 
     int _foxCount = tileStartAmounts[static_cast<int>(TileState::Fox)];
     int _rabbitCount = tileStartAmounts[static_cast<int>(TileState::Rabbit)];
