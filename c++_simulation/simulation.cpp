@@ -1,13 +1,11 @@
 #include <ranges>
 
 
-#include "headers/GrassUtils.h"
 #include "headers/settings.h"
 #include "headers/RandomUtils.h"
 #include "headers/global_enums.h"
-#include "headers/Tile.h"
 #include "headers/FileUtils.h"
-
+#include "headers/TileMap.h"
 //TODO
 //Bug: Grass is growing beyond borders (Done?)
 //Modified Grass behavior (Done?)
@@ -36,11 +34,14 @@ void DrawGrid()
     }
 }
 
-void DrawTiles(std::map<std::array<int, 2>, Tile> tileMap) //this function calls draw methods of all tiles in tilemap
+void DrawTiles(const Grid &grid) //this function calls draw methods of all tiles in tilemap
 {
-    for (const auto &position: tileMap | std::views::keys)
-    {
-        tileMap[position].draw(position);
+    std::vector<Position> occupied = grid.get_occupied();
+
+    for (Position pos : occupied) {
+        if (const Tile* tile = grid.get(pos)) {
+            tile->draw(pos);
+        }
     }
 }
 
@@ -65,20 +66,8 @@ int main()
     ///////////////////////////////////
     // Initialization
     ///////////////////////////////////
+    TileMap tileMap;
 
-    std::map<std::array<int, 2>, Tile> tileMap; //creating empty tilemap
-    // Set loop bounds
-    constexpr TileState TileMin = TileState::Grass;
-    constexpr TileState TileMax = TileState::Fox;
-    // Iterate over the enum class and create tiles based on settings
-    for (auto i = static_cast<int>(TileMin); i <= static_cast<int>(TileMax); i++)
-    {
-        TileState state = static_cast<TileState>(i);
-        for (int j = 0; j < tileStartAmounts[i]; j++)
-        {
-            RandomUtils::get_random_tile(tileMap, state);
-        }
-    }
     double lastTickTime = 0; //this is necessary to perform tick update (look at the statement ( if (lastTickTime + tickDuration < GetTime()) ) )
     InitWindow(screenWidth, screenHeight, "Simulation");
     SetTargetFPS(60);
@@ -88,8 +77,7 @@ int main()
     // Save data to a vector
     std::vector<FileUtils> overTimeData;
 
-    std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
-    std::vector<std::array<int, 2>> grassPositions; // separate Array for grass since it shouldn't move
+    std::vector<Position> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
 
     unsigned int cycleCounter = 0;
     while (!WindowShouldClose())
@@ -100,36 +88,14 @@ int main()
 
         if (lastTickTime + tickDuration < GetTime()) //this condition is fulfilled only once per tickDuration
         {
-            tilesPositions.clear();
-            grassPositions.clear();
+            tileMap.tick();
 
-            // get tile positons
-            for (const auto &key: tileMap | std::views::keys)
-            {
-                if (tileMap.at(key).get_state() != TileState::Grass)
-                    tilesPositions.push_back(key); //tilesPositon contains all positions that are stored in the map
-                else
-                    grassPositions.push_back(key);
-            }
-
-            std::ranges::shuffle(tilesPositions, rng); //tilesPositon is being shuffled
-
-            for (auto pos : tilesPositions) //positions from tilePosition are in random order so the order of movement is undetermined
-            {
-                std::array<int, 2> newPos = tileMap[pos].act(pos, tileMap); //.act(pos,tileMap) is responsible for status and behavior
-                if (newPos != pos) //if moved: remove old pos from the map
-                {
-                    tileMap[newPos] = tileMap[pos];
-                    tileMap.erase(pos);
-                }
-            }
-            GrassUtils::grow(tileMap, grassPositions);
             cycleCounter++;
             // save data (per tick) to vector
             FileUtil.lastTickTime = lastTickTime;
-            FileUtil.grassCount = Tile::get_grass_count();
-            FileUtil.rabbitCount = Tile::get_rabbit_count();
-            FileUtil.foxCount = Tile::get_fox_count();
+            FileUtil.grassCount = tileMap.get_grass_count();
+            FileUtil.rabbitCount = tileMap.get_rabbit_count();
+            FileUtil.foxCount = tileMap.get_fox_count();
             overTimeData.push_back(FileUtil);
             if (cycleCounter % ticksPerSave == 0)
             {
@@ -139,10 +105,7 @@ int main()
 
             // If there are no animals left, close the window. We don't need to check grass as if there's no bunnies left it will have grown by the time
             // the foxes die and if there are no foxes left the bunnies are going to eat it all
-            if (!Tile::get_rabbit_count() && !Tile::get_fox_count())
-            {
-               break;
-            }
+
         }
 
         ///////////////////////////////////
@@ -150,7 +113,7 @@ int main()
         ///////////////////////////////////
         BeginDrawing();
         DrawGrid();
-        DrawTiles(tileMap);
+        DrawTiles(tileMap.get_tile_grid());
         ClearBackground(RAYWHITE);
         EndDrawing();
     }

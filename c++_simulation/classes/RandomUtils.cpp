@@ -60,10 +60,10 @@ void RandomUtils::save_seed()
  * @param rangeOfSight Range of adjacent tiles
  * @return Array of positions adjacent to currentPosition
  */
- std::vector<std::array<int,2>> RandomUtils::positionsAdjacent(const std::array<int,2> currentPosition, const int rangeOfSight)
+ std::vector<Position> RandomUtils::positionsAdjacent(const Position currentPosition, const int rangeOfSight)
 {
     // C++ is smart enough to not need explicit std::array<std::array<int, 2>, 8> call here so auto is used
-    std::vector<std::array<int,2>> positions;
+    std::vector<Position> positions;
 
     for (auto i = -rangeOfSight; i <= rangeOfSight; i++)
     {
@@ -74,8 +74,8 @@ void RandomUtils::save_seed()
     }
     for (auto& pos : positions)
     {
-        pos[0] += currentPosition[0];
-        pos[1] += currentPosition[1];
+        pos.x_pos += currentPosition.x_pos;
+        pos.y_pos += currentPosition.y_pos;
     }
     std::ranges::shuffle(positions,rng);
     return positions;
@@ -83,30 +83,64 @@ void RandomUtils::save_seed()
 
 /**
  * Method that adds a random tile depending on tile state
- * @param tileMap array of all currently active tiles
+ * @param grid array of all currently active tiles
  * @param state state of tile that controls what role and color it has
  */
-void RandomUtils::get_random_tile(std::map<std::array<int, 2>, Tile>& tileMap, const TileState & state)
+void RandomUtils::get_random_tile(Grid& grid, const TileState & state)
 {
     switch (state)
     {
         case TileState::Grass :
         {
-            const Tile *tile = new Tile("Grass", GREEN);
-            tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
-            break;
+            while (true)
+            {
+                Position pos{_get_random_cell(), _get_random_cell()};
+
+                try
+                {
+                    grid.addTile(pos, std::make_unique<Grass>());
+                    return;
+                }
+                catch (...)
+                {
+                    std::cerr << "Error while adding grass tile" << std::endl;
+                }
+            }
+
         }
         case TileState::Rabbit :
         {
-            const Tile *tile = new Tile("Rabbit", GRAY);
-            tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
-            break;
+            while (true)
+            {
+                Position pos{_get_random_cell(), _get_random_cell()};
+
+                try
+                {
+                    grid.addTile(pos, std::make_unique<Rabbit>());
+                    return;
+                }
+                catch (...)
+                {
+                    std::cerr << "Error while adding rabbit tile" << std::endl;
+                }
+            }
         }
         case TileState::Fox :
         {
-            const Tile *tile = new Tile("Fox", ORANGE);
-            tileMap[std::array<int, 2>{_get_random_cell(), _get_random_cell()}] = *tile;
-            break;
+            while (true)
+            {
+                Position pos{_get_random_cell(), _get_random_cell()};
+
+                try
+                {
+                    grid.addTile(pos, std::make_unique<Fox>());
+                    return;
+                }
+                catch (...)
+                {
+                    std::cerr << "Error while adding fox tile" << std::endl;
+                }
+            }
         }
         default: ;
     }
