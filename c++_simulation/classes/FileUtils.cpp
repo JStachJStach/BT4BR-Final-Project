@@ -6,7 +6,7 @@
 void FileUtils::saveCSV(const std::vector<FileUtils>& dataVector)
 {
     // Open file in write mode wherein the data is saved
-    const std::string filePath = set_path("../data/raw/data.csv");
+    const std::string filePath = "data/data.csv"; //instead of: set_path("../data/raw/data.csv");
     std::ofstream data_file(filePath);
     // Check if the file has opened correctly
     if (data_file.is_open())
