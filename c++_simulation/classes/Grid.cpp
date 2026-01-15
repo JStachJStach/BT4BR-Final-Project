@@ -1,45 +1,48 @@
 #include "../headers/Grid.h"
-
+#include "../headers/Rabbit.h"
 Grid::Grid(int width, int height)
     : width_(width),
       height_(height),
       cells_(width * height)
 {
+    for (int y = 0; y < height_; ++y)
+        for (int x = 0; x < width_; ++x)
+            cells_[y * width_ + x] = std::make_unique<Cell>();
+    //Debug
+
+    addActor({0,0}, std::make_unique<Rabbit>());
+
 }
 
-bool Grid::inBounds(Position pos) const noexcept
+bool Grid::inBounds(const Position pos) const noexcept
 {
     return pos.x_pos >= 0 && pos.x_pos < width_
         && pos.y_pos >= 0 && pos.y_pos < height_;
 }
 
-std::size_t Grid::index(Position pos) const
+std::size_t Grid::index(const Position pos) const
 {
     return static_cast<std::size_t>(pos.y_pos * width_ + pos.x_pos);
 }
 
-void Grid::_modifyAmounts(const bool subtract, const std::unique_ptr<Tile> &tile)
+void Grid::_modifyAmounts(const bool subtract, const Actor &actor)
 {
     int modifyAmount = 1;
     if (subtract)
     {
         modifyAmount *= -1;
     }
-    switch (tile->type())
+    switch (actor.type())
     {
-        case TileState::Grass:
-        {
-            _grassCount += modifyAmount;
-            break;
-        }
         case TileState::Rabbit:
         {
             _rabbitCount += modifyAmount;
             break;
         }
-        case TileState::Fox :
+        case TileState::Fox:
         {
             _foxCount += modifyAmount;
+
             break;
         }
         default: break;
@@ -51,18 +54,18 @@ bool Grid::isEmpty(const Position pos) const
     if (!inBounds(pos))
         throw std::out_of_range("Grid::isEmpty: position out of bounds");
 
-    return cells_[index(pos)] == nullptr;
+    return !cells_[index(pos)]->hasActor();
 }
 
-Tile* Grid::get(const Position pos) const
+std::unique_ptr<Cell> Grid::get(const Position pos)
 {
     if (!inBounds(pos))
         throw std::out_of_range("Grid::get: position out of bounds");
 
-    return cells_[index(pos)].get();
+    return std::move(cells_[index(pos)]);
 }
 
-void Grid::addTile(const Position pos, std::unique_ptr<Tile> tile)
+void Grid::addActor(const Position pos, std::unique_ptr<Actor> actor)
 {
     if (!inBounds(pos))
         throw std::out_of_range("Grid::addTile: position out of bounds");
@@ -70,20 +73,25 @@ void Grid::addTile(const Position pos, std::unique_ptr<Tile> tile)
     if (!isEmpty(pos))
         throw std::logic_error("Grid::addTile: cell already occupied");
 
-    cells_[index(pos)] = std::move(tile);
-    _modifyAmounts(false, std::move(cells_[index(pos)]));
+    cells_[index(pos)]->setActor(std::move(actor));
+    auto actor_temp = cells_[index(pos)]->getActor();
+    _modifyAmounts(true, *actor_temp);
+    cells_[index(pos)]->setActor(std::move(actor_temp));
 }
 
-void Grid::removeTile(const Position pos)
+void Grid::removeCell(const Position pos)
 {
     if (!inBounds(pos))
         throw std::out_of_range("Grid::removeTile: position out of bounds");
 
     cells_[index(pos)].reset();
-    _modifyAmounts(true, std::move(cells_[index(pos)]));
+    auto actor = cells_[index(pos)]->getActor();
+    _modifyAmounts(true, *actor);
+    cells_[index(pos)]->setActor(std::move(actor));
+
 }
 // Not sure if this is needed tbh
-std::unique_ptr<Tile> Grid::takeTile(const Position pos)
+std::unique_ptr<Cell> Grid::takeTile(const Position pos)
 {
     if (!inBounds(pos))
         throw std::out_of_range("Grid::takeTile: position out of bounds");
@@ -95,8 +103,8 @@ std::unique_ptr<Tile> Grid::takeTile(const Position pos)
 std::vector<Position> Grid::get_occupied() const
 {
     std::vector<Position> occupied;
-    for (int y = 0; y < this->height(); ++y)
-        for (int x = 0; x < this->width(); ++x)
+    for (int y = 0; y < height_; ++y)
+        for (int x = 0; x < width_; ++x)
             if (!this->isEmpty({x,y}))
             {
                 Position pos{x,y};

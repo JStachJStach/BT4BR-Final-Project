@@ -4,7 +4,6 @@
 #include <ctime>
 #include "settings.h"
 
-#include "Grass.h"
 #include "Fox.h"
 #include "Rabbit.h"
 #include "TileMap.h"

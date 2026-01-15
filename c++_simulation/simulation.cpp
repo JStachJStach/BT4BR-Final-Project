@@ -34,12 +34,12 @@ void DrawGrid()
     }
 }
 
-void DrawTiles(const Grid &grid) //this function calls draw methods of all tiles in tilemap
+void DrawTiles(Grid &grid) //this function calls draw methods of all tiles in tilemap
 {
     std::vector<Position> occupied = grid.get_occupied();
 
     for (Position pos : occupied) {
-        if (const Tile* tile = grid.get(pos)) {
+        if (auto tile = grid.get(pos)) {
             tile->draw(pos);
         }
     }
@@ -93,7 +93,6 @@ int main()
             cycleCounter++;
             // save data (per tick) to vector
             FileUtil.lastTickTime = lastTickTime;
-            FileUtil.grassCount = tileMap.get_grass_count();
             FileUtil.rabbitCount = tileMap.get_rabbit_count();
             FileUtil.foxCount = tileMap.get_fox_count();
             overTimeData.push_back(FileUtil);

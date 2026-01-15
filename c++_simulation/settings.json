@@ -23,10 +23,10 @@
         "maxAmount": 1000
       },
       "rabbit": {
-        "startAmount": 30
+        "startAmount": 1
       },
       "fox": {
-        "startAmount": 30
+        "startAmount": 1
       }
     },
 

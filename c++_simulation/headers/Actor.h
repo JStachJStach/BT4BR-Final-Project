@@ -1,13 +1,23 @@
 #pragma once
-#include "Tile.h"
+#include "Cell.h"
 
-class Actor : public Tile
+class Grid;
+
+class Actor
 {
+    friend class Cell;
     public:
-    explicit Actor(const Color color) : Tile(color) {}
-    void act(Position pos, Grid& _grid) override;
-    TileState type() const noexcept override;
+    virtual ~Actor() = default;
 
+    explicit Actor(const Color color) : color_(color) {}
+
+    virtual void act(Position pos, Grid& _grid);
+    virtual TileState type() const noexcept;
+
+    // Interaction traits
+    [[nodiscard]] virtual bool isEdible() const { return false; }
+    [[nodiscard]] virtual bool blocksMovement() const { return true; }
 private:
+    Color color_{};
 };
 

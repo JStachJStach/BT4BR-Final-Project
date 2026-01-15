@@ -98,15 +98,14 @@ void RandomUtils::get_random_tile(Grid& grid, const TileState & state)
 
                 try
                 {
-                    grid.addTile(pos, std::make_unique<Grass>());
+                    grid.get(pos)->grow(10);
                     return;
                 }
                 catch (...)
                 {
-                    std::cerr << "Error while adding grass tile" << std::endl;
+                    std::cerr << "Error while adding rabbit tile" << std::endl;
                 }
             }
-
         }
         case TileState::Rabbit :
         {
@@ -116,7 +115,8 @@ void RandomUtils::get_random_tile(Grid& grid, const TileState & state)
 
                 try
                 {
-                    grid.addTile(pos, std::make_unique<Rabbit>());
+                    auto rabbit = std::make_unique<Rabbit>();
+                    grid.addActor(pos, std::move(rabbit));
                     return;
                 }
                 catch (...)
@@ -133,7 +133,8 @@ void RandomUtils::get_random_tile(Grid& grid, const TileState & state)
 
                 try
                 {
-                    grid.addTile(pos, std::make_unique<Fox>());
+                    auto fox = std::make_unique<Fox>();
+                    grid.addActor(pos, std::move(fox));
                     return;
                 }
                 catch (...)

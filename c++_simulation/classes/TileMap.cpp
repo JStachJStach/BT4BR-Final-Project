@@ -22,16 +22,12 @@ void TileMap::tick()
     std::vector<Position> occupied = _grid.get_occupied();
 
     for (Position pos : occupied) {
-        if (Tile* tile = _grid.get(pos)) {
-            tile->act(pos, _grid);
+        if (const auto actor = _grid.get(pos)->getActor()) {
+            actor->act(pos, _grid);
         }
     }
 }
 
-int TileMap::get_grass_count() const
-{
-    return _grid._grassCount;
-}
 
 int TileMap::get_rabbit_count() const
 {
@@ -46,10 +42,5 @@ int TileMap::get_fox_count() const
 Grid & TileMap::get_tile_grid()
 {
     return _grid;
-}
-
-void TileMap::_addTile(const Position pos, std::unique_ptr<Tile> tile)
-{
-   _grid.addTile(pos, std::move(tile));
 }
 

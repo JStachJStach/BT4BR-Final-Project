@@ -7,8 +7,6 @@ link_libraries(raylib)
 
 add_executable(c++_simulation simulation.cpp
         headers/global_enums.h
-        classes/Tile.cpp
-        headers/Tile.h
         headers/settings.h
         classes/RandomUtils.cpp
         headers/RandomUtils.h
@@ -18,12 +16,10 @@ add_executable(c++_simulation simulation.cpp
         headers/Rabbit.h
         classes/Fox.cpp
         headers/Fox.h
-        classes/Grass.cpp
-        headers/Grass.h
         classes/Actor.cpp
         headers/Actor.h
-        classes/Tile.cpp
-        headers/Tile.h
+        classes/Cell.cpp
+        headers/Cell.h
         classes/TileMap.cpp
         headers/TileMap.h
         headers/Position.h
