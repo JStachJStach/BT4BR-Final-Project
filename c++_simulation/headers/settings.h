@@ -48,6 +48,7 @@ inline int rabbitReproductionSat;
 inline int rabbitSatPerGrass;
 inline int rabbitSatPerTick;
 inline int rabbitSightValue;
+inline int rabbitSatPerReproduction;
 
 inline int foxMaxSat;
 inline int foxMinSat;
@@ -55,6 +56,14 @@ inline int foxReproductionSat;
 inline int foxSatPerRabbit;
 inline int foxSatPerTick;
 inline int foxSightValue;
+inline int foxSatPerReproduction;
+
+
+inline int grassMaxSat;
+inline int grassMinSat;
+inline int grassReproductionSat;
+inline int grassSatPerTick;
+inline int grassSatPerReproduction;
 /*
 inline std::string set_path(std::string fileName)
 {
@@ -104,9 +113,6 @@ inline void get_settings()
                 .get<unsigned int>()
                 );
         }
-        // Grass
-        grassGrowChance = settings.at("tiles").at("definitions").at("grass").value("growChance", 0.75f);
-        grassMaxAmount = settings.at("tiles").at("definitions").at("grass").value("maxAmount", 10);
 
         // Rabbits
         rabbitMaxSat = settings.at("animals").at("rabbit").value("maxSat", 75);
@@ -115,6 +121,7 @@ inline void get_settings()
         rabbitSatPerGrass = settings.at("animals").at("rabbit").value("satPerFood", 25);
         rabbitSatPerTick = settings.at("animals").at("rabbit").value("satPerTick", -1);
         rabbitSightValue = settings.at("animals").at("rabbit").value("sightValue", 3);
+        rabbitSatPerReproduction = settings.at("animals").at("fox").value("perReproductionSat", -30);
 
         // Foxes
         foxMaxSat = settings.at("animals").at("fox").value("maxSat", 75);
@@ -123,6 +130,14 @@ inline void get_settings()
         foxSatPerRabbit = settings.at("animals").at("fox").value("satPerFood", 25);
         foxSatPerTick = settings.at("animals").at("fox").value("satPerTick", -1);
         foxSightValue = settings.at("animals").at("fox").value("sightValue", 4);
+		foxSatPerReproduction = settings.at("animals").at("fox").value("perReproductionSat", -30);
+
+        // Grass
+        grassMaxSat = settings.at("animals").at("grass").value("maxSat", 75);
+        grassMinSat = settings.at("animals").at("grass").value("minSat", -50);
+        grassReproductionSat = settings.at("animals").at("grass").value("reproductionSat", 74);
+        grassSatPerTick = settings.at("animals").at("grass").value("satPerTick", 1);
+		grassSatPerReproduction = settings.at("animals").at("grass").value("perReproductionSat", -30);
     }
     else
     {

@@ -3,53 +3,60 @@
     "width": 720,
     "height": 720
   },
-
   "tick": {
     "duration": 0.05,
     "tickPerSave": 12
   },
-
   "grid": {
     "size": 120,
     "lineThickness": 2,
     "lineColor": "LIGHTGRAY"
   },
-
   "tiles": {
     "definitions": {
       "grass": {
-        "startAmount": 10,
-        "growChance": 0.1,
-        "maxAmount": 11
+        "startAmount": 0
       },
       "rabbit": {
-        "startAmount": 30
+        "startAmount": 40
       },
       "fox": {
-        "startAmount": 0
+        "startAmount": 20
       }
     },
-
-    "startOrder": ["grass", "rabbit", "fox"]
+    "startOrder": [
+      "grass",
+      "rabbit",
+      "fox"
+    ]
   },
-
   "animals": {
     "rabbit": {
       "maxSat": 75,
-      "minSat": -60,
-      "reproductionSat": 65,
-      "satPerFood": 25,
-      "satPerTick": -3,
-      "sightValue": 2
-    },
-
-    "fox": {
-      "maxSat": 75,
       "minSat": -50,
-      "reproductionSat": 71,
+      "reproductionSat": 35,
+      "satPerFood": 25,
+      "satPerTick": 3,
+      "sightValue": 2,
+      "satPerReproduction": -50
+    },
+    "fox": {
+      "maxSat": 20,
+      "minSat": -30,
+      "reproductionSat": 10,
       "satPerFood": 25,
       "satPerTick": -1,
-      "sightValue": 2
+      "sightValue": 1,
+      "satPerReproduction": -35
+    },
+    "grass": {
+      "maxSat": 75,
+      "minSat": -50,
+      "reproductionSat": 74,
+      "satPerFood": 25,
+      "satPerTick": 1,
+      "sightValue": 2,
+      "satPerReproduction": -30
     }
   }
 }

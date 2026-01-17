@@ -8,10 +8,6 @@
 #include "headers/Tile.h"
 #include "headers/FileUtils.h"
 
-//TODO
-//Bug: Grass is growing beyond borders (Done?)
-//Modified Grass behavior (Done?)
-//Fix get_random_tile allowing for duplicates
 
 
 
@@ -89,11 +85,10 @@ int main()
     std::vector<FileUtils> overTimeData;
 
     std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
-    std::vector<std::array<int, 2>> grassPositions; // separate Array for grass since it shouldn't move
-
     unsigned int cycleCounter = 0;
     while (!WindowShouldClose())
     {
+
         ///////////////////////////////////
         // Update per tick
         ///////////////////////////////////
@@ -101,15 +96,12 @@ int main()
         if (lastTickTime + tickDuration < GetTime()) //this condition is fulfilled only once per tickDuration
         {
             tilesPositions.clear();
-            grassPositions.clear();
+
 
             // get tile positons
             for (const auto &key: tileMap | std::views::keys)
             {
-                if (tileMap.at(key).get_state() != TileState::Grass)
-                    tilesPositions.push_back(key); //tilesPositon contains all positions that are stored in the map
-                else
-                    grassPositions.push_back(key);
+                tilesPositions.push_back(key); //tilesPositon contains all positions that are stored in the map
             }
 
             std::ranges::shuffle(tilesPositions, rng); //tilesPositon is being shuffled
@@ -123,7 +115,6 @@ int main()
                     tileMap.erase(pos);
                 }
             }
-            GrassUtils::grow(tileMap, grassPositions);
             cycleCounter++;
             // save data (per tick) to vector
             FileUtil.lastTickTime = lastTickTime;
@@ -137,14 +128,8 @@ int main()
             }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
 
-            // If there are no animals left, close the window. We don't need to check grass as if there's no bunnies left it will have grown by the time
-            // the foxes die and if there are no foxes left the bunnies are going to eat it all
-            if (!Tile::get_rabbit_count() && !Tile::get_fox_count())
-            {
-               break;
-            }
-        }
 
+        }
         ///////////////////////////////////
         // Draw
         ///////////////////////////////////
@@ -153,6 +138,7 @@ int main()
         DrawTiles(tileMap);
         ClearBackground(RAYWHITE);
         EndDrawing();
+        
     }
 
     try

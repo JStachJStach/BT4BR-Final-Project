@@ -47,6 +47,7 @@ Tile::Tile(const std::string& nameIn, const Color& color) : _name(nameIn), _colo
     //std::cout << "Creating tile " << _name << " with ID "  << _tileID <<"\n";
 }
 
+
 /**********************************************
  *                                            *
  *                  Methods                   *
@@ -89,6 +90,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
             {
                 if (!tileMap.contains(pos))
                 {
+					this->_satiation += rabbitSatPerReproduction;
                     const Tile* tile = new Tile("Rabbit", GRAY);
                     tileMap[std::array{pos[0], pos[1]}] = *tile;
                     delete tile;
@@ -115,6 +117,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
             {
                 if (!tileMap.contains(pos))
                 {
+					this->_satiation += foxSatPerReproduction;
                     const Tile* tile = new Tile("Fox", ORANGE);
                     tileMap[std::array{pos[0], pos[1]}] = *tile;
                     delete tile;
@@ -123,14 +126,35 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
             }
         }
     }
-
+    if (this->_name == "Grass")
+    {
+        //depleting satiation
+        this->_satiation += grassSatPerTick;
+        //reproduction
+        if (this->_satiation > grassReproductionSat)
+        {
+            for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
+            {
+                if (!tileMap.contains(pos))
+                {
+                    this->_satiation += grassSatPerReproduction;
+                    const Tile* tile = new Tile("Grass", GREEN);
+                    tileMap[std::array{ pos[0], pos[1] }] = *tile;
+                    delete tile;
+                    break;
+                }
+            }
+        }
+    }
 
 
     // Check if there are certain tiles on adjacent positions
+    int counter = 0;
     for (auto pos : (this->_name == "Rabbit" ? RandomUtils::positionsAdjacent(currentPosition, rabbitSightValue) : RandomUtils::positionsAdjacent(currentPosition, foxSightValue)))
     {
         if (tileMap.contains(pos))
         {
+            counter++;
             if (this->_name == "Fox" and this->_satiation < foxMaxSat and tileMap[pos]._name == "Rabbit")
             {
                 this->_satiation += foxSatPerRabbit;
@@ -152,9 +176,26 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                 return move_if_target_in_sight(pos, currentPosition);
             }
         }
+        if (counter >=7)
+        {
+            if (this->_name == "Rabbit")
+            {
+                _rabbitCount--;
+                tileMap.erase(currentPosition);
+                return currentPosition;
+            }
+            if (this->_name == "Fox") 
+            {
+                _foxCount--;
+                tileMap.erase(currentPosition);
+                return currentPosition;
+			}
+		}
     }
 
     // Regular move
+    if (this->_name == "Grass")
+		return currentPosition; // Grass doesn't move
     int newPositionX = currentPosition[0] + RandomUtils::get_random_num(-1,1),
     newPositionY = currentPosition[1] + RandomUtils::get_random_num(-1,1);
     // Check if new position is in the bounds of the grid
