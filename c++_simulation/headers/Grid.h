@@ -24,7 +24,9 @@ public:
     void addActor(Position pos, std::unique_ptr<Actor> actor);
     void removeCell(Position pos);
     std::unique_ptr<Cell> takeTile(Position pos);
+
     std::vector<Position> get_occupied() const;
+    void draw() const;
 
 private:
     Grid(int width, int height);

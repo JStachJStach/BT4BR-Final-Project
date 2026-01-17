@@ -7,7 +7,10 @@ Grid::Grid(int width, int height)
 {
     for (int y = 0; y < height_; ++y)
         for (int x = 0; x < width_; ++x)
+        {
             cells_[y * width_ + x] = std::make_unique<Cell>();
+            cells_[index({x, y})]->setPosition({x,y});
+        }
     //Debug
 
     addActor({0,0}, std::make_unique<Rabbit>());
@@ -75,7 +78,6 @@ void Grid::addActor(const Position pos, std::unique_ptr<Actor> actor)
         throw std::logic_error("Grid::addTile: cell already occupied");
 
     _modifyAmounts(false, std::move(actor), pos);
-    cells_[index(pos)]->setActor(std::move(actor));
 
 }
 
@@ -84,8 +86,8 @@ void Grid::removeCell(const Position pos)
     if (!inBounds(pos))
         throw std::out_of_range("Grid::removeTile: position out of bounds");
 
-    cells_[index(pos)].reset();
     _modifyAmounts(true, std::move(cells_[index(pos)]->getActor()), pos);
+    cells_[index(pos)].reset();
 
 }
 // Not sure if this is needed tbh
@@ -109,4 +111,26 @@ std::vector<Position> Grid::get_occupied() const
                 occupied.push_back(pos);
             }
     return occupied;
+}
+
+
+
+void Grid::draw() const
+{
+    for (auto& cell : cells_)
+    {
+        auto actor = cell->getActor();
+        if (actor)
+        {
+            Color test = actor->getColor();
+            cell->setActor(std::move(actor));
+            DrawRectangle(cell->_currentPosition.x_pos * cellSize, cell->_currentPosition.y_pos * cellSize, cellSize, cellSize, test);
+        }
+        else
+        {
+            DrawRectangle(cell->_currentPosition.x_pos * cellSize, cell->_currentPosition.y_pos * cellSize, cellSize, cellSize,  cell->_grassColorSaturation);
+        }
+    }
+
+
 }

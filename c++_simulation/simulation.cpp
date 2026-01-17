@@ -36,13 +36,8 @@ void DrawGrid()
 
 void DrawTiles(Grid &grid) //this function calls draw methods of all tiles in tilemap
 {
-    std::vector<Position> occupied = grid.get_occupied();
 
-    for (Position pos : occupied) {
-        if (auto tile = grid.get(pos)) {
-            tile->draw(pos);
-        }
-    }
+    grid.draw();
 }
 
 int main()
@@ -111,9 +106,11 @@ int main()
         // Draw
         ///////////////////////////////////
         BeginDrawing();
+        ClearBackground(RAYWHITE);
         DrawGrid();
         DrawTiles(tileMap.get_tile_grid());
-        ClearBackground(RAYWHITE);
+
+
         EndDrawing();
     }
 

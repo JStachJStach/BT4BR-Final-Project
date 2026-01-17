@@ -22,8 +22,9 @@ void TileMap::tick()
     std::vector<Position> occupied = _grid.get_occupied();
 
     for (Position pos : occupied) {
-        if (const auto actor = _grid.get(pos)->getActor()) {
+        if (auto actor = _grid.get(pos)->getActor()) {
             actor->act(pos, _grid);
+            _grid.get(pos)->setActor(std::move(actor));
         }
     }
 }

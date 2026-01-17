@@ -13,7 +13,7 @@ class Actor
 
     virtual void act(Position pos, Grid& _grid);
     virtual TileState type() const noexcept;
-
+    Color getColor() const;
     // Interaction traits
     [[nodiscard]] virtual bool isEdible() const { return false; }
     [[nodiscard]] virtual bool blocksMovement() const { return true; }

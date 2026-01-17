@@ -21,6 +21,12 @@ void Cell::setActor(std::unique_ptr<Actor> actor)
     _actor = std::move(actor);
 }
 
+void Cell::setPosition(const Position &position)
+{
+    _currentPosition.x_pos = position.x_pos;
+    _currentPosition.y_pos = position.y_pos;
+}
+
 std::unique_ptr<Actor> Cell::getActor()
 {
 
@@ -32,7 +38,8 @@ void Cell::draw(const Position& currentPosition) const
 {
     if (_actor != nullptr)
     {
-        DrawRectangle(currentPosition.x_pos * cellSize, currentPosition.y_pos * cellSize, cellSize, cellSize, _color);
+        Color test = _actor->getColor();
+        DrawRectangle(currentPosition.x_pos * cellSize, currentPosition.y_pos * cellSize, cellSize, cellSize, test);
     }
     else
     {

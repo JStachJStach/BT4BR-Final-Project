@@ -12,3 +12,8 @@ TileState Actor::type() const noexcept
 {
     return TileState::None;
 }
+
+Color Actor::getColor() const
+{
+    return color_;
+}
