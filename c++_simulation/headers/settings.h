@@ -12,11 +12,15 @@
 ///////////////////////////////////
 // Headers
 ///////////////////////////////////
-
+#ifdef _WIN32
+    #include "../raylib_win/include/raylib.h"
+#elif __linux__                    //important to run program without dependencies on linux
+#include "../include/raylib.h"     //download raylib for linux (https://github.com/raysan5/raylib/releases), unzip and place in project folder, replace this line with: #include "../<release_name>/include/raylib.h"
+#endif
+#include "global_enums.h"
 #include "../include/nlohmann/json.hpp"
 using json = nlohmann::json;
-#include "../include/raylib.h"
-#include "global_enums.h"
+
 
 ///////////////////////////////////
 // Settings
