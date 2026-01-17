@@ -5,12 +5,21 @@ import pandas as pd
 import subprocess
 import time
 import csv
+
+
+
+
+
+
 path = "simulation.exe"
 subprocess.Popen([path])
 
 
-fig = plt.figure()
-ax = fig.add_subplot(1,1,1)
+fig, axes = plt.subplots(2,1)
+fig.set_size_inches(5.5, 8.5)
+axes[0].clear()
+axes[1].clear()
+
 time.sleep(0.5)
 
 def plotting(i):
@@ -30,11 +39,16 @@ def plotting(i):
         #grass.pop(0)
         foxes.pop(0)
         rabbits.pop(0)
-    ax.clear()
-    ax.plot(time, foxes, color="orange")
-    ax.plot(time, rabbits, color="grey")
+
+    axes[0].clear()
+    axes[1].clear()
+    axes[1].set_xlim(right=1000)
+    axes[1].set_ylim(top=1000)
+
+    axes[0].plot(time, foxes, color="orange")
+    axes[0].plot(time, rabbits, color="grey")
+
+    axes[1].scatter(foxes, rabbits, c=time, cmap="Greys")
 
 animation_object = animation.FuncAnimation(fig, plotting, interval=100)
 plt.show()
-
-
