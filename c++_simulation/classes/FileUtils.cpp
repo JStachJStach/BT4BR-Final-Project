@@ -28,5 +28,10 @@ void FileUtils::saveCSV(const std::vector<FileUtils>& dataVector)
         throw std::runtime_error("Could not open file" + std::string(filePath));
     }
 }
-//void FileUtils::saveFrame()
+void FileUtils::clearCSV()
+{
+    const std::string filePath = "data/data.csv";
+    std::ofstream data_file(filePath, std::ofstream::trunc);
+	data_file.close();
+}
 

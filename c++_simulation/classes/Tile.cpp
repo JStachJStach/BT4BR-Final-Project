@@ -88,7 +88,8 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
             {
-                if (!tileMap.contains(pos))
+
+                if (!tileMap.contains(pos) && !(pos[0] < 0 || pos[0] > gridSize - 1 || pos[1] < 0 || pos[1] > gridSize - 1))
                 {
 					this->_satiation += rabbitSatPerReproduction;
                     const Tile* tile = new Tile("Rabbit", GRAY);
@@ -115,7 +116,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
             {
-                if (!tileMap.contains(pos))
+                if (!tileMap.contains(pos) && !(pos[0] < 0 || pos[0] > gridSize - 1 || pos[1] < 0 || pos[1] > gridSize - 1))
                 {
 					this->_satiation += foxSatPerReproduction;
                     const Tile* tile = new Tile("Fox", ORANGE);
