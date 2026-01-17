@@ -40,6 +40,7 @@ constexpr Color gridLineColor = LIGHTGRAY; // This has to stay here unless we wa
 inline unsigned int grassMaxAmount;
 inline float grassGrowChance;
 inline std::vector<unsigned int> tileStartAmounts{};
+inline int sparsity;
 
 // Reproduction and death
 inline int rabbitMaxSat;
@@ -113,6 +114,7 @@ inline void get_settings()
                 .get<unsigned int>()
                 );
         }
+		sparsity = settings.at("tiles").value("sparsity", 7);
 
         // Rabbits
         rabbitMaxSat = settings.at("animals").at("rabbit").value("maxSat", 75);

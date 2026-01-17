@@ -76,7 +76,9 @@ int main()
         }
     }
     double lastTickTime = 0; //this is necessary to perform tick update (look at the statement ( if (lastTickTime + tickDuration < GetTime()) ) )
+
     InitWindow(screenWidth, screenHeight, "Simulation");
+    SetWindowPosition(200, 200);
     SetTargetFPS(60);
 
     // FileUtils object because file I/O operations are a lot slower than memory I/O operations

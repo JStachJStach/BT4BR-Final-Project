@@ -176,7 +176,7 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
                 return move_if_target_in_sight(pos, currentPosition);
             }
         }
-        if (counter >=7)
+        if (counter >=sparsity)
         {
             if (this->_name == "Rabbit")
             {

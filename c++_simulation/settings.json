@@ -4,11 +4,11 @@
     "height": 720
   },
   "tick": {
-    "duration": 0.05,
+    "duration": 0.1,
     "tickPerSave": 12
   },
   "grid": {
-    "size": 120,
+    "size": 80,
     "lineThickness": 2,
     "lineColor": "LIGHTGRAY"
   },
@@ -24,6 +24,7 @@
         "startAmount": 20
       }
     },
+    "sparsity": 7,
     "startOrder": [
       "grass",
       "rabbit",
