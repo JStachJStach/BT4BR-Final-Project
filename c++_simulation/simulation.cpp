@@ -39,27 +39,16 @@ void DrawTiles(std::map<std::array<int, 2>, Tile> tileMap) //this function calls
     }
 }
 
-int main()
+void main_contents()
 {
-    // Really important save_seed() is called first, please do not mess with this :)
-    try
-    {
-        RandomUtils::save_seed();
-        get_settings();
-        save_settings();
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
-
-
-
-
     ///////////////////////////////////
     // Initialization
     ///////////////////////////////////
+
+    // Really important save_seed() is called first, please do not mess with this :)
+    RandomUtils::save_seed();
+    get_settings();
+    save_settings();
 
     std::map<std::array<int, 2>, Tile> tileMap; //creating empty tilemap
     // Set loop bounds
@@ -84,7 +73,7 @@ int main()
     FileUtils FileUtil{};
     // Save data to a vector
     //std::vector<FileUtils> overTimeData;
-	FileUtils::prepareCSV();
+    FileUtils::prepareCSV();
     std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
     unsigned int cycleCounter = 0;
     while (!WindowShouldClose())
@@ -100,7 +89,7 @@ int main()
 
 
             // get tile positons
-            for (const auto &key: tileMap | std::views::keys)
+            for (const auto& key : tileMap | std::views::keys)
             {
                 tilesPositions.push_back(key); //tilesPositon contains all positions that are stored in the map
             }
@@ -127,10 +116,10 @@ int main()
             if (cycleCounter % ticksPerSave == 0)
             {
                 std::vector<float> row;
-				row.push_back(lastTickTime);
-				row.push_back(Tile::get_grass_count());
-				row.push_back(Tile::get_rabbit_count());
-				row.push_back(Tile::get_fox_count());
+                row.push_back(lastTickTime);
+                row.push_back(Tile::get_grass_count());
+                row.push_back(Tile::get_rabbit_count());
+                row.push_back(Tile::get_fox_count());
                 FileUtils::saveCSV(row);
             }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
@@ -145,8 +134,24 @@ int main()
         DrawTiles(tileMap);
         ClearBackground(RAYWHITE);
         EndDrawing();
-        
+
     }
 
     CloseWindow();
 }
+
+
+#ifdef _WIN32
+int WinMain()
+{
+    main_contents();
+    return 0;
+}
+#elif __linux__
+
+int main()
+{
+    main_contents();
+    return 0;
+}
+#endif

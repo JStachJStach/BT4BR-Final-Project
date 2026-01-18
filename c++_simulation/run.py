@@ -9,12 +9,11 @@ import os
 import locale
 os.environ["LC_NUMERIC"] = "C"
 locale.setlocale(locale.LC_NUMERIC, "C")
-
 import json
-
-
-
 import tkinter as tk
+
+
+
 def fox_start_num_change(change):
     global fox_start_num
     fox_start_num = change
