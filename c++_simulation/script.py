@@ -5,10 +5,16 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import subprocess
 import time
 import csv
-import tkinter as tk
+import os
+import locale
+os.environ["LC_NUMERIC"] = "C"
+locale.setlocale(locale.LC_NUMERIC, "C")
+
 import json
 
 
+
+import tkinter as tk
 def fox_start_num_change(change):
     global fox_start_num
     fox_start_num = change
@@ -51,9 +57,12 @@ def start():
 
     with open("settings.json", "w") as f:
         json.dump(settings_map, f)
-
-    subprocess.Popen(["simulation.exe"])
-    time.sleep(0.6)
+    try:
+        subprocess.Popen(["simulation.exe"])
+        time.sleep(0.6)
+    except:
+        subprocess.Popen(["./simulation"])
+        time.sleep(0.6)
 
 
     canvas_panel.pack(side="right", fill="both", expand=True)
