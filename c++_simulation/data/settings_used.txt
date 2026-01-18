@@ -1,6 +1,6 @@
 Ecosystem Simulation v0.1.0
-Ran at: Sun Jan 18 02:39:35 2026
-Seed used: 2100090796
+Ran at: Sun Jan 18 03:28:32 2026
+Seed used: 2572596476
 
 Settings used: 
 Window size: 720x720px
@@ -11,7 +11,7 @@ Grid size: 80px
 Grid line thickness: 2px
 
 Grass parameters: 
-Starting grass amount: 0
+Starting grass amount: 40
 Max grass amount: 0
 
 Rabbit parameters: 

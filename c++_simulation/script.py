@@ -15,6 +15,9 @@ def fox_start_num_change(change):
 def rabbit_start_num_change(change):
     global rabbit_start_num
     rabbit_start_num = change
+def grass_start_num_change(change):
+    global grass_start_num
+    grass_start_num = change
 def grid_size_change(change):
     global grid_size
     grid_size = change
@@ -28,6 +31,7 @@ def start():
 
         settings_map["tiles"]["definitions"]["fox"]["startAmount"] = int(fox_start_num)
         settings_map["tiles"]["definitions"]["rabbit"]["startAmount"] = int(rabbit_start_num)
+        settings_map["tiles"]["definitions"]["grass"]["startAmount"] = int(grass_start_num)
         settings_map["grid"]["size"] = int(grid_size)
         settings_map["tick"]["duration"] = float(simulation_speed)
 
@@ -36,8 +40,11 @@ def start():
     
     fox_num_scale.config(state="disabled")
     rabbit_num_scale.config(state="disabled")
+    if_grass_button.config(state="disabled")
+    grass_num_scale.config(state="disabled")
     grid_size_scale.config(state="disabled")
     simulation_speed_scale.config(state="disabled")
+
 
     with open("settings.json", "w") as f:
         json.dump(settings_map, f)
@@ -62,7 +69,8 @@ def plotting(i):
         for row in csv_read:
             if len(row) == 4:
                 time.append(float(row[0]))
-                #grass.append(int(row[1]))
+                if(if_grass.get()):
+                    grass.append(int(row[1]))
                 rabbits.append(int(row[2]))
                 foxes.append(int(row[3]))
     axes[0].clear()
@@ -78,11 +86,13 @@ def plotting(i):
         axes[1].set_xlim(right=400)
         axes[1].set_ylim(top=400)
 
-    axes[0].plot(time, foxes, color="orange")
-    axes[0].plot(time, rabbits, color="grey")
+    axes[0].plot(time, foxes, color="orange", label="Fox")
+    axes[0].plot(time, rabbits, color="grey", label="Rabbit")
+    if(if_grass.get()):
+        axes[0].plot(time, grass, color="green", label="Grass")
     axes[0].set_xlabel("Time (in seconds)")
     axes[0].set_ylabel("Population")
-    axes[0].legend()
+    axes[0].legend(loc="upper left")
 
 
     axes[1].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
@@ -131,6 +141,20 @@ rabbit_num_scale.set(40)
 rabbit_num_scale.pack()
 rabbit_num_scale_text = tk.Label(settings_panel, text="Number of rabbits", font=("Georgia", 10))
 rabbit_num_scale_text.pack()
+
+if_grass = tk.BooleanVar(value=False)
+if_grass_button = tk.Checkbutton(settings_panel, variable=if_grass)
+if_grass_button.pack()
+if_grass_button_text = tk.Label(settings_panel, text="Include grass", font=("Georgia", 10))
+if_grass_button_text.pack()
+
+grass_num_scale = tk.Scale(settings_panel,from_=1,to=200,orient="horizontal",command=grass_start_num_change)
+grass_num_scale.set(40)
+grass_num_scale.pack()
+grass_num_scale_text = tk.Label(settings_panel, text="Number of grass", font=("Georgia", 10))
+grass_num_scale_text.pack()
+grass_num_scale_text2 = tk.Label(settings_panel, font=("Georgia", 8))
+grass_num_scale_text2.pack()
 
 plt.style.use("fivethirtyeight")
 fig, axes = plt.subplots(2, 1)
