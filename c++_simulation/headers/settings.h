@@ -144,6 +144,10 @@ inline void get_settings()
         grassReproductionSat = settings.at("animals").at("grass").value("reproductionSat", 74);
         grassSatPerTick = settings.at("animals").at("grass").value("satPerTick", 1);
 		grassSatPerReproduction = settings.at("animals").at("grass").value("perReproductionSat", -30);
+
+
+		screenHeight = cellSize * gridSize;
+		screenWidth = cellSize * gridSize;
     }
     else
     {

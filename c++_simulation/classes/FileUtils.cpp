@@ -28,6 +28,37 @@ void FileUtils::saveCSV(const std::vector<FileUtils>& dataVector)
         throw std::runtime_error("Could not open file" + std::string(filePath));
     }
 }
+
+
+void FileUtils::saveCSV(const std::vector<float>& dataRowVector)
+{
+    const std::string filePath = "data/data.csv";
+    std::ofstream data_file(filePath, std::ios::app);
+    if (data_file.is_open())
+    {
+            data_file << dataRowVector[0] << "," << dataRowVector[1] << "," << dataRowVector[2] << "," << dataRowVector[3] << std::endl;
+        data_file.close();
+    }
+    else
+    {
+        throw std::runtime_error("Could not open file" + std::string(filePath));
+    }
+}
+void FileUtils::prepareCSV()
+{
+    const std::string filePath = "data/data.csv";
+    std::ofstream data_file(filePath, std::ofstream::trunc);
+    if (data_file.is_open())
+    {
+        data_file << "lastTickTime" << "," << "Tile::grassCount" << "," << "Tile::rabbitCount" << "," << "Tile::foxCount" << std::endl;
+        data_file.close();
+    }
+    else
+    {
+        throw std::runtime_error("Could not open file" + std::string(filePath));
+	}
+}
+
 void FileUtils::clearCSV()
 {
     const std::string filePath = "data/data.csv";

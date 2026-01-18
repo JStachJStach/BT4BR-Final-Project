@@ -15,27 +15,43 @@ def fox_start_num_change(change):
 def rabbit_start_num_change(change):
     global rabbit_start_num
     rabbit_start_num = change
+def grid_size_change(change):
+    global grid_size
+    grid_size = change
+def simulation_speed_change(change):
+    global simulation_speed
+    simulation_speed = change
 
 def start():
     with open("settings.json", "r") as f:
         settings_map = json.load(f)
-        
+
         settings_map["tiles"]["definitions"]["fox"]["startAmount"] = int(fox_start_num)
         settings_map["tiles"]["definitions"]["rabbit"]["startAmount"] = int(rabbit_start_num)
+        settings_map["grid"]["size"] = int(grid_size)
+        settings_map["tick"]["duration"] = float(simulation_speed)
+
+
+    confirm_button.config(state="disabled")
+    
+    fox_num_scale.config(state="disabled")
+    rabbit_num_scale.config(state="disabled")
+    grid_size_scale.config(state="disabled")
+    simulation_speed_scale.config(state="disabled")
 
     with open("settings.json", "w") as f:
         json.dump(settings_map, f)
-        
-    subprocess.Popen(["simulation.exe"])
 
-    fox_num_scale.config(state="disabled")
-    rabbit_num_scale.config(state="disabled")
+    subprocess.Popen(["simulation.exe"])
+    time.sleep(0.6)
+
 
     canvas_panel.pack(side="right", fill="both", expand=True)
     global animation_object
     animation_object = animation.FuncAnimation(fig, plotting, interval=100)
 
 def plotting(i):
+
     time = []
     grass = []
     rabbits = []
@@ -51,8 +67,11 @@ def plotting(i):
                 foxes.append(int(row[3]))
     axes[0].clear()
     axes[1].clear()
-    
-    if foxes[len(foxes)-1] > 400 or rabbits[len(rabbits)-1] > 400:
+
+    if foxes[len(foxes)-1] > 900 or rabbits[len(rabbits)-1] > 900 or int(grid_size) >= 140:
+        axes[1].set_xlim(right=2000)
+        axes[1].set_ylim(top=2000) 
+    elif foxes[len(foxes)-1] > 400 or rabbits[len(rabbits)-1] > 400 or int(grid_size) >= 100:
         axes[1].set_xlim(right=1000)
         axes[1].set_ylim(top=1000)
     else:
@@ -61,9 +80,15 @@ def plotting(i):
 
     axes[0].plot(time, foxes, color="orange")
     axes[0].plot(time, rabbits, color="grey")
+    axes[0].set_xlabel("Time (in seconds)")
+    axes[0].set_ylabel("Population")
+    axes[0].legend()
 
 
-    axes[1].scatter(foxes[-80:], rabbits[-80:], c=time[-80:], cmap="Greys")
+    axes[1].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
+    axes[1].set_xlabel("Fox population")
+    axes[1].set_ylabel("Rabbit population")
+    fig.subplots_adjust(left=0.2)
 
 
 
@@ -75,6 +100,25 @@ root.geometry("800x900")
 settings_panel= tk.Frame(root)
 settings_panel.pack(side="left", anchor="n")
 
+simulation_section_text = tk.Label(settings_panel, text="Simulation:", font=("Georgia", 13, "bold"))
+simulation_section_text.pack()
+
+grid_size_scale = tk.Scale(settings_panel,from_=10,to=180, resolution=10, orient="horizontal",command=grid_size_change)
+grid_size_scale.set(80)
+grid_size_scale.pack()
+grid_size_text = tk.Label(settings_panel, text="Grid size", font=("Georgia", 10))
+grid_size_text.pack()
+
+simulation_speed_scale = tk.Scale(settings_panel,from_=0.01,to=0.5, resolution=0.01, orient="horizontal",command=simulation_speed_change)
+simulation_speed_scale.set(0.1)
+simulation_speed_scale.pack()
+simulation_speed_text = tk.Label(settings_panel, text="Tick duration (s)", font=("Georgia", 10))
+simulation_speed_text.pack()
+
+
+Objects_section_text = tk.Label(settings_panel, text="Objects:", font=("Georgia", 13, "bold"))
+Objects_section_text.pack()
+
 fox_num_scale = tk.Scale(settings_panel,from_=0,to=100,orient="horizontal",command=fox_start_num_change)
 fox_num_scale.set(20)
 fox_num_scale.pack()
@@ -84,10 +128,11 @@ fox_num_scale_text.pack()
 
 rabbit_num_scale = tk.Scale(settings_panel,from_=0,to=200,orient="horizontal",command=rabbit_start_num_change)
 rabbit_num_scale.set(40)
-rabbit_num_scale.pack(pady="10")
+rabbit_num_scale.pack()
 rabbit_num_scale_text = tk.Label(settings_panel, text="Number of rabbits", font=("Georgia", 10))
 rabbit_num_scale_text.pack()
 
+plt.style.use("fivethirtyeight")
 fig, axes = plt.subplots(2, 1)
 
 
@@ -96,7 +141,7 @@ canvas_panel = canvas.get_tk_widget()
 
 
 
-confirm_button = tk.Button(settings_panel, text="Confirm settings",font=("Georgia", 8), command=start)
+confirm_button = tk.Button(settings_panel, text="Run simulation!",font=("Georgia", 8), command=start)
 confirm_button.pack(pady="20")
 root.mainloop()
 

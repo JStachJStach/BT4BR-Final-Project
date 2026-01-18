@@ -83,8 +83,8 @@ int main()
     // FileUtils object because file I/O operations are a lot slower than memory I/O operations
     FileUtils FileUtil{};
     // Save data to a vector
-    std::vector<FileUtils> overTimeData;
-
+    //std::vector<FileUtils> overTimeData;
+	FileUtils::prepareCSV();
     std::vector<std::array<int, 2>> tilesPositions; // tilesPosition is made to make the choice of position unbiased (e.g. not from left to right)
     unsigned int cycleCounter = 0;
     while (!WindowShouldClose())
@@ -116,16 +116,22 @@ int main()
                     tileMap.erase(pos);
                 }
             }
+
             cycleCounter++;
             // save data (per tick) to vector
-            FileUtil.lastTickTime = lastTickTime;
-            FileUtil.grassCount = Tile::get_grass_count();
-            FileUtil.rabbitCount = Tile::get_rabbit_count();
-            FileUtil.foxCount = Tile::get_fox_count();
-            overTimeData.push_back(FileUtil);
+            //FileUtil.lastTickTime = lastTickTime;
+            //FileUtil.grassCount = Tile::get_grass_count();
+            //FileUtil.rabbitCount = Tile::get_rabbit_count();
+            //FileUtil.foxCount = Tile::get_fox_count();
+            //overTimeData.push_back(FileUtil);
             if (cycleCounter % ticksPerSave == 0)
             {
-                FileUtils::saveCSV(overTimeData);
+                std::vector<float> row;
+				row.push_back(lastTickTime);
+				row.push_back(Tile::get_grass_count());
+				row.push_back(Tile::get_rabbit_count());
+				row.push_back(Tile::get_fox_count());
+                FileUtils::saveCSV(row);
             }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )
 
@@ -140,15 +146,6 @@ int main()
         ClearBackground(RAYWHITE);
         EndDrawing();
         
-    }
-
-    try
-    {
-        FileUtils::saveCSV(overTimeData);
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
     }
 
     CloseWindow();
