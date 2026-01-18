@@ -31,7 +31,10 @@ def start():
 
         settings_map["tiles"]["definitions"]["fox"]["startAmount"] = int(fox_start_num)
         settings_map["tiles"]["definitions"]["rabbit"]["startAmount"] = int(rabbit_start_num)
-        settings_map["tiles"]["definitions"]["grass"]["startAmount"] = int(grass_start_num)
+        if include_grass_bool_obj.get():
+            settings_map["tiles"]["definitions"]["grass"]["startAmount"] = int(grass_start_num)
+        else:
+            settings_map["tiles"]["definitions"]["grass"]["startAmount"] = 0
         settings_map["grid"]["size"] = int(grid_size)
         settings_map["tick"]["duration"] = float(simulation_speed)
 
@@ -40,7 +43,7 @@ def start():
     
     fox_num_scale.config(state="disabled")
     rabbit_num_scale.config(state="disabled")
-    if_grass_button.config(state="disabled")
+    include_grass_button.config(state="disabled")
     grass_num_scale.config(state="disabled")
     grid_size_scale.config(state="disabled")
     simulation_speed_scale.config(state="disabled")
@@ -69,7 +72,7 @@ def plotting(i):
         for row in csv_read:
             if len(row) == 4:
                 time.append(float(row[0]))
-                if(if_grass.get()):
+                if(include_grass_bool_obj.get()):
                     grass.append(int(row[1]))
                 rabbits.append(int(row[2]))
                 foxes.append(int(row[3]))
@@ -88,7 +91,7 @@ def plotting(i):
 
     axes[0].plot(time, foxes, color="orange", label="Fox")
     axes[0].plot(time, rabbits, color="grey", label="Rabbit")
-    if(if_grass.get()):
+    if(include_grass_bool_obj.get()):
         axes[0].plot(time, grass, color="green", label="Grass")
     axes[0].set_xlabel("Time (in seconds)")
     axes[0].set_ylabel("Population")
@@ -142,11 +145,11 @@ rabbit_num_scale.pack()
 rabbit_num_scale_text = tk.Label(settings_panel, text="Number of rabbits", font=("Georgia", 10))
 rabbit_num_scale_text.pack()
 
-if_grass = tk.BooleanVar(value=False)
-if_grass_button = tk.Checkbutton(settings_panel, variable=if_grass)
-if_grass_button.pack()
-if_grass_button_text = tk.Label(settings_panel, text="Include grass", font=("Georgia", 10))
-if_grass_button_text.pack()
+include_grass_bool_obj = tk.BooleanVar(value=False)
+include_grass_button = tk.Checkbutton(settings_panel, variable=include_grass_bool_obj)
+include_grass_button.pack()
+include_grass_text = tk.Label(settings_panel, text="Include grass", font=("Georgia", 10))
+include_grass_text.pack()
 
 grass_num_scale = tk.Scale(settings_panel,from_=1,to=200,orient="horizontal",command=grass_start_num_change)
 grass_num_scale.set(40)
@@ -159,14 +162,9 @@ grass_num_scale_text2.pack()
 plt.style.use("fivethirtyeight")
 fig, axes = plt.subplots(2, 1)
 
-
 canvas = FigureCanvasTkAgg(fig, master=root)
 canvas_panel = canvas.get_tk_widget()
-
-
 
 confirm_button = tk.Button(settings_panel, text="Run simulation!",font=("Georgia", 8), command=start)
 confirm_button.pack(pady="20")
 root.mainloop()
-
-
