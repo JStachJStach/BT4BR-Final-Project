@@ -75,16 +75,16 @@ std::array<int, 2> Tile_old::act(const std::array<int, 2> &currentPosition, std:
     if (this->_name == "Rabbit")
     {
         //depleting satiation
-        this->_satiation += rabbitSatPerTick;
+        this->_satiation += rabbitEnergyPerTick;
         //death
-        if (this->_satiation < rabbitMinSat)
+        if (this->_satiation < rabbitStartingEnergy)
         {
             _rabbitCount--;
             tileMap.erase(currentPosition);
             return currentPosition;
         }
         //reproduction
-        if (this->_satiation > rabbitReproductionSat)
+        if (this->_satiation > rabbitReproductionEnergy)
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
             {
@@ -142,12 +142,12 @@ std::array<int, 2> Tile_old::act(const std::array<int, 2> &currentPosition, std:
                 _rabbitCount--;
                 return move_if_target_in_sight(pos, currentPosition);
             }
-            if (this->_name == "Rabbit" and this->_satiation < rabbitMaxSat and tileMap[pos]._name == "Grass")
+            if (this->_name == "Rabbit" and this->_satiation < rabbitMaxEnergy and tileMap[pos]._name == "Grass")
             {
                 this->_satiation += rabbitSatPerGrass;
-                if (this->_satiation > rabbitMaxSat)
+                if (this->_satiation > rabbitMaxEnergy)
                 {
-                    this->_satiation = rabbitMaxSat;
+                    this->_satiation = rabbitMaxEnergy;
                 }
                 _grassCount--;
                 return move_if_target_in_sight(pos, currentPosition);

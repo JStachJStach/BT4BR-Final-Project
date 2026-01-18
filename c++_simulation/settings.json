@@ -20,10 +20,10 @@
       "grass": {
         "startAmount": 10,
         "growChance": 0.1,
-        "maxAmount": 1000
+        "maxAmount": 100
       },
       "rabbit": {
-        "startAmount": 1
+        "startAmount": 0
       },
       "fox": {
         "startAmount": 1
@@ -36,7 +36,7 @@
   "animals": {
     "rabbit": {
       "maxSat": 75,
-      "minSat": -60,
+      "minSat": 50,
       "reproductionSat": 65,
       "satPerFood": 25,
       "satPerTick": -1,

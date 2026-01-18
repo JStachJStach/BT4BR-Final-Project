@@ -24,4 +24,16 @@ add_executable(c++_simulation simulation.cpp
         headers/TileMap.h
         headers/Position.h
         classes/Grid.cpp
-        headers/Grid.h)
+        headers/Grid.h
+
+        headers/GrassColor.h)
+target_compile_options(c++_simulation PRIVATE
+        -fsanitize=address,undefined
+        -fno-omit-frame-pointer
+        -g
+        -O0
+)
+
+target_link_options(c++_simulation PRIVATE
+        -fsanitize=address,undefined
+)

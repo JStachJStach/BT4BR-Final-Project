@@ -62,14 +62,15 @@ void RandomUtils::save_seed()
  */
  std::vector<Position> RandomUtils::positionsAdjacent(const Position currentPosition, const int rangeOfSight)
 {
-    // C++ is smart enough to not need explicit std::array<std::array<int, 2>, 8> call here so auto is used
+
     std::vector<Position> positions;
 
     for (auto i = -rangeOfSight; i <= rangeOfSight; i++)
     {
         for (int j = -rangeOfSight;j <= rangeOfSight; j++)
         {
-            positions.push_back({i,j});
+            if (i != 0 || j != 0)
+                positions.push_back({i,j});
         }
     }
     for (auto& pos : positions)
@@ -94,16 +95,17 @@ void RandomUtils::get_random_tile(Grid& grid, const TileState & state)
         {
             while (true)
             {
-                Position pos{_get_random_cell(), _get_random_cell()};
+                const Position pos{_get_random_cell(), _get_random_cell()};
 
                 try
                 {
-                    grid.get(pos)->grow(10);
+                    grid.get(pos)->seed(10);
+                    grid.appendGrassPos(pos);
                     return;
                 }
                 catch (...)
                 {
-                    std::cerr << "Error while adding rabbit tile" << std::endl;
+                    std::cerr << "Error while adding grass tile" << std::endl;
                 }
             }
         }
@@ -111,7 +113,7 @@ void RandomUtils::get_random_tile(Grid& grid, const TileState & state)
         {
             while (true)
             {
-                Position pos{_get_random_cell(), _get_random_cell()};
+                const Position pos{_get_random_cell(), _get_random_cell()};
 
                 try
                 {
@@ -129,7 +131,7 @@ void RandomUtils::get_random_tile(Grid& grid, const TileState & state)
         {
             while (true)
             {
-                Position pos{_get_random_cell(), _get_random_cell()};
+                const Position pos{_get_random_cell(), _get_random_cell()};
 
                 try
                 {

@@ -33,36 +33,35 @@ std::unique_ptr<Actor> Cell::getActor()
     return std::move(_actor);
 }
 
-
-void Cell::draw(const Position& currentPosition) const
+void Cell::grow(const int& howMuch) //Change magic numbers to variables
 {
-    if (_actor != nullptr)
+    if (_grassLevel > 0)
     {
-        Color test = _actor->getColor();
-        DrawRectangle(currentPosition.x_pos * cellSize, currentPosition.y_pos * cellSize, cellSize, cellSize, test);
+        if (_grassLevel + howMuch < _grassMAX)
+            _grassLevel += howMuch;
+        else
+        {
+            _grassLevel = _grassMAX;
+        }
+        _setGrassSatColor();
     }
-    else
+    if (_grassLevel > 90)
     {
-        DrawRectangle(currentPosition.x_pos * cellSize, currentPosition.y_pos * cellSize, cellSize, cellSize, _grassColorSaturation);
+        _grassShouldSpread = true;
     }
 }
 
-void Cell::grow(const int& howMuch)
+void Cell::seed(const int& howMuch)
 {
-    if (_grassLevel + howMuch < _grassMAX)
-        _grassLevel += howMuch;
-    else
-    {
-        _grassLevel = _grassMAX;
-    }
+    _grassLevel += howMuch;
 }
 
 void Cell::_setGrassSatColor()
 {
-    _grassColorSaturation.g = (_grassLevel * 255/_grassMAX);
+    _grassColorSaturation = grassColor_.calculateGrassColor(_grassLevel);
 }
 
 void Cell::_setColor()
 {
-    _color = _actor->color_;
+    _color = _actor->_color;
 }

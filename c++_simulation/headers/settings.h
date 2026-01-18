@@ -42,11 +42,12 @@ inline float grassGrowChance;
 inline std::vector<unsigned int> tileStartAmounts{};
 
 // Reproduction and death
-inline int rabbitMaxSat;
-inline int rabbitMinSat;
-inline int rabbitReproductionSat;
-inline int rabbitSatPerGrass;
-inline int rabbitSatPerTick;
+inline int rabbitMaxEnergy;
+inline int rabbitStartingEnergy;
+inline int rabbitReproductionEnergy;
+inline int rabbitReproductionCost;
+inline int rabbitEnergyPerEat;
+inline int rabbitEnergyPerTick;
 inline int rabbitSightValue;
 
 inline int foxMaxSat;
@@ -109,11 +110,11 @@ inline void get_settings()
         grassMaxAmount = settings.at("tiles").at("definitions").at("grass").value("maxAmount", 10);
 
         // Rabbits
-        rabbitMaxSat = settings.at("animals").at("rabbit").value("maxSat", 75);
-        rabbitMinSat = settings.at("animals").at("rabbit").value("minSat", -50);
-        rabbitReproductionSat = settings.at("animals").at("rabbit").value("reproductionSat", 73);
-        rabbitSatPerGrass = settings.at("animals").at("rabbit").value("satPerFood", 25);
-        rabbitSatPerTick = settings.at("animals").at("rabbit").value("satPerTick", -1);
+        rabbitMaxEnergy = settings.at("animals").at("rabbit").value("maxSat", 75);
+        rabbitStartingEnergy = settings.at("animals").at("rabbit").value("minSat", 50);
+        rabbitReproductionEnergy = settings.at("animals").at("rabbit").value("reproductionSat", 73);
+        rabbitEnergyPerEat = settings.at("animals").at("rabbit").value("satPerFood", 25);
+        rabbitEnergyPerTick = settings.at("animals").at("rabbit").value("satPerTick", -1);
         rabbitSightValue = settings.at("animals").at("rabbit").value("sightValue", 3);
 
         // Foxes
@@ -158,11 +159,11 @@ inline void save_settings()
         file << std::endl;
         file << "Rabbit parameters: " << std::endl;
         file << "Starting rabbit amount: " << tileStartAmounts[static_cast<int>(TileState::Rabbit)] << std::endl;
-        file << "Maximum rabbit saturation: " << rabbitMaxSat << std::endl;
-        file << "Minimum rabbit saturation: " << rabbitMinSat << std::endl;
-        file << "Rabbit reproduction saturation: " << rabbitReproductionSat << std::endl;
-        file << "Rabbit saturation per meal: " << rabbitSatPerGrass << std::endl;
-        file << "Rabbit hunger rate per tick: " << rabbitSatPerTick << std::endl;
+        file << "Maximum rabbit saturation: " << rabbitMaxEnergy << std::endl;
+        file << "Minimum rabbit saturation: " << rabbitStartingEnergy << std::endl;
+        file << "Rabbit reproduction saturation: " << rabbitReproductionEnergy << std::endl;
+        file << "Rabbit saturation per meal: " << rabbitEnergyPerEat << std::endl;
+        file << "Rabbit hunger rate per tick: " << rabbitEnergyPerTick << std::endl;
         file << std::endl;
         file << "Fox parameters: " << std::endl;
         file << "Starting fox amount: " << tileStartAmounts[static_cast<int>(TileState::Fox)] << std::endl;

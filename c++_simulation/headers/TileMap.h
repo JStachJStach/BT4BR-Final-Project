@@ -15,4 +15,6 @@ public:
     Grid& get_tile_grid();
 private:
     Grid _grid;
+    std::vector<Position> _cells;
+
 };
