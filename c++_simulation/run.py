@@ -32,6 +32,9 @@ def simulation_speed_change(change):
 def sparsity_val_change(change):
     global sparsity_val
     sparsity_val = change
+def grass_growth_change(change):
+    global grass_growth
+    grass_growth = change
 
 
 def start():
@@ -45,10 +48,14 @@ def start():
 
         settings_map["tiles"]["definitions"]["fox"]["startAmount"] = int(fox_start_num)
         settings_map["tiles"]["definitions"]["rabbit"]["startAmount"] = int(rabbit_start_num)
+        settings_map["animals"]["grass"]["satPerTick"] = int(grass_growth)
         if include_grass_bool_obj.get():
             settings_map["tiles"]["definitions"]["grass"]["startAmount"] = int(grass_start_num)
+            settings_map["animals"]["rabbit"]["satPerTick"] = -2
         else:
             settings_map["tiles"]["definitions"]["grass"]["startAmount"] = 0
+            settings_map["animals"]["rabbit"]["satPerTick"] = 3
+
         settings_map["grid"]["size"] = int(grid_size)
         settings_map["tick"]["duration"] = float(simulation_speed)
         settings_map["tiles"]["sparsity"] = int(sparsity_val)
@@ -104,10 +111,20 @@ def plotting(i):
     axes[0].set_ylabel("Population")
     axes[0].legend(loc="upper left")
 
-
-    axes[1].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
-    axes[1].set_xlabel("Fox population")
-    axes[1].set_ylabel("Rabbit population")
+    if not include_grass_bool_obj.get():
+        axes[1].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
+        axes[1].set_xlabel("Fox population")
+        axes[1].set_ylabel("Rabbit population")
+    else:
+        axes[1].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
+        axes[1].scatter(rabbits[-120:], grass[-120:], c=time[-120:], cmap="Greys")
+        x_empty=[]
+        y_empty=[]
+        axes[1].plot(x_empty,y_empty,color="#9B4B23", label="y=Rabbit, x=Fox")
+        axes[1].plot(x_empty,y_empty,color="black", label="y=Grass, x=Rabbit")
+        axes[1].set_xlabel("Predator population")
+        axes[1].set_ylabel("Prey population")
+        axes[1].legend(loc="upper right")
     fig.subplots_adjust(left=0.2)
 
 
@@ -170,12 +187,17 @@ Objects_section_text = tk.Label(settings_panel, text="Rules:", font=("Georgia", 
 Objects_section_text.pack()
 
 
-sparsity_val_scale = tk.Scale(settings_panel,from_=4,to=10,orient="horizontal",command=sparsity_val_change)
-sparsity_val_scale.set(6)
+sparsity_val_scale = tk.Scale(settings_panel,from_=3,to=10,orient="horizontal",command=sparsity_val_change)
+sparsity_val_scale.set(5)
 sparsity_val_scale.pack()
 sparsity_val_scale_text = tk.Label(settings_panel, text="Density", font=("Georgia", 12))
 sparsity_val_scale_text.pack()
 
+grass_growth_scale = tk.Scale(settings_panel,from_=2,to=20,orient="horizontal",command=grass_growth_change)
+grass_growth_scale.set(7)
+grass_growth_scale.pack()
+grass_growth_scale_text = tk.Label(settings_panel, text="Grass growth rate", font=("Georgia", 12))
+grass_growth_scale_text.pack()
 
 
 

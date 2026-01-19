@@ -51,6 +51,8 @@ void main_contents()
     save_settings();
 
 	int grassCount = 0;
+	int rabbitCount = 0;
+	int foxCount = 0;
     std::map<std::array<int, 2>, Tile> tileMap; //creating empty tilemap
     // Set loop bounds
     constexpr TileState TileMin = TileState::Grass;
@@ -103,6 +105,10 @@ void main_contents()
 					continue;
                 if (tileMap[pos].get_state() == TileState::Grass) //skip empty tiles
 					grassCount++;
+                if (tileMap[pos].get_state() == TileState::Rabbit) //skip empty tiles
+                    rabbitCount++;
+                if (tileMap[pos].get_state() == TileState::Fox) //skip empty tiles
+                    foxCount++;
                 std::array<int, 2> newPos = tileMap[pos].act(pos, tileMap); //.act(pos,tileMap) is responsible for status and behavior
                 if (newPos != pos) //if moved: remove old pos from the map
                 {
@@ -124,8 +130,10 @@ void main_contents()
                 row.push_back(lastTickTime);
                 row.push_back(grassCount);
 				grassCount = 0;
-                row.push_back(Tile::get_rabbit_count());
-                row.push_back(Tile::get_fox_count());
+                row.push_back(rabbitCount);
+				rabbitCount = 0;
+				row.push_back(foxCount);
+				foxCount = 0;
                 FileUtils::saveCSV(row);
             }
             lastTickTime = GetTime(); //look at the statement ( if (lastTickTime + tickDuration < GetTime()) )

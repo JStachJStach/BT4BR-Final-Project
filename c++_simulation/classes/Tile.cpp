@@ -116,6 +116,8 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
             {
+				pos[0] += RandomUtils::get_random_num(-2, 2);
+				pos[1] += RandomUtils::get_random_num(-2, 2);
                 if (!tileMap.contains(pos) && !(pos[0] < 0 || pos[0] > gridSize - 1 || pos[1] < 0 || pos[1] > gridSize - 1))
                 {
 					this->_satiation += foxSatPerReproduction;
@@ -136,8 +138,25 @@ std::array<int, 2> Tile::act(const std::array<int, 2> &currentPosition, std::map
         {
             for (auto pos : RandomUtils::positionsAdjacent(currentPosition))
             {
+
+				pos[0] += (pos[0] - currentPosition[0]) * RandomUtils::get_random_num(1, RandomUtils::get_random_num(3, 10));
+				pos[1] += (pos[1] - currentPosition[1]) * RandomUtils::get_random_num(1, RandomUtils::get_random_num(3,10));
+
                 if (!tileMap.contains(pos) && !(pos[0] < 0 || pos[0] > gridSize - 1 || pos[1] < 0 || pos[1] > gridSize - 1))
                 {
+                    int counter = 0;
+                    for (auto pos2 : RandomUtils::positionsAdjacent(pos))
+                    {
+                        if (tileMap.contains(pos2) && tileMap[pos2]._name == "Grass")
+                        {
+							counter++;
+                        }
+					}
+                    if (counter >= RandomUtils::get_random_num(1, 2))
+                    {
+                        continue;
+                    }
+
                     this->_satiation += grassSatPerReproduction;
                     const Tile* tile = new Tile("Grass", GREEN);
                     tileMap[std::array{ pos[0], pos[1] }] = *tile;
