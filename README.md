@@ -61,22 +61,25 @@ Arch:
 ``` bash
 sudo pacman -S python3-matplotlib
 ```
-Windows: https://matplotlib.org/stable/install/index.html
+Windows:
+``` bash
+pip install matplotlib
+```
 
 After verifying that the dependencies are installed, run the program with the following commands on Windows or Linux:
 
 ``` bash
-cd path/to/directory/BT4BR-Final-Project\c++_simulation
+cd path/to/directory/BT4BR-Final-Project/c++_simulation
 python run.py
 ```
 
 ## Manual compilation
 
 Should you require to manually compile the c++ program yourself you may do so by doing the following:
-## Linux (tested on Manjaro)
+### Linux (tested on Manjaro)
 
 ``` bash
-cd path/to/directory/BT4BR-Final-Project\c++_simulation
+cd path/to/directory/BT4BR-Final-Project/c++_simulation
 cmake .
 cmake --build .
 mv ./c++_simulation ./simulation
