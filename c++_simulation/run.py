@@ -84,17 +84,18 @@ def plotting(i):
                 foxes.append(int(row[3]))
     axes[0].clear()
     axes[1].clear()
-
-    if foxes[len(foxes)-1] > 900 or rabbits[len(rabbits)-1] > 900 or int(grid_size) >= 140:
-        axes[1].set_xlim(right=2000)
-        axes[1].set_ylim(top=2000) 
-    elif foxes[len(foxes)-1] > 400 or rabbits[len(rabbits)-1] > 400 or int(grid_size) >= 100:
-        axes[1].set_xlim(right=1000)
-        axes[1].set_ylim(top=1000)
-    else:
-        axes[1].set_xlim(right=400)
-        axes[1].set_ylim(top=400)
-
+    try:
+        if foxes[-1] > 900 or rabbits[-1] > 900 or int(grid_size) >= 140:
+            axes[1].set_xlim(right=2000)
+            axes[1].set_ylim(top=2000) 
+        elif foxes[-1] > 400 or rabbits[-1] > 400 or int(grid_size) >= 100:
+            axes[1].set_xlim(right=1000)
+            axes[1].set_ylim(top=1000)
+        else:
+            axes[1].set_xlim(right=400)
+            axes[1].set_ylim(top=400)
+    except:
+        print("")
     axes[0].plot(time[-1200:], foxes[-1200:], color="orange", label="Fox",linewidth=2)
     axes[0].plot(time[-1200:], rabbits[-1200:], color="grey", label="Rabbit",linewidth=2)
     if(include_grass_bool_obj.get()):

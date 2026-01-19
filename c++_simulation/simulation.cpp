@@ -50,6 +50,7 @@ void main_contents()
     get_settings();
     save_settings();
 
+	int grassCount = 0;
     std::map<std::array<int, 2>, Tile> tileMap; //creating empty tilemap
     // Set loop bounds
     constexpr TileState TileMin = TileState::Grass;
@@ -98,6 +99,10 @@ void main_contents()
 
             for (auto pos : tilesPositions) //positions from tilePosition are in random order so the order of movement is undetermined
             {
+                if (!tileMap.contains(pos)) //i dont know how but it removes a bug
+					continue;
+                if (tileMap[pos].get_state() == TileState::Grass) //skip empty tiles
+					grassCount++;
                 std::array<int, 2> newPos = tileMap[pos].act(pos, tileMap); //.act(pos,tileMap) is responsible for status and behavior
                 if (newPos != pos) //if moved: remove old pos from the map
                 {
@@ -117,7 +122,8 @@ void main_contents()
             {
                 std::vector<float> row;
                 row.push_back(lastTickTime);
-                row.push_back(Tile::get_grass_count());
+                row.push_back(grassCount);
+				grassCount = 0;
                 row.push_back(Tile::get_rabbit_count());
                 row.push_back(Tile::get_fox_count());
                 FileUtils::saveCSV(row);
