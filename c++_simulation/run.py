@@ -12,8 +12,6 @@ locale.setlocale(locale.LC_NUMERIC, "C")
 import json
 import tkinter as tk
 
-
-
 def fox_start_num_change(change):
     global fox_start_num
     fox_start_num = change
@@ -35,7 +33,12 @@ def sparsity_val_change(change):
 def grass_growth_change(change):
     global grass_growth
     grass_growth = change
-
+def rabbit_reproduction_rate_change(change):
+        global rabbit_reproduction_rate
+        rabbit_reproduction_rate = change
+def fox_reproduction_rate_change(change):
+        global fox_reproduction_rate
+        fox_reproduction_rate = change
 
 def start():
     global simulation_process
@@ -59,8 +62,11 @@ def start():
         settings_map["grid"]["size"] = int(grid_size)
         settings_map["tick"]["duration"] = float(simulation_speed)
         settings_map["tiles"]["sparsity"] = int(sparsity_val)
-
-
+        settings_map["animals"]["fox"]["reproductionSat"] = 20-int(fox_reproduction_rate)###############################################
+        settings_map["animals"]["fox"]["maxSat"] = (20-int(fox_reproduction_rate))*2####################################################
+        settings_map["animals"]["rabbit"]["reproductionSat"] = 70-int(rabbit_reproduction_rate)#########################################
+        settings_map["animals"]["rabbit"]["maxSat"] = (70-int(rabbit_reproduction_rate))*2##############################################
+        
     with open("settings.json", "w") as f:
         json.dump(settings_map, f)
 
@@ -92,7 +98,7 @@ def plotting(i):
     axes[0].clear()
     axes[1].clear()
     try:
-        if foxes[-1] > 900 or rabbits[-1] > 900 or int(grid_size) >= 140:
+        if foxes[-1] > 900 or rabbits[-1] > 900 or int(grid_size) >= 150:
             axes[1].set_xlim(right=2000)
             axes[1].set_ylim(top=2000) 
         elif foxes[-1] > 400 or rabbits[-1] > 400 or int(grid_size) >= 100:
@@ -199,7 +205,17 @@ grass_growth_scale.pack()
 grass_growth_scale_text = tk.Label(settings_panel, text="Grass growth rate", font=("Georgia", 12))
 grass_growth_scale_text.pack()
 
+fox_reproduction_rate_scale = tk.Scale(settings_panel,from_=5, to=15,orient="horizontal",command=fox_reproduction_rate_change)
+fox_reproduction_rate_scale.set(10)
+fox_reproduction_rate_scale.pack()
+fox_reproduction_rate_scale_text = tk.Label(settings_panel,text="Fox reproduction rate", font=("Georgia", 12))
+fox_reproduction_rate_scale_text.pack()
 
+rabbit_reproduction_rate_scale = tk.Scale(settings_panel,from_=5, to=50,orient="horizontal",command=rabbit_reproduction_rate_change)
+rabbit_reproduction_rate_scale.set(35)
+rabbit_reproduction_rate_scale.pack()
+rabbit_reproduction_rate_scale_text = tk.Label(settings_panel,text="Rabbit reproduction rate", font=("Georgia", 12))
+rabbit_reproduction_rate_scale_text.pack()
 
 plt.style.use("fivethirtyeight")
 fig, axes = plt.subplots(2, 1)
