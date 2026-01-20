@@ -1,8 +1,11 @@
+import signal
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import subprocess
+import signal
 import time
 import csv
 import os
@@ -43,8 +46,13 @@ def fox_reproduction_rate_change(change):
 def start():
     global simulation_process
     try:
-        simulation_process.terminate()
-    except:
+
+        old = simulation_process
+        os.killpg(old.pid, signal.SIGKILL)
+        old.wait()
+        print("success")
+    except Exception as e:
+        print(repr(e))
         confirm_button.config(text="Rerun simulation")
     with open("settings.json", "r") as f:
         settings_map = json.load(f)
@@ -71,9 +79,9 @@ def start():
         json.dump(settings_map, f)
 
     try:
-        simulation_process = subprocess.Popen(["simulation.exe"])
+        simulation_process = subprocess.Popen(["simulation.exe"],  start_new_session=True)
     except:
-        simulations_process = subprocess.Popen(["./simulation"])
+        simulation_process = subprocess.Popen(["./simulation"], start_new_session=True)
 
     canvas_panel.pack(side="right", fill="both", expand=True)
     global animation_object
