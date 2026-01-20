@@ -45,15 +45,17 @@ def fox_reproduction_rate_change(change):
 def start():
     global simulation_process
     try:
-
         old = simulation_process
         os.killpg(old.pid, signal.SIGKILL)
         old.wait()
-        simulation_process.terminate() #for windows
         print("success")
     except Exception as e:
         print(repr(e))
-        confirm_button.config(text="Rerun simulation")
+        try:
+            simulation_process.terminate() #for windows
+        except:
+            print("")
+    confirm_button.config(text="Rerun simulation")
     with open("settings.json", "r") as f:
         settings_map = json.load(f)
 

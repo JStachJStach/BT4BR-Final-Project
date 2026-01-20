@@ -1,6 +1,6 @@
 Ecosystem Simulation v0.1.0
-Ran at: Tue Jan 20 17:04:12 2026
-Seed used: 548355281
+Ran at: Tue Jan 20 17:09:55 2026
+Seed used: 2639553151
 
 Settings used: 
 Window size: 700x700px
@@ -11,7 +11,7 @@ Grid size: 140px
 Grid line thickness: 2px
 
 Grass parameters: 
-Starting grass amount: 0
+Starting grass amount: 40
 Max grass amount: 0
 
 Rabbit parameters: 
@@ -20,7 +20,7 @@ Maximum rabbit saturation: 70
 Minimum rabbit saturation: -60
 Rabbit reproduction saturation: 35
 Rabbit saturation per meal: 25
-Rabbit hunger rate per tick: 3
+Rabbit hunger rate per tick: -2
 
 Fox parameters: 
 Starting fox amount: 70
