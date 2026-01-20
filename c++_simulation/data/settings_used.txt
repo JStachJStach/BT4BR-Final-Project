@@ -1,6 +1,6 @@
 Ecosystem Simulation v0.1.0
-Ran at: Tue Jan 20 13:42:14 2026
-Seed used: 1602423906
+Ran at: Tue Jan 20 17:04:12 2026
+Seed used: 548355281
 
 Settings used: 
 Window size: 700x700px
@@ -24,8 +24,8 @@ Rabbit hunger rate per tick: 3
 
 Fox parameters: 
 Starting fox amount: 70
-Maximum fox saturation: 40
+Maximum fox saturation: 20
 Minimum fox saturation: -30
-Fox reproduction saturation: 15
+Fox reproduction saturation: 10
 Fox saturation per meal: 25
 Fox hunger rate per tick: -1

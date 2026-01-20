@@ -1,5 +1,4 @@
 import signal
-
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import style
@@ -50,6 +49,7 @@ def start():
         old = simulation_process
         os.killpg(old.pid, signal.SIGKILL)
         old.wait()
+        simulation_process.terminate() #for windows
         print("success")
     except Exception as e:
         print(repr(e))
@@ -88,7 +88,6 @@ def start():
     animation_object = animation.FuncAnimation(fig, plotting, interval=100)
 
 def plotting(i):
-
     time = []
     grass = []
     rabbits = []
@@ -99,54 +98,84 @@ def plotting(i):
         for row in csv_read:
             if len(row) == 4:
                 time.append(float(row[0]))
-                if(include_grass_bool_obj.get()):
-                    grass.append(int(row[1]))
+                grass.append(int(row[1]))
                 rabbits.append(int(row[2]))
                 foxes.append(int(row[3]))
-    axes[0].clear()
-    axes[1].clear()
+
+    axes[0][0].clear()
+    axes[0][1].clear()
+    axes[1][0].clear()
+    axes[1][1].clear()
+    
     try:
         if foxes[-1] > 900 or rabbits[-1] > 900 or int(grid_size) >= 150:
-            axes[1].set_xlim(right=2000)
-            axes[1].set_ylim(top=2000) 
+            axes[1][0].set_xlim(right=2000)
+            axes[1][0].set_ylim(top=2000) 
         elif foxes[-1] > 400 or rabbits[-1] > 400 or int(grid_size) >= 100:
-            axes[1].set_xlim(right=1000)
-            axes[1].set_ylim(top=1000)
+            axes[1][0].set_xlim(right=1000)
+            axes[1][0].set_ylim(top=1000)
         else:
-            axes[1].set_xlim(right=400)
-            axes[1].set_ylim(top=400)
+            axes[1][0].set_xlim(right=400)
+            axes[1][0].set_ylim(top=400)
     except:
         print("")
-    axes[0].plot(time[-1200:], foxes[-1200:], color="orange", label="Fox",linewidth=2)
-    axes[0].plot(time[-1200:], rabbits[-1200:], color="grey", label="Rabbit",linewidth=2)
+    
+    axes[0][0].plot(time[-1200:], foxes[-1200:], color="orange", label="Fox",linewidth=2)
+    axes[0][0].plot(time[-1200:], rabbits[-1200:], color="grey", label="Rabbit",linewidth=2)
     if(include_grass_bool_obj.get()):
-        axes[0].plot(time[-1200:], grass[-1200:], color="green", label="Grass",linewidth=2)
-    axes[0].set_xlabel("Time (in seconds)")
-    axes[0].set_ylabel("Population")
-    axes[0].legend(loc="upper left")
+        axes[0][0].plot(time[-1200:], grass[-1200:], color="green", label="Grass",linewidth=2)
+    axes[0][0].set_xlabel("Time (in seconds)")
+    axes[0][0].set_ylabel("Population")
+    axes[0][0].legend(loc="upper left")
+
+    axes[1][0].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
+    axes[1][0].set_xlabel("Fox population")
+    axes[1][0].set_ylabel("Rabbit population")
+
 
     if not include_grass_bool_obj.get():
-        axes[1].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
-        axes[1].set_xlabel("Fox population")
-        axes[1].set_ylabel("Rabbit population")
+        axes[0][1].axis("off")
+        axes[1][1].axis("off")
     else:
-        axes[1].scatter(foxes[-120:], rabbits[-120:], c=time[-120:], cmap="Oranges")
-        axes[1].scatter(rabbits[-120:], grass[-120:], c=time[-120:], cmap="Greys")
-        x_empty=[]
-        y_empty=[]
-        axes[1].plot(x_empty,y_empty,color="#9B4B23", label="y=Rabbit, x=Fox")
-        axes[1].plot(x_empty,y_empty,color="black", label="y=Grass, x=Rabbit")
-        axes[1].set_xlabel("Predator population")
-        axes[1].set_ylabel("Prey population")
-        axes[1].legend(loc="upper right")
-    fig.subplots_adjust(left=0.2)
+        axes[0][1].axis("on")
+        axes[1][1].axis("on")
+        axes[0][1].scatter(foxes[-120:], grass[-120:], c=time[-120:], cmap="Greens")
+        axes[0][1].set_xlabel("Fox population")
+        axes[0][1].set_ylabel("Grass amount")
+        try:
+            if grass[-1] > 2000 or foxes[-1] > 2000 or int(grid_size) >= 150:
+                axes[0][1].set_xlim(right=3000)
+                axes[0][1].set_ylim(top=6000) 
+            elif grass[-1] > 1000 or foxes[-1] > 500 or int(grid_size) >= 100:
+                axes[0][1].set_xlim(right=1500)
+                axes[0][1].set_ylim(top=3000)
+            else:
+                axes[0][1].set_xlim(right=400)
+                axes[0][1].set_ylim(top=800)
+        except:
+            print("")
+        axes[1][1].scatter(rabbits[-120:], grass[-120:], c=time[-120:], cmap="Greys")
+        axes[1][1].set_xlabel("Rabbit population")
+        axes[1][1].set_ylabel("Grass amount")
+        try:
+            if rabbits[-1] > 2000 or grass[-1] > 2000 or int(grid_size) >= 150:
+                axes[1][1].set_xlim(right=3000)
+                axes[1][1].set_ylim(top=6000) 
+            elif rabbits[-1] > 1000 or grass[-1] > 500 or int(grid_size) >= 100:
+                axes[1][1].set_xlim(right=1500)
+                axes[1][1].set_ylim(top=3000)
+            else:
+                axes[1][1].set_xlim(right=400)
+                axes[1][1].set_ylim(top=800)
+        except:
+            print("")
 
 
 
 
 root = tk.Tk()
 root.title("Settings and plotting")
-root.geometry("800x900")
+root.geometry("1200x900")
 
 settings_panel= tk.Frame(root)
 settings_panel.pack(side="left", anchor="n")
@@ -228,7 +257,7 @@ grass_growth_scale_text.pack()
 
 
 plt.style.use("fivethirtyeight")
-fig, axes = plt.subplots(2, 1)
+fig, axes = plt.subplots(2, 2)
 
 canvas = FigureCanvasTkAgg(fig, master=root)
 canvas_panel = canvas.get_tk_widget()
