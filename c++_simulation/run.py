@@ -34,11 +34,11 @@ def grass_growth_change(change):
     global grass_growth
     grass_growth = change
 def rabbit_reproduction_rate_change(change):
-        global rabbit_reproduction_rate
-        rabbit_reproduction_rate = change
+    global rabbit_reproduction_rate
+    rabbit_reproduction_rate = change
 def fox_reproduction_rate_change(change):
-        global fox_reproduction_rate
-        fox_reproduction_rate = change
+    global fox_reproduction_rate
+    fox_reproduction_rate = change
 
 def start():
     global simulation_process
@@ -199,12 +199,6 @@ sparsity_val_scale.pack()
 sparsity_val_scale_text = tk.Label(settings_panel, text="Density", font=("Georgia", 12))
 sparsity_val_scale_text.pack()
 
-grass_growth_scale = tk.Scale(settings_panel,from_=2,to=20,orient="horizontal",command=grass_growth_change)
-grass_growth_scale.set(7)
-grass_growth_scale.pack()
-grass_growth_scale_text = tk.Label(settings_panel, text="Grass growth rate", font=("Georgia", 12))
-grass_growth_scale_text.pack()
-
 fox_reproduction_rate_scale = tk.Scale(settings_panel,from_=5, to=15,orient="horizontal",command=fox_reproduction_rate_change)
 fox_reproduction_rate_scale.set(10)
 fox_reproduction_rate_scale.pack()
@@ -216,6 +210,14 @@ rabbit_reproduction_rate_scale.set(35)
 rabbit_reproduction_rate_scale.pack()
 rabbit_reproduction_rate_scale_text = tk.Label(settings_panel,text="Rabbit reproduction rate", font=("Georgia", 12))
 rabbit_reproduction_rate_scale_text.pack()
+
+grass_growth_scale = tk.Scale(settings_panel,from_=2,to=20,orient="horizontal",command=grass_growth_change)
+grass_growth_scale.set(7)
+grass_growth_scale.pack()
+grass_growth_scale_text = tk.Label(settings_panel, text="Grass growth rate", font=("Georgia", 12))
+grass_growth_scale_text.pack()
+
+
 
 plt.style.use("fivethirtyeight")
 fig, axes = plt.subplots(2, 1)
