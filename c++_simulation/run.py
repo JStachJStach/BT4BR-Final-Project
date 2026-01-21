@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from matplotlib import style
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import subprocess
 import signal
-import time
 import csv
 import os
 import locale
@@ -14,7 +12,6 @@ import json
 import datetime
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import simpledialog
 from tkinter import filedialog
 
 def fox_start_num_change(change):
@@ -60,6 +57,7 @@ def start():
             print("")
     confirm_button.config(text="Rerun simulation")
     save_button.config(state="active")
+
     with open("settings.json", "r") as f:
         settings_map = json.load(f)
 
@@ -76,11 +74,12 @@ def start():
         settings_map["grid"]["size"] = int(grid_size)
         settings_map["tick"]["duration"] = float(simulation_speed)
         settings_map["tiles"]["sparsity"] = int(sparsity_val)
-        settings_map["animals"]["fox"]["reproductionSat"] = 20-int(fox_reproduction_rate)###############################################
-        settings_map["animals"]["fox"]["maxSat"] = (20-int(fox_reproduction_rate))*2####################################################
-        settings_map["animals"]["rabbit"]["reproductionSat"] = 70-int(rabbit_reproduction_rate)#########################################
-        settings_map["animals"]["rabbit"]["maxSat"] = (70-int(rabbit_reproduction_rate))*2##############################################
-        
+        """
+        settings_map["animals"]["fox"]["reproductionSat"] = 20-int(fox_reproduction_rate)
+        settings_map["animals"]["fox"]["maxSat"] = (20-int(fox_reproduction_rate))*2
+        settings_map["animals"]["rabbit"]["reproductionSat"] = 70-int(rabbit_reproduction_rate)
+        settings_map["animals"]["rabbit"]["maxSat"] = (70-int(rabbit_reproduction_rate))*2
+        """
     with open("settings.json", "w") as f:
         json.dump(settings_map, f)
 
@@ -88,17 +87,23 @@ def start():
         simulation_process = subprocess.Popen(["simulation.exe"],  start_new_session=True)
     except:
         simulation_process = subprocess.Popen(["./simulation"], start_new_session=True)
-
-    with open("../data/settings_used.txt", mode='r') as f:
-        for row in f:
-            if row.startswith('Seed'):
-                seed_label.config(text=row)
-                break
-
+    try:
+        with open("../data/settings_used.txt", mode='r') as f:
+            for row in f:
+                if row.startswith('Seed'):
+                    seed_label.config(text=row)
+                    break
+    except:
+            with open("data/settings_used.txt", mode='r') as f:
+                for row in f:
+                    if row.startswith('Seed'):
+                        seed_label.config(text=row)
+                        break
     canvas_panel.pack(side="right", fill="both", expand=True)
     global animation_object
     animation_object = animation.FuncAnimation(fig, plotting, interval=100)
 
+"""
 def on_closing():
     if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
         try:
@@ -109,7 +114,7 @@ def on_closing():
             root.destroy()
         except:
             root.destroy()
-
+"""
 def plotting(i):
     time = []
     grass = []
@@ -217,7 +222,7 @@ simulation_section_text = tk.Label(settings_panel, text="Simulation:", font=("Ge
 simulation_section_text.pack()
 
 grid_size_scale = tk.Scale(settings_panel,from_=10,to=180, resolution=10, orient="horizontal",command=grid_size_change)
-grid_size_scale.set(140)
+grid_size_scale.set(120)
 grid_size_scale.pack()
 grid_size_text = tk.Label(settings_panel, text="Grid size", font=("Georgia", 12))
 grid_size_text.pack()
@@ -233,14 +238,14 @@ Objects_section_text = tk.Label(settings_panel, text="Start params:", font=("Geo
 Objects_section_text.pack()
 
 fox_num_scale = tk.Scale(settings_panel,from_=0,to=100,orient="horizontal",command=fox_start_num_change)
-fox_num_scale.set(70)
+fox_num_scale.set(35)
 fox_num_scale.pack()
 fox_num_scale_text = tk.Label(settings_panel, text="Number of foxes", font=("Georgia", 12))
 fox_num_scale_text.pack()
 
 
 rabbit_num_scale = tk.Scale(settings_panel,from_=0,to=200,orient="horizontal",command=rabbit_start_num_change)
-rabbit_num_scale.set(140)
+rabbit_num_scale.set(70)
 rabbit_num_scale.pack()
 rabbit_num_scale_text = tk.Label(settings_panel, text="Number of rabbits", font=("Georgia", 12))
 rabbit_num_scale_text.pack()
@@ -269,6 +274,8 @@ sparsity_val_scale.pack()
 sparsity_val_scale_text = tk.Label(settings_panel, text="Density", font=("Georgia", 12))
 sparsity_val_scale_text.pack()
 
+
+"""
 fox_reproduction_rate_scale = tk.Scale(settings_panel,from_=5, to=15,orient="horizontal",command=fox_reproduction_rate_change)
 fox_reproduction_rate_scale.set(10)
 fox_reproduction_rate_scale.pack()
@@ -280,7 +287,7 @@ rabbit_reproduction_rate_scale.set(35)
 rabbit_reproduction_rate_scale.pack()
 rabbit_reproduction_rate_scale_text = tk.Label(settings_panel,text="Rabbit reproduction rate", font=("Georgia", 12))
 rabbit_reproduction_rate_scale_text.pack()
-
+"""
 grass_growth_scale = tk.Scale(settings_panel,from_=2,to=20,orient="horizontal",command=grass_growth_change)
 grass_growth_scale.set(7)
 grass_growth_scale.pack()
@@ -298,10 +305,10 @@ canvas_panel = canvas.get_tk_widget()
 confirm_button = tk.Button(settings_panel, text="Run simulation",font=("Georgia", 13), command=start)
 confirm_button.pack(pady="10")
 
-save_button = tk.Button(settings_panel, text="Save results",font=("Georgia", 13), command=save_plot, state="disabled")
+save_button = tk.Button(settings_panel, text="Save figures",font=("Georgia", 13), command=save_plot, state="disabled")
 save_button.pack(pady="10")
 
 
 
-root.protocol("WM_DELETE_WINDOW", on_closing)
+#root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
