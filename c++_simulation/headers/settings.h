@@ -128,6 +128,7 @@ inline void get_settings()
         rabbitSatPerTick = settings.at("animals").at("rabbit").value("satPerTick", -1);
         rabbitSightValue = settings.at("animals").at("rabbit").value("sightValue", 3);
         rabbitSatPerReproduction = settings.at("animals").at("fox").value("perReproductionSat", -30);
+        rabbitSatPerReproduction = -rabbitReproductionSat;
 
         // Foxes
         foxMaxSat = settings.at("animals").at("fox").value("maxSat", 75);
@@ -137,6 +138,7 @@ inline void get_settings()
         foxSatPerTick = settings.at("animals").at("fox").value("satPerTick", -1);
         foxSightValue = settings.at("animals").at("fox").value("sightValue", 4);
 		foxSatPerReproduction = settings.at("animals").at("fox").value("perReproductionSat", -30);
+
 
         // Grass
         grassMaxSat = settings.at("animals").at("grass").value("maxSat", 75);

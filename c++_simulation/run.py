@@ -89,6 +89,12 @@ def start():
     except:
         simulation_process = subprocess.Popen(["./simulation"], start_new_session=True)
 
+    with open("../data/settings_used.txt", mode='r') as f:
+        for row in f:
+            if row.startswith('Seed'):
+                seed_label.config(text=row)
+                break
+
     canvas_panel.pack(side="right", fill="both", expand=True)
     global animation_object
     animation_object = animation.FuncAnimation(fig, plotting, interval=100)
@@ -194,15 +200,18 @@ def save_plot():
     save_str = now + ".png"
 
     if messagebox.askokcancel("Save Plot", "Would you like to save plot?"):
-        f = filedialog.asksaveasfilename(initialfile=save_str, initialdir="../figures", defaultextension=".png", filetypes=[("PNG files", "*.png")])
+        f = filedialog.asksaveasfilename(initialfile=save_str, initialdir="../figures", defaultextension=".png", filetypes=[("PNG files", "*.png"), ("SVG files", "*.svg")])
         plt.savefig(f)
 
 root = tk.Tk()
 root.title("Settings and plotting")
-root.geometry("1200x1000")
+root.geometry("1200x1080")
 
 settings_panel= tk.Frame(root)
 settings_panel.pack(side="left", anchor="n")
+
+seed_label = tk.Label(settings_panel, text="Seed:", font=("Georgia", 12))
+seed_label.pack(pady="0")
 
 simulation_section_text = tk.Label(settings_panel, text="Simulation:", font=("Georgia", 15, "bold"))
 simulation_section_text.pack()
@@ -287,9 +296,12 @@ canvas = FigureCanvasTkAgg(fig, master=root)
 canvas_panel = canvas.get_tk_widget()
 
 confirm_button = tk.Button(settings_panel, text="Run simulation",font=("Georgia", 13), command=start)
-confirm_button.pack(pady="20")
+confirm_button.pack(pady="10")
 
 save_button = tk.Button(settings_panel, text="Save results",font=("Georgia", 13), command=save_plot, state="disabled")
 save_button.pack(pady="10")
+
+
+
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
