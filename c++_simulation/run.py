@@ -1,4 +1,3 @@
-import signal
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import style
@@ -12,7 +11,11 @@ import locale
 os.environ["LC_NUMERIC"] = "C"
 locale.setlocale(locale.LC_NUMERIC, "C")
 import json
+import datetime
 import tkinter as tk
+from tkinter import messagebox
+from tkinter import simpledialog
+from tkinter import filedialog
 
 def fox_start_num_change(change):
     global fox_start_num
@@ -48,7 +51,7 @@ def start():
         old = simulation_process
         os.killpg(old.pid, signal.SIGKILL)
         old.wait()
-        print("success")
+        print("Window close success")
     except Exception as e:
         print(repr(e))
         try:
@@ -56,6 +59,7 @@ def start():
         except:
             print("")
     confirm_button.config(text="Rerun simulation")
+    save_button.config(state="active")
     with open("settings.json", "r") as f:
         settings_map = json.load(f)
 
@@ -88,6 +92,17 @@ def start():
     canvas_panel.pack(side="right", fill="both", expand=True)
     global animation_object
     animation_object = animation.FuncAnimation(fig, plotting, interval=100)
+
+def on_closing():
+    if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+        try:
+            old = simulation_process
+            os.killpg(old.pid, signal.SIGKILL)
+            old.wait()
+            print("Simulation window close success")
+            root.destroy()
+        except:
+            root.destroy()
 
 def plotting(i):
     time = []
@@ -174,10 +189,17 @@ def plotting(i):
 
 
 
+def save_plot():
+    now = datetime.date.strftime(datetime.datetime.now(), "%Y%m%d_%H%M%S")
+    save_str = now + ".png"
+
+    if messagebox.askokcancel("Save Plot", "Would you like to save plot?"):
+        f = filedialog.asksaveasfilename(initialfile=save_str, initialdir="../figures", defaultextension=".png", filetypes=[("PNG files", "*.png")])
+        plt.savefig(f)
 
 root = tk.Tk()
 root.title("Settings and plotting")
-root.geometry("1200x900")
+root.geometry("1200x1000")
 
 settings_panel= tk.Frame(root)
 settings_panel.pack(side="left", anchor="n")
@@ -259,11 +281,15 @@ grass_growth_scale_text.pack()
 
 
 plt.style.use("fivethirtyeight")
-fig, axes = plt.subplots(2, 2)
+fig, axes = plt.subplots(2, 2, constrained_layout=True)
 
 canvas = FigureCanvasTkAgg(fig, master=root)
 canvas_panel = canvas.get_tk_widget()
 
 confirm_button = tk.Button(settings_panel, text="Run simulation",font=("Georgia", 13), command=start)
 confirm_button.pack(pady="20")
+
+save_button = tk.Button(settings_panel, text="Save results",font=("Georgia", 13), command=save_plot, state="disabled")
+save_button.pack(pady="10")
+root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
