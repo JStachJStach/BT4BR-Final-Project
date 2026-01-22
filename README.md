@@ -61,8 +61,7 @@ Windows:
 pip install matplotlib
 ```
 
-After verifying that the dependencies are installed,
-### run the program with the following commands on Windows or Linux:
+After verifying that the dependencies are installed, run the program with the following commands on Windows or Linux:
 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
