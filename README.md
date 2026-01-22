@@ -218,6 +218,27 @@ We have been using AI LLMs such as ChatGPT in the followng cases:
 - Jakub: getting help understanding some compilation errors, *.vcxproj files management and corrections, getting help in building standalone .exe file using Visual Studio.  
 - Bartosz: getting help with errors, CMake, and understanding how to derive the Lotka-Volterra equations.
 
+## Contributions:
+- Jakub Stach
+  - Project Leader
+  - Windows support
+  - Live plotting
+  - Tkinter GUI
+  - Quiver plot
+  - Actor acting in simulation
+- Bartosz Kądziołka
+  - Linux support
+  - QA
+  - JSON support
+  - Lotka-Volterra equation derivation
+  - Code organisation
+- Mysterious KnotSora character
+  - is Bartosz
+  - GitHub was being weird
+
+Furthemore, both members worked equally on the C++ program.
+For more details, look at the commits on GitHub.
+Moreover, there exists a more elaborate unfinished version of the simulation in the 'rework-act-method' branch. It is unfinished due to time constraints, however it is equally interesting C++ code wise.
 ## Further reading and inspirations:
 
 [1] <https://en.wikipedia.org/wiki/Lotka–Volterra_equations>
