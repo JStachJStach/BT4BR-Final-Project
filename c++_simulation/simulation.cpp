@@ -1,6 +1,4 @@
 #include <ranges>
-
-
 #include "headers/settings.h"
 #include "headers/RandomUtils.h"
 #include "headers/global_enums.h"

@@ -23,60 +23,32 @@ C++ was chosen as the language for the simulation due to its extraordinary speed
 ### Why Python?
 Python is a go-to option when it comes to programming GUIs with plotting embedded. Although Raylib is efficient and gives a lot of flexibility, programming a GUI in C++ is pure Spartan work, and is not necessary to meet our needs. Thus said, we have chosen Tkinter, an easy-to-use built-in Python library, coupled with matplotlib.
 
-## How to set up the program?
+## Setup
 
-Make sure Python and matplotlib are installed.
+### Runtime requirements
 
-You may verify the above are installed by running:
-``` bash
-python --version
-```
-after verifying Python version >3.0 is installed:
-``` bash
-python
-import matplotlib 
-matplotlib.__version__
-```
-Should any of these dependencies not be installed, they may be installed with the following:
+The Python GUI requires:
+- Python ≥ 3.8
+- matplotlib
 
-### Python:
+Install python dependecies:
 
-Ubuntu/Debian:
+#### Ubuntu/Debian:
 ``` bash
-sudo apt install python3
+sudo apt-get install python3 python3-matplotlib.
 ```
-Arch:
+#### Arch:
 ``` bash
-sudo pacman -S python3
+sudo pacman -S python python-matplotlib
 ```
-Windows:
-https://www.geeksforgeeks.org/python/how-to-install-python-on-windows/
-### matplotlib:
+#### Windows:
 
-Ubuntu/Debian:
-``` bash
-sudo apt-get install python3-matplotlib.
-```
-Arch:
-``` bash
-sudo pacman -S python-matplotlib
-```
-Windows:
+Install Python from https://www.python.org
+
+Then:
 ``` bash
 pip install matplotlib
 ```
-Furthermore, Linux users need to download the following graphical libraries for Raylib to work properly:
-
-Ubuntu/Debian:
-```bash
-sudo apt intall libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev mesa-common-dev
-```
-Arch:
-```bash
-sudo pacman -S libx11 libxrandr libxinerama libxcursor libxi mesa
-```
-
-After verifying that the dependencies are installed, run the program with the following commands on Windows or Linux:
 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
@@ -85,7 +57,13 @@ python run.py
 
 ## Manual compilation
 
+Required to compile the C++ simulation:
+- C++ compiler with C++20 support (ex. g++)
+- CMake ≥ 4.00
+- X11 and OpenGL development libraries (required by raylib)
+
 Should you require to manually compile the C++ program yourself you may do so by doing the following:
+
 ### Linux (tested on Arch)
 
 ``` bash
@@ -97,6 +75,18 @@ cmake --build .
 mv ./simulation ../simulation
 cd ..
 ```
+
+Furthermore, Linux users need to download the following libraries for the program to compile properly:
+
+Ubuntu/Debian:
+```bash
+sudo apt install cmake g++ libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev mesa-common-dev
+```
+Arch:
+```bash
+sudo pacman -S cmake gcc libx11 libxrandr libxinerama libxcursor libxi mesa
+```
+
 ## Program explanation:
 
 ### Settings:
@@ -158,39 +148,63 @@ In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra co
     - rabbits start amount = 70
     - fox start amount = 35
     - density = 5
-- and given seeds: 717277385, 3351555370, 1945957692, 1401806454
+- and respective seeds: 717277385, 3351555370, 1945957692, 1401806454
+
 ### Results:
-  
-<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/quiver.png" />
+Our program generated the data allowing for the following plots to be created. They have been created using the data from the dataLotkaVolterra directory.
+
+<img width="640" height="480" alt="fig1" src="c++_simulation/data/dataLotkaVolterra/Fox_LV.png" />
+<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Rabbit_LV.png" />
+
+Due to the stochastic nature of the simulation the R^2 value is noticibly low. However, despite the low values, the parameters correctly capture the structure of the Lotka-Volterra model.
+
+These plots showcase the approximate tendency of change in population in prey and predators respectively, given by the equations:
+
+<img width="256" height="128" alt="Prey Equation" src="images/Prey.svg"> 
+
+<img width="256" height="128" alt="Prey Equation" src="images/Predator.svg"> 
+
+Where:
+- **x** is the population density of prey
+- **y** is the population density of a predator
+- **α** is the maximum prey per capita growth rate 
+- **β** is the effect of the presence of predators on the prey death rate
+- **γ** is the predator's per capita death rate
+- **δ** is the effect of the presence of prey on the predator's growth rate
+
+We can also see that this tendency is showcased on an example plot plotted at runtime with the data in c++_simulation/data/data_example.csv.
+
+<img width="640" height="480" alt="fig3" src="figures/example_plt.png" />
+
+With the above, it is clear to see the relationship between pray and predator: the more predators there are, the less prey there is and the more prey there is, the more predators there are.
+
+<img width="640" height="480" alt="fig4" src="c++_simulation/data/dataLotkaVolterra/quiver.png" />
 
 The plot presents the approximation model, which answers the question of how the populations will change in the next unit of time, based on the current state of the system.
 
-The tendency is visible, every point on the plot would wander, revolving clock-wise around the centre, sometimes it fluctuates, changing the radius.
+The tendency is visible, every point on the plot wanders, revolving clock-wise around the centre, sometimes it fluctuates, changing the radius.
 
 
-<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Fox_LV.png" />
-<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Rabbit_LV.png" />
+
 
 ### Why our project is flawed:
-
+#### Cellular automata
 Cellular automata, although easy to visualise and perform calculations on, is a huge simplification. Rules that we have chosen arbitrarily may also be adjusted in a way that doesn't meet our assumptions.
-
-Reproduction system doesn't align with "only simple rules" principle. It was rewritten multiple times, adding new parts of code, but not revamping the entire system. Like applying sewing patches on worn-out clothes until they become only patches. This does not make it possible to explain object behavior in one sentence using simple terms. It is especially visible in grass behavior that was programmed quickly and haphazardly without any strict plan in mind.
-
+#### Reproduction system doesn't align with "only simple rules" principle.
+The reproduction system was rewritten multiple times, adding new parts of code, but not revamping the entire system. Like applying sewing patches on worn-out clothes until they become only patches. This does not make it possible to explain object behavior in one sentence using simple terms. It is especially visible in grass behavior that was programmed quickly and haphazardly without any strict plan in mind.
+#### Chaos
 Randomisation algorithms cause the simulation to look undetermined and chaotic (in a good way), but cellular automata should mostly be based on strict deterministic rules to easily follow extrapolations from small scale to large scale. It is also important for reproducibility reasons.
-
+#### Bad file management
 Bad file management, mostly caused by us, the creators, using completely unlike workflows, separate IDEs and operating systems (Jakub: Visual Studio and VScode on Windows, Bartosz: CLion and PyCharm on Linux) 
 
 The dichotomy described above has also manifested in the code. Every time each of us has been trying to compile a freshly pulled commit, it was full of bugs and compilation errors. This is the reason for using many try/catch, try/except statements and conditional instructions to prevent it. But every cloud has a silver lining. Our program may be successfully run on both Windows and Linux.
-
-Bad code management, multiple variables declared but never used, files such as settings.json containing obsolete information.
 
 ### Known bugs:
 
 Windows version of the program isn't the latest and function meant to create setting_used.json file is obsolete.
 
 ### AI disclaimer:
-We have been using AI LLMs such as ChatGPT in these cases:
+We have been using AI LLMs such as ChatGPT in the followng cases:
 - Jakub: getting help understanding some compilation errors, *.vcxproj files management and corrections, getting help in building standalone .exe file using Visual Studio.  
 - Bartosz: getting help with errors, CMake, and understanding how to derive the Lotka-Volterra equations.
 
