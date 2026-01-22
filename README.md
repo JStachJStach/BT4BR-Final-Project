@@ -1,10 +1,10 @@
 # Cellular automata simulation of Lotka–Volterra population model
 
 ## Project introduction:
-For our project, we have prepared program with visual simulation of simple ecosystem, and bunch functionalities around it.
+For our project, we have prepared program with visual simulation of a simple ecosystem, and bunch functionalities around it.
 It features an interactive GUI wherein parameters may be adjusted before running the simulation. Moreover, inside of the GUI appears a real-time rendered plot of the population of the objects included.
 Why we have chosen this particular topic? We wanted to test out computer capabilities to fabricate ecosystems, in our example really trivial one. Ecologists lack clean real-world data in a scale large enough to derive idealised mathematical models able to grasp mass population variations. Heavy computer simulations, due to the ability to create large, parallel processes and easy access to data might give the insight into many real-life problems.
-In our simple example, focus is place on prey-predator population fluctuations described by Lotka-Volterra equations [1]
+In our simple example, focus is placed on prey-predator population fluctuations described by Lotka-Volterra equations [1], read more in "Results and Discussion" section.
 
 ## Technologies used:
 
