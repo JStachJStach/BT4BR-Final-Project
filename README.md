@@ -6,7 +6,7 @@ For our project, we have prepared program with a visual simulation of a simple e
 
  We wanted to test out computer capabilities to fabricate ecosystems, which in our example is a really trivial one. Ecologists lack clean real-world data in a scale large enough to derive idealised mathematical models able to grasp mass population variations. Heavy computer simulations, due to the ability to create large, parallel processes and easy access to data might give the insight into many real-life problems.
  
-In our simple example, focus is placed on prey-predator population fluctuations 
+In our simple example, focus is placed on prey-predator population tendencies 
 described by Lotka-Volterra equations [1]. Read more in "Results and Discussion" section.
 
 ## Technologies used:
@@ -127,7 +127,7 @@ Every object has its own place on a grid, and perform action every tick, with th
     - Foxes: check if rabbit is on the surrounding cell (8 cells) if there is, it moves to this place, rabbit object is destroyed.
     - Rabbits: check if grass is on the surrounding cell (8 cells) if there is, it moves to this place, grass object is destroyed.
 ## Results and discussion:
-To test capabilies of our program we have ran the simulation several times and observed certain constants. LotkaVolterra.py was made to visualise overall fluctuations in the processes, to run it, go to the proper directory. 
+To test capabilies of our program we have ran the simulation several times and observed certain constants. LotkaVolterra.py was made to visualise overall behavior og the processes, to run it, go to the proper directory. 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
 ```
@@ -146,9 +146,13 @@ In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra co
     - density = 5
 - and given seeds: 717277385, 3351555370, 1945957692, 1401806454
 ### Results:
-  <img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/quiver.png" />
-    
+  
+   <img width="667" height="480" alt="fig" src="https://github.com/user-attachments/assets/90d87c37-a2b8-439b-8fc6-54afaa1fa8bb" />
+
 The plot presents the approximation model which answers the question of how the populations will change in the next unit of time, based on the current state of the system.
+
+The tendency is visible, every point on the plot would wander, revolving clock-wise around the centre, sometimes it fluctuates, changing the radius.
+
 
 <img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Fox_LV.png" />
 <img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Rabbit_LV.png" />
