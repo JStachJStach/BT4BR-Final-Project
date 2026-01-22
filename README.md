@@ -5,7 +5,7 @@ For our project, we have prepared a program with a visual simulation of a simple
 
 ### Why have we chosen this particular topic?
 
- We wanted to test out the capabilities of computers to fabricate ecosystems - in our example, a really trivial one. Moreover, ecologists lack clean, real-world data on a large enough scale to derive idealised mathematical models able to grasp mass population variations. Heavy computer simulations, due to their ability to create large, parallel processes and easy access to data, might give insight into many real-life problems.
+ We wanted to test out the capabilities of computers to fabricate ecosystems - in our example, a really trivial one. Ecologists lack clean, real-world data on a large enough scale to derive idealised mathematical models able to grasp mass population variations. Heavy computer simulations, due to their ability to create large, parallel processes and easy access to data, might give insight into many real-life problems.
 
 In our simple example, focus is placed on prey-predator population tendencies 
 described by Lotka-Volterra equations [1]. More in "Results and Discussion" section.
