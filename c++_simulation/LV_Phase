@@ -1,0 +1,25 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.colors as colors
+
+
+alpha = 1.5276
+beta = 0.00688
+gamma = 1.03783
+delta = 0.00319
+
+ticks = np.arange(1, 1000, 2) 
+ticks = np.arange(1, 1000, 2) 
+
+
+Predators, Preys = np.meshgrid(ticks, ticks)
+V = beta*Predators - alpha*np.log(Predators) + delta*Preys - gamma*np.log(Preys)
+
+
+plt.contour(Predators, Preys, V, levels=np.linspace(V.min(), -8, 18),cmap = "turbo", vmax=-8)
+#plt.contourf(Predators, Preys, V, levels=np.linspace(V.min(), V.max(), 1000),cmap ="gist_stern")
+plt.ylabel("Rabbit population")
+plt.xlabel("Fox population")
+#plt.colorbar(label='V value')
+plt.grid()
+plt.show()
