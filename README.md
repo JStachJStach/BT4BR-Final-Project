@@ -205,6 +205,7 @@ Now:
 - β = 0.00688
 - γ =  1.03783
 - δ = 0.00319
+  
 These parameters can be used to create phase portrait:
 
 ``` bash
@@ -214,7 +215,7 @@ python LV_Phase.py
 <img width="803" height="808" alt="image" src="https://github.com/user-attachments/assets/e552c861-a67e-4428-83bb-316f51b7a4f2" />
 
 This represents abstract idealisation of prey-predator dependence.
-Depending on the starting parameters. Let's say fox_population=40 and rabbit_population = 50. This point (40, 50) must align with one of these lines and cling to it while moving.
+Based on the starting parameters. Let's say fox_population=40 and rabbit_population = 50. This point (40, 50) must align with one of these lines and cling to it while moving.
 
 
 ### Why our project is flawed:
