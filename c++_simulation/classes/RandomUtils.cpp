@@ -37,7 +37,7 @@ void RandomUtils::save_seed()
 {
     // Open file for saving seed
 	const std::string path = "data/settings_used.txt";  // instead of: set_path("../../data/settings_used.txt");
-    std::ofstream seedFile(path);
+    std::fstream seedFile(path, std::ios::out);
     const time_t cur_time = time(nullptr);
     const tm *local_time = localtime(&cur_time);
     // Check if file has opened correctly
