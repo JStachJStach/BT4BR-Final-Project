@@ -150,16 +150,19 @@ In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra co
     - density = 5
 - and respective seeds: 717277385, 3351555370, 1945957692, 1401806454
 
+
 ### Results:
-Our program generated the data allowing for the following plots to be created. They have been created using the data from the dataLotkaVolterra directory.
 
-<img width="640" height="480" alt="fig1" src="c++_simulation/data/dataLotkaVolterra/Fox_LV.png" />
-<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Rabbit_LV.png" />
+<img width="640" height="480" alt="fig4" src="c++_simulation/data/dataLotkaVolterra/quiver.png" />
 
-Due to the stochastic nature of the simulation the R^2 value is noticibly low. However, despite the low values, the parameters correctly capture the structure of the Lotka-Volterra model.
+The plot above answers the question of how the populations will change in the next unit of time, based on the current state of the system.
 
-These plots showcase the approximate tendency of change in population in prey and predators respectively, given by the equations:
+We can also see that this tendency is showcased on an example plot plotted at runtime:
 
+<img width="972" height="581" alt="image" src="https://github.com/user-attachments/assets/b5240223-d5c7-4558-b84b-e9b8766f3a6c" />
+
+###Lotka-Volterra equations:
+A pair of non-linear differential equations able to describe prey-predator ecosystem is stated as below: 
 
 ### $\frac{\mathrm{d} y}{\mathrm{d} t} = \delta xy - \gamma y$
 ### $\frac{\mathrm{d} x}{\mathrm{d} t} = \alpha x - \beta xy$
@@ -174,6 +177,8 @@ After integrating:
 
 ### $V = \delta x - \gamma \ln(x) + \beta y - \alpha \ln(y)$
 
+
+
 Where:
 - **x** is the population density of prey
 - **y** is the population density of a predator
@@ -182,19 +187,32 @@ Where:
 - **γ** is the predator's per capita death rate
 - **δ** is the effect of the presence of prey on the predator's growth rate
 
-We can also see that this tendency is showcased on an example plot plotted at runtime with the data in c++_simulation/data/data_example.csv.
+This formula can be used further in LV_Phase.py file, but first α, β, γ, δ parameters must be obtained with is being done in LV_Calc.py:
+``` bash
+cd path/to/directory/BT4BR-Final-Project/c++_simulation/data/dataLotkaVolterra
+python LotkaVolterra.py
+```
+Our program generated the data allowing for the following plots to be created. They have been created using the data from the dataLotkaVolterra directory.
 
-<img width="640" height="480" alt="fig3" src="figures/example_plt.png" />
+<img width="640" height="480" alt="fig1" src="c++_simulation/data/dataLotkaVolterra/Fox_LV.png" />
+<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Rabbit_LV.png" />
 
-With the above, it is clear to see the relationship between pray and predator: the more predators there are, the less prey there is and the more prey there is, the more predators there are.
+Due to the stochastic nature of the simulation the R^2 value is noticibly low. However, despite the low values, the parameters correctly capture the structure of the Lotka-Volterra model.
+Now: 
+- α = 1.5276
+- β = 0.00688
+- γ =  1.03783
+- δ = 0.00319
+These parameters can be used to create phase portrait:
 
-<img width="640" height="480" alt="fig4" src="c++_simulation/data/dataLotkaVolterra/quiver.png" />
+``` bash
+cd path/to/directory/BT4BR-Final-Project/c++_simulation
+python LV_Phase.py
+```
+<img width="803" height="808" alt="image" src="https://github.com/user-attachments/assets/e552c861-a67e-4428-83bb-316f51b7a4f2" />
 
-The plot presents the approximation model, which answers the question of how the populations will change in the next unit of time, based on the current state of the system.
-
-The tendency is visible, every point on the plot wanders, revolving clock-wise around the centre, sometimes it fluctuates, changing the radius.
-
-
+This represents abstract idealisation of prey-predator dependence.
+Depending on the starting parameters. Let's say fox_population=40 and rabbit_population = 50. This point (40, 50) must align with one of these lines and cling to it while moving.
 
 
 ### Why our project is flawed:
