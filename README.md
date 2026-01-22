@@ -85,11 +85,11 @@ Furthermore, Linux users need to download the following libraries for the progra
 
 Ubuntu/Debian:
 ```bash
-sudo apt install cmake g++ libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev mesa-common-dev
+sudo apt install cmake g++ libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev mesa-common-dev build-essential 
 ```
 Arch:
 ```bash
-sudo pacman -S cmake gcc libx11 libxrandr libxinerama libxcursor libxi mesa
+sudo pacman -S cmake gcc libx11 libxrandr libxinerama libxcursor libxi mesa base-devel
 ```
 
 ## Program explanation:
