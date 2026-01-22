@@ -266,6 +266,8 @@ Moreover, there exists a more elaborate unfinished version of the simulation in 
 
 Insight into real life example:
 
+<https://www.researchgate.net/publication/296703828_The_Dynamics_of_the_Lynx-Hare_System_an_Application_of_the_Lotka-Volterra_Model>
+
 <https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00977.x>
 
 Similar projects:
