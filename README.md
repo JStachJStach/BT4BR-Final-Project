@@ -160,9 +160,19 @@ Due to the stochastic nature of the simulation the R^2 value is noticibly low. H
 
 These plots showcase the approximate tendency of change in population in prey and predators respectively, given by the equations:
 
-<img width="256" height="128" alt="Prey Equation" src="images/Prey.svg"> 
 
-<img width="256" height="128" alt="Prey Equation" src="images/Predator.svg"> 
+### $\frac{\mathrm{d} y}{\mathrm{d} t} = \delta xy - \gamma y$
+### $\frac{\mathrm{d} x}{\mathrm{d} t} = \alpha x - \beta xy$
+
+With some simple transformations we can calculate the following relationship:
+
+### $\frac{\mathrm{d} y}{\mathrm{d} x} = -\frac{y}{x}\frac{\delta x - \gamma}{\beta y - \alpha}$
+
+### $\frac{\beta y - \alpha}{y} \mathrm{d} y + \frac{\delta x - \gamma}{x} \mathrm{d} x = 0$
+
+After integrating:
+
+### $V = \delta x - \gamma \ln(x) + \beta y - \alpha \ln(y)$
 
 Where:
 - **x** is the population density of prey
