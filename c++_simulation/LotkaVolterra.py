@@ -76,7 +76,8 @@ ticks_vec = np.zeros(len(ticks))
 U, V = np.meshgrid(ticks_vec, ticks_vec)
 folder = "data/dataLotkaVolterra"
 for file in os.listdir(folder):
-    U, V = UseDataFromFile(folder+"/"+file, U, V, ticks)
+    if file.endswith(".csv"):
+        U, V = UseDataFromFile(folder+"/"+file, U, V, ticks)
 L = np.sqrt(U**2 + V**2)
 L[L == 0] = 1
 U /= L
@@ -85,5 +86,6 @@ quiverPlot = plt.quiver(X,Y,U,V,L,norm=colors.LogNorm(vmin=L.min(), vmax=L.max()
 plt.axis([-1, 1001, -1, 1001])
 plt.xlabel("Fox population")
 plt.ylabel("Rabbit population")
-plt.colorbar(quiverPlot, label="Avarage population change")
+plt.title("System fluctuations", fontsize=15, fontweight="bold")
+plt.colorbar(quiverPlot, label="Population avarage tendency to change")
 plt.show()

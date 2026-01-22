@@ -143,6 +143,10 @@ Described above dichotomy is also manifesting in the code. Every time each of us
 
 Bad code management, multiple variables declared but never used, files such as settings.json containing obsolete information.
 
+### Known bugs:
+
+Windows version of the program isn't the latest and function meant to create setting_used.json file is obsolete.
+
 ### AI disclaimer:
 We have been using AI LLMs such as ChatGPT in these cases:
 - Jakub: getting help understanding some compilation errors, *.vcxproj files management and corrections, getting help in building standalone .exe file using Visual Studio.  
