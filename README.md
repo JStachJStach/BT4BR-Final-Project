@@ -217,7 +217,7 @@ cd path/to/directory/BT4BR-Final-Project/c++_simulation
 python LV_Phase.py
 ```
 
-<img width="640" height="480" alt="image" src="images/LV_Phase.png" />
+<img width="640" height="480" alt="image" src="images/LV_Phase1.png" />
 
 This represents abstract idealisation of prey-predator dependence based on the starting parameters. Let's say fox_population=40 and rabbit_population = 50. This point (40, 50) must align with one of these lines and cling to it while moving.
 
