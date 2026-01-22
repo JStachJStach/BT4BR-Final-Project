@@ -159,9 +159,9 @@ The plot above answers the question of how the populations will change in the ne
 
 We can also see this tendency is showcased on an example plot plotted at runtime:
 
-<img width="972" height="581" alt="image" src="https://github.com/user-attachments/assets/b5240223-d5c7-4558-b84b-e9b8766f3a6c" />
+<img width="972" height="580" alt="image" src="figures/example_plot.png" />
 
-###Lotka-Volterra equations:
+### Lotka-Volterra equations:
 A pair of non-linear differential equations able to describe prey-predator ecosystem is stated as below: 
 
 ### $\frac{\mathrm{d} y}{\mathrm{d} t} = \delta xy - \gamma y$
@@ -187,10 +187,10 @@ Where:
 - **γ** is the predator's per capita death rate
 - **δ** is the effect of the presence of prey on the predator's growth rate
 
-This formula can be used further in LV_Phase.py file, but first α, β, γ, δ parameters must be obtained with is being done in LV_Calc.py:
+This formula can be used further in the LV_Phase.py file, but first α, β, γ and δ parameters must be obtained with it being done in LV_Calc.py:
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation/data/dataLotkaVolterra
-python LotkaVolterra.py
+python LV_Calc.py
 ```
 Our program generated the data allowing for the following plots to be created. They have been created using the data from the dataLotkaVolterra directory.
 
@@ -198,18 +198,21 @@ Our program generated the data allowing for the following plots to be created. T
 <img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Rabbit_LV.png" />
 
 Due to the stochastic nature of the simulation the R^2 value is noticibly low. However, despite the low values, the parameters correctly capture the structure of the Lotka-Volterra model.
+
 Now: 
 - α = 1.5276
 - β = 0.00688
 - γ =  1.03783
 - δ = 0.00319
+
 These parameters can be used to create phase portrait:
 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
 python LV_Phase.py
 ```
-<img width="803" height="808" alt="image" src="https://github.com/user-attachments/assets/e552c861-a67e-4428-83bb-316f51b7a4f2" />
+
+<img width="640" height="480" alt="image" src="images/LV_Phase.png" />
 
 This represents abstract idealisation of prey-predator dependence.
 Depending on the starting parameters. Let's say fox_population=40 and rabbit_population = 50. This point (40, 50) must align with one of these lines and cling to it while moving.
