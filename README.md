@@ -41,10 +41,6 @@ Ubuntu/Debian:
 ``` bash
 sudo apt install python3
 ```
-Fedora/Red hat:
-``` bash
-sudo dnf install python3
-```
 Arch:
 ``` bash
 sudo pacman -S python3
@@ -57,17 +53,9 @@ Ubuntu/Debian:
 ``` bash
 sudo apt-get install python3-matplotlib.
 ```
-Fedora:
-``` bash
-sudo dnf install python3-matplotlib
-```
-Red Hat:
-``` bash
-sudo yum install python3-matplotlib.
-```
 Arch:
 ``` bash
-sudo pacman -S python3-matplotlib
+sudo pacman -S python-matplotlib
 ```
 Windows:
 ``` bash
