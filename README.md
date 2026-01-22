@@ -1,13 +1,14 @@
 # Cellular automata simulation of Lotka–Volterra population model
 
 ## Project introduction:
-For our project, we have prepared program with a visual simulation of a simple ecosystem, and built additional functionalities around it.It features an interactive GUI wherein parameters may be adjusted before running the simulation. Moreover, inside of the GUI appears a real-time rendered plot of the population of the objects included.
-### Why we have chosen this particular topic?
+For our project, we have prepared a program with a visual simulation of a simple ecosystem and built additional functionalities around it. The project features an interactive GUI wherein parameters may be adjusted before running the simulation. Moreover, inside the GUI appears a real-time rendered plot which displays the population of the objects included.
 
- We wanted to test out computer capabilities to fabricate ecosystems, which in our example is a really trivial one. Ecologists lack clean real-world data in a scale large enough to derive idealised mathematical models able to grasp mass population variations. Heavy computer simulations, due to the ability to create large, parallel processes and easy access to data might give the insight into many real-life problems.
- 
+### Why have we chosen this particular topic?
+
+ We wanted to test out the capabilities of computers to fabricate ecosystems - in our example, a really trivial one. Moreover, ecologists lack clean, real-world data on a large enough scale to derive idealised mathematical models able to grasp mass population variations. Heavy computer simulations, due to their ability to create large, parallel processes and easy access to data, might give insight into many real-life problems.
+
 In our simple example, focus is placed on prey-predator population tendencies 
-described by Lotka-Volterra equations [1]. Read more in "Results and Discussion" section.
+described by Lotka-Volterra equations [1]. More in "Results and Discussion" section.
 
 ## Technologies used:
 
@@ -18,24 +19,25 @@ described by Lotka-Volterra equations [1]. Read more in "Results and Discussion"
     - [matplotlib](https://matplotlib.org/)
 
 ### Why C++?
-C++ was chosen as the language for the simulation due to its extraordinary speed and computational power when compared to Python. Its speed has allowed us to carry out the simulation with a ton of cells. Furthermore, it has also made it possible to visualise the cells moving around with the use of the Raylib library. Moreover, C++ is a language that not only is taught here at the UJ, but it is also a language that the both of us have experience in. 
+C++ was chosen as the language for the simulation due to its extraordinary speed and computational power when compared to Python. Its speed has allowed us to carry out the simulation with a large number of cells. Furthermore, it has also made it possible to visualise the cells moving around with the use of the Raylib library. Moreover, C++ is a language that not only is taught here at the UJ, but it is also a language that both of us have experience in. 
 ### Why Python?
-Python is a go-to option when it comes to programming GUI with plotting embedded. Although Raylib is efficient and gives a lot of flexibility, programming GUI is a pure spartan work, and is not necesseary to meet our needs. Thus said, we have chosen Tkinter, an easy to use built-in python library, coupled with matplotlib.
+Python is a go-to option when it comes to programming GUIs with plotting embedded. Although Raylib is efficient and gives a lot of flexibility, programming a GUI in C++ is pure Spartan work, and is not necessary to meet our needs. Thus said, we have chosen Tkinter, an easy-to-use built-in Python library, coupled with matplotlib.
 
 ## How to set up the program?
 
-Make sure python and matplotlib is installed.
+Make sure Python and matplotlib are installed.
+
 You may verify the above are installed by running:
 ``` bash
 python --version
 ```
-after verifying python version >3.0 is installed:
+after verifying Python version >3.0 is installed:
 ``` bash
 python
 import matplotlib 
 matplotlib.__version__
 ```
-Should any of these dependencies not be installed they may be installed with the following:
+Should any of these dependencies not be installed, they may be installed with the following:
 
 ### Python:
 
@@ -63,6 +65,16 @@ Windows:
 ``` bash
 pip install matplotlib
 ```
+Furthermore, Linux users need to download the following graphical libraries for Raylib to work properly:
+
+Ubuntu/Debian:
+```bash
+sudo apt intall libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev mesa-common-dev
+```
+Arch:
+```bash
+sudo pacman -S libx11 libxrandr libxinerama libxcursor libxi mesa
+```
 
 After verifying that the dependencies are installed, run the program with the following commands on Windows or Linux:
 
@@ -73,8 +85,8 @@ python run.py
 
 ## Manual compilation
 
-Should you require to manually compile the c++ program yourself you may do so by doing the following:
-### Linux (tested on Manjaro)
+Should you require to manually compile the C++ program yourself you may do so by doing the following:
+### Linux (tested on Arch)
 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
@@ -85,60 +97,62 @@ cmake --build .
 mv ./simulation ../simulation
 cd ..
 ```
-## Program explaination:
+## Program explanation:
+
 ### Settings:
 Grid size [integer, 10-180]: Changes the number of cells per row to the selected value. 
 
-- Tick duration [float, 0.01-0.5]: Sets the duration in seconds of each tick to the selected value.
+- Tick duration [float, 0.01-0.5]: Sets the duration, in seconds, of each tick to the selected value.
 
-  _Warning: low values (e.g. 0.01, may cause program to run unevenly_
+  _Warning: low values (ex. 0.01) may cause the program to run unevenly_
 
 - Number of foxes [integer, 0-100]: Sets the starting number of foxes.
 
-- Numbers of rabbits [integer, 0-200]: Sets the starting number of rabbits. (default = 70) 
+- Number of rabbits [integer, 0-200]: Sets the starting number of rabbits.
 
 - Grass amount [integer, 1-200]: Sets the starting grass amount.
 
-  _Warning: if there is no place to instantiate new object, it is not being created_
+  _Warning: if there is no place to instantiate a new object, it won't be created_
   
 - Include grass [Boolean]: Include grass or not.
 
-  _Warning: By default it is disabled, this means that rabbits don't need grass to reproduce, assuming, they have sufficient amount of food. Enabling it may be resource consuming._
+  _Warning: By default, it is disabled, which means that rabbits don't need grass to reproduce - grass is meant to be abundant. Enabling it may be resource-intensive_
 
-- Density [integer, 3-10]: Objects need some personal space. When number of objects surrounding meets Density value, it is being destroyed.
+- Density [integer, 3-10]: Objects need personal space. When the number of objects surrounding meets the density value, they are destroyed.
 
 - Grass growth rate [integer, 2-20]: Sets the grass spreading speed
 
-### Objects behavior:
-Every object has its own place on a grid, and perform action every tick, with the order determined by a randomization algorithm. This action may cause object to move, reproduce and consume simultaneously.
+### Object behavior:
+Every object has its own place on the grid and acts every tick, with the order determined by a randomisation algorithm. This action may cause objects to move, reproduce and consume simultaneously.
 - How do objects move?
-    - Foxes: choose random surrounding cell (24 cells) if unprovoked by rabbit, and move if the place is vacant.
-    - Rabbits: choose random surrounding cell (8 cells) if unprovoked by fox, and move if the place is vacant.
+    - Foxes: choose a random surrounding cell (24 cells) if unprovoked by a rabbit, and move if the place is vacant.
+    - Rabbits: choose a random surrounding cell (8 cells) if unprovoked by a fox, and move if the place is vacant.
     - Grass: read "Why our project is flawed" section in "Results and discussion"
 - How do objects reproduce?
-    - Every object has few variables, these are of the utmost importance:
-        - saturation - represents amount of food the object has eaten. Every object start at 0.
-        - reproduction saturation - amount of saturation that make an object to reproduce.
-        - saturation per food - amount of saturation points that is added after the food is eaten.
-        - saturation per tick - amount of saturation points that is added per tick. For the type of object, that is last in the food chain, it should be a positive number.
-        - saturation per reproduction, amount of saturation points that is added (it's a negative number) after reproduction.
-        - minimum saturation - saturation at which an object dies. Should be negative
+    - Every object has a few variables, these are of the utmost importance:
+        - saturation - represents the amount of food the object has eaten. Every object starts at 0.
+        - reproduction saturation - saturation that makes an object attempt reproduction.
+        - saturation per food - saturation points that are added after food is eaten.
+        - saturation per tick - saturation points that are added/subtracted per tick. For the type of object that is last in the food chain, it should be a positive number to simulate an abundance of food.
+        - saturation per reproduction - saturation points that are subtracted after reproduction.
+        - minimum saturation - saturation at which an object dies. Should be negative.
+
 - How do objects consume other objects?
-    - Foxes: check if rabbit is on the surrounding cell (8 cells) if there is, it moves to this place, rabbit object is destroyed.
-    - Rabbits: check if grass is on the surrounding cell (8 cells) if there is, it moves to this place, grass object is destroyed.
+    - Foxes: check if a rabbit is on a surrounding cell (8 cells), if there is, it moves to this place and the rabbit object is destroyed.
+    - Rabbits: check if grass is on a surrounding cell (8 cells), if there is, it moves to this place and the grass object is destroyed.
 ## Results and discussion:
-To test capabilies of our program we have ran the simulation several times and observed certain constants. LotkaVolterra.py was made to visualise overall behavior og the processes, to run it, go to the proper directory. 
+To test the capabilities of our program, we have run the simulation several times and observed certain constants. LotkaVolterra.py was made to visualise the overall behavior of the processes. In order to run it, step into the proper directory. 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
 ```
-And type command in the console:
+And type the following command in the console:
 ``` bash
 python LotkaVolterra.py
 ```
-Depending on what *.csv files are inside BT4BR-Final-Project/c++_simulation/dataLotkaVolterra, the program plot them accordingly.
+Depending on what *.csv files are inside BT4BR-Final-Project/c++_simulation/dataLotkaVolterra, the program will create a plot accordingly.
 
-In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra contains 4 .csv files with collected data:
--  lasting around 450 seconds
+In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra contains 4 .csv files with collected data that:
+-  lasts around 450 seconds
 -  with settings used:
     - grid size = 120
     - rabbits start amount = 70
@@ -147,9 +161,9 @@ In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra co
 - and given seeds: 717277385, 3351555370, 1945957692, 1401806454
 ### Results:
   
-   <img width="667" height="480" alt="fig" src="https://github.com/user-attachments/assets/90d87c37-a2b8-439b-8fc6-54afaa1fa8bb" />
+<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/quiver.png" />
 
-The plot presents the approximation model which answers the question of how the populations will change in the next unit of time, based on the current state of the system.
+The plot presents the approximation model, which answers the question of how the populations will change in the next unit of time, based on the current state of the system.
 
 The tendency is visible, every point on the plot would wander, revolving clock-wise around the centre, sometimes it fluctuates, changing the radius.
 
@@ -159,15 +173,15 @@ The tendency is visible, every point on the plot would wander, revolving clock-w
 
 ### Why our project is flawed:
 
-Cellular automata, although easy to visualise and perform calculations, it is huge simplification. Rules that we have chosen arbitrally, may also be adjusted in a way that doesn't meet our assumptions.
+Cellular automata, although easy to visualise and perform calculations on, is a huge simplification. Rules that we have chosen arbitrarily may also be adjusted in a way that doesn't meet our assumptions.
 
-Reproduction system doesn't align with "only simple rules" principle. It was being rewritten multiple times, adding new parts of code, but not revamping whole system. Like sewing patches on worn out clothes until they became only patches. This does not make it possible to explain objects behavior in one sentence using simple terms. It is especially visible in grass behavior that was programmed quickly and uncarefully without any strict plan in mind.
+Reproduction system doesn't align with "only simple rules" principle. It was rewritten multiple times, adding new parts of code, but not revamping the entire system. Like applying sewing patches on worn-out clothes until they become only patches. This does not make it possible to explain object behavior in one sentence using simple terms. It is especially visible in grass behavior that was programmed quickly and haphazardly without any strict plan in mind.
 
-Randomization algorithms cause simulation to look undetermined and chaotic (in a good way), but cellular automata should mostly be based on strict deterministic rules to easly follow extrapolations from small scale to large scale. It is also important for reproducibility reasons.
+Randomisation algorithms cause the simulation to look undetermined and chaotic (in a good way), but cellular automata should mostly be based on strict deterministic rules to easily follow extrapolations from small scale to large scale. It is also important for reproducibility reasons.
 
-Bad file management, mostly due to a fact that we, the creators, have completely unlike workflows, been using seperate IDEs and operating systems (Jakub: Visual Studio and VScode on Windows, Bartosz: CLion and PyCharm on Linux) 
+Bad file management, mostly caused by us, the creators, using completely unlike workflows, separate IDEs and operating systems (Jakub: Visual Studio and VScode on Windows, Bartosz: CLion and PyCharm on Linux) 
 
-Described above dichotomy is also manifesting in the code. Every time each of us has been trying to compile freshely pulled friends commitment, it was full of bugs and compilations errors. This is the reason for many try/catch, try/except statements and conditional instructions used to prevent it. But every cloud has a silver lining, our program may be ran successfully on both Windows and Linux.
+The dichotomy described above has also manifested in the code. Every time each of us has been trying to compile a freshly pulled commit, it was full of bugs and compilation errors. This is the reason for using many try/catch, try/except statements and conditional instructions to prevent it. But every cloud has a silver lining. Our program may be successfully run on both Windows and Linux.
 
 Bad code management, multiple variables declared but never used, files such as settings.json containing obsolete information.
 
@@ -178,12 +192,13 @@ Windows version of the program isn't the latest and function meant to create set
 ### AI disclaimer:
 We have been using AI LLMs such as ChatGPT in these cases:
 - Jakub: getting help understanding some compilation errors, *.vcxproj files management and corrections, getting help in building standalone .exe file using Visual Studio.  
+- Bartosz: getting help with errors, CMake, and understanding how to derive the Lotka-Volterra equations.
 
 ## Further reading and inspirations:
 
 [1] <https://en.wikipedia.org/wiki/Lotka–Volterra_equations>
 
-Insight into real-life example:
+Insight into real life example:
 
 <https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00977.x>
 
@@ -193,7 +208,7 @@ Similar projects:
 
 <https://youtu.be/sGKiTL_Es9w?si=9HQs78u29Kml01Jf>
 
-Well made video being an introduction to the topic:
+A well made video serving as an introduction to the topic by Sum and Product:
 
 <https://www.youtube.com/watch?v=fW_Df8bytIU>
 
