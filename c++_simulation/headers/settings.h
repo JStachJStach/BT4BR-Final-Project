@@ -177,10 +177,17 @@ inline void save_settings()
         file << "Grid: " << std::endl;
         file << "Grid size: " << gridSize << "px" << std::endl;
         file << std::endl;
-        file << "Grass parameters: " << std::endl;
-        file << "Grass inluded: " << (tileStartAmounts[static_cast<int>(TileState::Grass)] == 0 ? "No" : "Yes") << std::endl;
+        file << "Grass included?: " << (tileStartAmounts[static_cast<int>(TileState::Grass)] == 0 ? "No" : "Yes") << std::endl;
         if (tileStartAmounts[static_cast<int>(TileState::Grass)] != 0)
+        {
+            file << "Grass parameters: " << std::endl;
             file << "Starting grass amount: " << tileStartAmounts[static_cast<int>(TileState::Grass)] << std::endl;
+            file << "Grass minimum energy: " << grassMinSat << std::endl;
+            file << "Grass maximum energy: " << grassMaxSat << std::endl;
+            file << "Grass reproduction energy: " << grassReproductionSat << std::endl;
+            file << "Grass energy per tick: " << grassSatPerTick << std::endl;
+            file << "Grass energy per spread: " << grassSatPerReproduction << std::endl;
+        }
         file << std::endl;
         file << "Rabbit parameters: " << std::endl;
         file << "Starting rabbit amount: " << tileStartAmounts[static_cast<int>(TileState::Rabbit)] << std::endl;
