@@ -268,7 +268,7 @@ Moreover, there exists a more elaborate unfinished version of the simulation in 
 
 [1] <https://en.wikipedia.org/wiki/Lotka–Volterra_equations>
 
-Insight into real life example:
+Insight into real life examples:
 
 <https://www.researchgate.net/publication/296703828_The_Dynamics_of_the_Lynx-Hare_System_an_Application_of_the_Lotka-Volterra_Model>
 
