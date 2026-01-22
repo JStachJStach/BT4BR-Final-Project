@@ -157,7 +157,7 @@ In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra co
 
 The plot above answers the question of how the populations will change in the next unit of time, based on the current state of the system.
 
-We can also see that this tendency is showcased on an example plot plotted at runtime:
+We can also see this tendency is showcased on an example plot plotted at runtime:
 
 <img width="972" height="581" alt="image" src="https://github.com/user-attachments/assets/b5240223-d5c7-4558-b84b-e9b8766f3a6c" />
 
