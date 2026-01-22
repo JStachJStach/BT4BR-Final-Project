@@ -116,7 +116,7 @@ Grid size [integer, 10-180]: Changes the number of cells per row to the selected
 
 - Density [integer, 3-10]: Objects need some personal space. When number of objects surrounding meets Density value, it is being destroyed.
 
--Grass growth rate [integer, 2-20]: Sets the grass spreading speed
+- Grass growth rate [integer, 2-20]: Sets the grass spreading speed
 
 ### Objects behavior
 
@@ -140,11 +140,11 @@ We have been using AI LLMs such as ChatGPT in these cases:
 
 ## Further reading and inspirations
 
-Insight into real-life examples:
+Insight into real-life example:
 
 <https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00977.x>
 
-similar projects:
+Similar projects:
 
 <http://en.alife.pl/predators-and-prey-the-Lotka-Volterra-model>
 
