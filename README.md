@@ -187,7 +187,7 @@ Where:
 - **γ** is the predator's per capita death rate
 - **δ** is the effect of the presence of prey on the predator's growth rate
 
-This formula can be used further in the LV_Phase.py file, but first α, β, γ and δ parameters must be obtained with it being done in LV_Calc.py:
+This formula can be used further in the LV_Phase.py file, but first α, β, γ and δ parameters must be obtained which it being done in LV_Calc.py:
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation/data/dataLotkaVolterra
 python LV_Calc.py
