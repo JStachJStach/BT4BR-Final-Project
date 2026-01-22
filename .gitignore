@@ -362,11 +362,11 @@ MigrationBackup/
 FodyWeavers.xsd
 #CLion build files
 cmake-build-debug/
-/.idea
+.idea/
 # This file does not need to be tracked because later it will be a part of a larger results file :)
 data/settings_used.txt
 data/data.csv
-.run
-.vscode
+.run/
+.vscode/
 c++_simulation/.idea
 c++_simulation/build
