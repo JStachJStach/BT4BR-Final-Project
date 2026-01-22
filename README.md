@@ -24,7 +24,12 @@ C++ was chosen as the language for the simulation due to its extraordinary speed
 Python is a go-to option when it comes to programming GUIs with plotting embedded. Although Raylib is efficient and gives a lot of flexibility, programming a GUI in C++ is pure Spartan work, and is not necessary to meet our needs. Thus said, we have chosen Tkinter, an easy-to-use built-in Python library, coupled with matplotlib.
 
 ## Setup
-
+#### When cloning the repositiory the following flag must be set!
+```bash
+git clone --recourse-submodules https://github.com/JStachJStach/BT4BR-Final-Project
+cd BT4BR-Final-Project
+git submodule update --init --recursive
+```
 ### Runtime requirements
 
 The Python GUI requires:
