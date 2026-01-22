@@ -69,6 +69,11 @@ void main_contents()
     double lastTickTime = 0; //this is necessary to perform tick update (look at the statement ( if (lastTickTime + tickDuration < GetTime()) ) )
 
     InitWindow(screenWidth, screenHeight, "Simulation");
+    if (!IsWindowReady())
+    {
+        TraceLog(LOG_ERROR, "Window failed to initialise.");
+        return;
+    }
     SetWindowPosition(1300, 200);
     SetTargetFPS(60);
 

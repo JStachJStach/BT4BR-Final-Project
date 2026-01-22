@@ -19,7 +19,7 @@ C++ was chosen as the language for the simulation due to its extraordinary speed
 ### Why Python?
 Python is a go-to option when it comes to programming GUI with plotting embedded. Although Raylib is efficient and gives a lot of flexibility, programming GUI is a pure spartan work, and is not necesseary to meet our needs. Thus said, we have chosen Tkinter, an easy to use built-in python library, coupled with matplotlib.
 
-## How to run the program?
+## How to set up the program?
 
 Make sure python and matplotlib is installed.
 You may verify the above are installed by running:
@@ -61,7 +61,8 @@ Windows:
 pip install matplotlib
 ```
 
-After verifying that the dependencies are installed, run the program with the following commands on Windows or Linux:
+After verifying that the dependencies are installed,
+### run the program with the following commands on Windows or Linux:
 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
@@ -124,22 +125,43 @@ Every object has its own place on a grid, and perform action every tick, with th
     - Foxes: check if rabbit is on the surrounding cell (8 cells) if there is, it moves to this place, rabbit object is destroyed.
     - Rabbits: check if grass is on the surrounding cell (8 cells) if there is, it moves to this place, grass object is destroyed.
 ## Results and discussion:
-To test capabilies of our program we have ran the simulation several times and observed certain constants. LotkaVolterra.py was made to visualise overall fluctuations in the processes
-...
-...
-...
+To test capabilies of our program we have ran the simulation several times and observed certain constants. LotkaVolterra.py was made to visualise overall fluctuations in the processes, to run it, go to the proper directory. 
+``` bash
+cd path/to/directory/BT4BR-Final-Project/c++_simulation
+```
+And type command in the console:
+``` bash
+python LotkaVolterra.py
+```
+Depending on what *.csv files are inside BT4BR-Final-Project/c++_simulation/dataLotkaVolterra, the program plot them accordingly.
+
+In the example provided, BT4BR-Final-Project/c++_simulation/dataLotkaVolterra contains 4 .csv files with collected data:
+-  lasting around 450 seconds
+-  with settings used:
+    - grid size = 120
+    - rabbits start amount = 70
+    - fox start amount = 35
+    - density = 5
+- and given seeds: 717277385, 3351555370, 1945957692, 1401806454
+### Results:
+  <img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/quiver.png" />
+    
+The plot presents the approximation model which answers the question of how the populations will change in the next unit of time, based on the current state of the system.
+
+<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Fox_LV.png" />
+<img width="640" height="480" alt="fig2" src="c++_simulation/data/dataLotkaVolterra/Rabbit_LV.png" />
 
 ### Why our project is flawed:
 
-Cellular automata, although it is easy to visualise and perform calculations, it is huge simplification. Rules that we have chosen arbitrally, may also be adjusted in a way that doesn't meet our assumptions.
+Cellular automata, although easy to visualise and perform calculations, it is huge simplification. Rules that we have chosen arbitrally, may also be adjusted in a way that doesn't meet our assumptions.
 
 Reproduction system doesn't align with "only simple rules" principle. It was being rewritten multiple times, adding new parts of code, but not revamping whole system. Like sewing patches on worn out clothes until they became only patches. This does not make it possible to explain objects behavior in one sentence using simple terms. It is especially visible in grass behavior that was programmed quickly and uncarefully without any strict plan in mind.
 
 Randomization algorithms cause simulation to look undetermined and chaotic (in a good way), but cellular automata should mostly be based on strict deterministic rules to easly follow extrapolations from small scale to large scale. It is also important for reproducibility reasons.
 
-Bad file management, mostly due to a fact that we, the creators, have completely unlike workflows, been using seperate IDEs and operating systems (Jakub: Visual Studio and Visual Studio code on Windows, Bartosz: CLion and Pycharm on Linux) 
+Bad file management, mostly due to a fact that we, the creators, have completely unlike workflows, been using seperate IDEs and operating systems (Jakub: Visual Studio and VScode on Windows, Bartosz: CLion and PyCharm on Linux) 
 
-Described above dichotomy is also manifesting in the code. Every time each of us has been trying to compile freshely pulled frieds commitmennt, it was full of bugs and compilations errors. This is the reason for many try/catch, try/except statements and conditional instructions used to prevent it. But every cloud has a silver lining, our program may be ran successfully on both Windows and Linux.
+Described above dichotomy is also manifesting in the code. Every time each of us has been trying to compile freshely pulled friends commitment, it was full of bugs and compilations errors. This is the reason for many try/catch, try/except statements and conditional instructions used to prevent it. But every cloud has a silver lining, our program may be ran successfully on both Windows and Linux.
 
 Bad code management, multiple variables declared but never used, files such as settings.json containing obsolete information.
 

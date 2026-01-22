@@ -103,18 +103,13 @@ def start():
     global animation_object
     animation_object = animation.FuncAnimation(fig, plotting, interval=100)
 
-"""
+
 def on_closing():
-    if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-        try:
-            old = simulation_process
-            os.killpg(old.pid, signal.SIGKILL)
-            old.wait()
-            print("Simulation window close success")
-            root.destroy()
-        except:
-            root.destroy()
-"""
+    try:
+        root.destroy()
+    except:
+        print("")
+
 def plotting(i):
     time = []
     grass = []
@@ -310,5 +305,5 @@ save_button.pack(pady="10")
 
 
 
-#root.protocol("WM_DELETE_WINDOW", on_closing)
+root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()

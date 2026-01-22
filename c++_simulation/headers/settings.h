@@ -175,7 +175,7 @@ inline void save_settings()
         file << "Ticks per data save: " << ticksPerSave << std::endl;
         file << std::endl;
         file << "Grid: " << std::endl;
-        file << "Grid size: " << gridSize << "px" << std::endl;
+        file << "Grid size: " << gridSize << "x" << gridSize << " cells" << std::endl;
         file << std::endl;
         file << "Grass included?: " << (tileStartAmounts[static_cast<int>(TileState::Grass)] == 0 ? "No" : "Yes") << std::endl;
         if (tileStartAmounts[static_cast<int>(TileState::Grass)] != 0)

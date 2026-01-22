@@ -45,7 +45,6 @@ import matplotlib.pyplot as plt
 
 coef = np.polyfit(rabbit_x,rabbit_y,1)
 poly1d_fn = np.poly1d(coef) 
-# poly1d_fn is now a function which takes in x and returns an estimate for y
 
 ss_res = np.sum((rabbit_y - poly1d_fn(rabbit_x))**2)
 ss_tot = np.sum((rabbit_y - np.mean(rabbit_y))**2)
@@ -97,7 +96,6 @@ slope, intercept = coef
 gamma = -intercept
 delta  = slope
 
-# poly1d_fn is now a function which takes in x and returns an estimate for y
 ss_res = np.sum((fox_y - poly1d_fn(fox_x))**2)
 ss_tot = np.sum((fox_y - np.mean(fox_y))**2)
 

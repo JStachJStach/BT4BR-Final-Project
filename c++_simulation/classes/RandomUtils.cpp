@@ -43,7 +43,7 @@ void RandomUtils::save_seed()
     // Check if file has opened correctly
     if (seedFile.is_open())
     {
-        seedFile << "Ecosystem Simulation v0.1.0" << std::endl;
+        seedFile << "Ecosystem Simulation v1.0.0" << std::endl;
         seedFile << "Ran at: " << asctime(local_time);
         seedFile << "Seed used: " << SEED << std::endl << std::endl;
         seedFile.close();

@@ -1,0 +1,33 @@
+Ecosystem Simulation v1.0.0
+Ran at: Thu Jan 22 18:08:27 2026
+Seed used: 2739666703
+
+Settings used: 
+Density: 5
+Tick duration: 0.02s
+Ticks per data save: 1
+
+Grid: 
+Grid size: 120x120 cells
+
+Grass included?: No
+
+Rabbit parameters: 
+Starting rabbit amount: 70
+Maximum rabbit saturation: 70
+Minimum rabbit saturation: -60
+Rabbit reproduction saturation: 35
+Rabbit saturation per meal: 25
+Rabbit hunger rate per tick: 3
+Rabbit sight value: 2
+Rabbit reproduction cost: -35
+
+Fox parameters: 
+Starting fox amount: 35
+Maximum fox saturation: 20
+Minimum fox saturation: -30
+Fox reproduction saturation: 10
+Fox saturation per meal: 25
+Fox hunger rate per tick: -1
+Fox sight value: 1
+Fox reproduction cost: -30

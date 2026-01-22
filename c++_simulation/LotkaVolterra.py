@@ -2,7 +2,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
-import os
+import glob
 
 
 def UseDataFromFile(fileName, commonU, commonV, ticks):
@@ -75,9 +75,8 @@ X, Y = np.meshgrid(ticks, ticks)
 ticks_vec = np.zeros(len(ticks))
 U, V = np.meshgrid(ticks_vec, ticks_vec)
 folder = "data/dataLotkaVolterra"
-for file in os.listdir(folder):
-    if file.endswith(".csv"):
-        U, V = UseDataFromFile(folder+"/"+file, U, V, ticks)
+for file in glob.glob(folder + "/*.csv"):
+    U, V = UseDataFromFile(file, U, V, ticks)
 L = np.sqrt(U**2 + V**2)
 L[L == 0] = 1
 U /= L
@@ -87,5 +86,6 @@ plt.axis([-1, 1001, -1, 1001])
 plt.xlabel("Fox population")
 plt.ylabel("Rabbit population")
 plt.title("System fluctuations", fontsize=15, fontweight="bold")
-plt.colorbar(quiverPlot, label="Population avarage tendency to change")
+plt.colorbar(quiverPlot, label="Average population change tendency")
+plt.savefig("data/dataLotkaVolterra/quiver.png")
 plt.show()
