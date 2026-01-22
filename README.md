@@ -161,7 +161,9 @@ We can also see this tendency is showcased on an example plot plotted at runtime
 
 <img width="972" height="581" alt="image" src="https://github.com/user-attachments/assets/b5240223-d5c7-4558-b84b-e9b8766f3a6c" />
 
-###Lotka-Volterra equations:
+
+
+### Lotka-Volterra equations:
 A pair of non-linear differential equations able to describe prey-predator ecosystem is stated as below: 
 
 ### $\frac{\mathrm{d} y}{\mathrm{d} t} = \delta xy - \gamma y$
