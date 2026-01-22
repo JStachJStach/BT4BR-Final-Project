@@ -161,7 +161,7 @@ We can also see this tendency is showcased on an example plot plotted at runtime
 
 <img width="972" height="580" alt="image" src="figures/example_plot.png" />
 
-### Lotka-Volterra equations:
+###Lotka-Volterra equations:
 A pair of non-linear differential equations able to describe prey-predator ecosystem is stated as below: 
 
 ### $\frac{\mathrm{d} y}{\mathrm{d} t} = \delta xy - \gamma y$
@@ -214,8 +214,7 @@ python LV_Phase.py
 
 <img width="640" height="480" alt="image" src="images/LV_Phase.png" />
 
-This represents abstract idealisation of prey-predator dependence.
-Depending on the starting parameters. Let's say fox_population=40 and rabbit_population = 50. This point (40, 50) must align with one of these lines and cling to it while moving.
+This represents abstract idealisation of prey-predator dependence based on the starting parameters. Let's say fox_population=40 and rabbit_population = 50. This point (40, 50) must align with one of these lines and cling to it while moving.
 
 
 ### Why our project is flawed:
@@ -265,6 +264,8 @@ Moreover, there exists a more elaborate unfinished version of the simulation in 
 [1] <https://en.wikipedia.org/wiki/Lotka–Volterra_equations>
 
 Insight into real life example:
+
+<https://www.researchgate.net/publication/296703828_The_Dynamics_of_the_Lynx-Hare_System_an_Application_of_the_Lotka-Volterra_Model>
 
 <https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00977.x>
 
