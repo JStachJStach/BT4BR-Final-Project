@@ -15,10 +15,10 @@
 #ifdef _WIN32
     #include "../raylib_win/include/raylib.h"
 #elif __linux__                    //important to run program without dependencies on linux
-#include "../include/raylib/header/raylib.h"
+#include "../external/raylib/src/raylib.h"
 #endif
 #include "global_enums.h"
-#include "../include/nlohmann/json.hpp"
+#include "../external/nlohmann/json.hpp"
 using json = nlohmann::json;
 
 
@@ -41,8 +41,6 @@ inline unsigned int gridLineThickness;
 constexpr Color gridLineColor = LIGHTGRAY; // This has to stay here unless we want to deal with overloading the json hpp somehow
 
 // Tiles
-inline unsigned int grassMaxAmount;
-inline float grassGrowChance;
 inline std::vector<unsigned int> tileStartAmounts{};
 inline int sparsity;
 
@@ -172,16 +170,17 @@ inline void save_settings()
     {
         // Not everything here needs to be saved, we can adjust later
         file << "Settings used: " << std::endl;
-        file << "Window size: "<< screenWidth << "x" << screenHeight << "px" << std::endl;
-        file << "Tick duration: " << tickDuration << std::endl; //Seconds? Please add unit
+        file << "Density: " << sparsity << std::endl;
+        file << "Tick duration: " << tickDuration << "s" << std::endl;
+        file << "Ticks per data save: " << ticksPerSave << std::endl;
         file << std::endl;
         file << "Grid: " << std::endl;
         file << "Grid size: " << gridSize << "px" << std::endl;
-        file << "Grid line thickness: " << gridLineThickness << "px" << std::endl;
         file << std::endl;
         file << "Grass parameters: " << std::endl;
-        file << "Starting grass amount: " << tileStartAmounts[static_cast<int>(TileState::Grass)] << std::endl;
-        file << "Max grass amount: " << grassMaxAmount << std::endl;
+        file << "Grass inluded: " << (tileStartAmounts[static_cast<int>(TileState::Grass)] == 0 ? "No" : "Yes") << std::endl;
+        if (tileStartAmounts[static_cast<int>(TileState::Grass)] != 0)
+            file << "Starting grass amount: " << tileStartAmounts[static_cast<int>(TileState::Grass)] << std::endl;
         file << std::endl;
         file << "Rabbit parameters: " << std::endl;
         file << "Starting rabbit amount: " << tileStartAmounts[static_cast<int>(TileState::Rabbit)] << std::endl;
@@ -190,6 +189,8 @@ inline void save_settings()
         file << "Rabbit reproduction saturation: " << rabbitReproductionSat << std::endl;
         file << "Rabbit saturation per meal: " << rabbitSatPerGrass << std::endl;
         file << "Rabbit hunger rate per tick: " << rabbitSatPerTick << std::endl;
+        file << "Rabbit sight value: " << rabbitSightValue << std::endl;
+        file << "Rabbit reproduction cost: " << rabbitSatPerReproduction << std::endl;
         file << std::endl;
         file << "Fox parameters: " << std::endl;
         file << "Starting fox amount: " << tileStartAmounts[static_cast<int>(TileState::Fox)] << std::endl;
@@ -198,6 +199,8 @@ inline void save_settings()
         file << "Fox reproduction saturation: " << foxReproductionSat << std::endl;
         file << "Fox saturation per meal: " << foxSatPerRabbit << std::endl;
         file << "Fox hunger rate per tick: " << foxSatPerTick << std::endl;
+        file << "Fox sight value: " << foxSightValue << std::endl;
+        file << "Fox reproduction cost: " << foxSatPerReproduction << std::endl;
         file.close();
     }
     else

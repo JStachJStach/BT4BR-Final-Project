@@ -80,9 +80,12 @@ Should you require to manually compile the c++ program yourself you may do so by
 
 ``` bash
 cd path/to/directory/BT4BR-Final-Project/c++_simulation
-cmake .
+mkdir build
+cd build
+cmake ..
 cmake --build .
-mv ./c++_simulation ./simulation
+mv ./simulation ../simulation
+cd ..
 ```
 ## Windows
 Kuba, please add windows instructions

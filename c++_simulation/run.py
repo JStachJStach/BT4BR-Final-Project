@@ -253,7 +253,7 @@ rabbit_num_scale_text.pack()
 grass_num_scale = tk.Scale(settings_panel,from_=1,to=200,orient="horizontal",command=grass_start_num_change)
 grass_num_scale.set(40)
 grass_num_scale.pack()
-grass_num_scale_text = tk.Label(settings_panel, text="Number of grass", font=("Georgia", 12))
+grass_num_scale_text = tk.Label(settings_panel, text="Grass amount", font=("Georgia", 12))
 grass_num_scale_text.pack()
 
 include_grass_bool_obj = tk.BooleanVar(value=False)

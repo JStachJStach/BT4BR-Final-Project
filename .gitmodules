@@ -1,0 +1,3 @@
+[submodule "c++_simulation/external/raylib"]
+	path = c++_simulation/external/raylib
+	url = https://github.com/raysan5/raylib
